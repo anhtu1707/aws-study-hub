@@ -219,11 +219,8 @@ const playNextGoogleChunk = (id: string) => {
   }
 
   const chunk = audioQueue[currentQueueIndex];
-  // In dev: route through local Vite proxy. In production/static GitHub Pages: attempt direct or fallback
-  const isProd = import.meta.env.PROD;
-  const url = isProd
-    ? `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=vi&q=${encodeURIComponent(chunk)}`
-    : `/api/tts?q=${encodeURIComponent(chunk)}`;
+  // Route through /api/tts proxy (supported in Vite dev & Vercel Serverless Function, falls back on static hosts)
+  const url = `/api/tts?q=${encodeURIComponent(chunk)}`;
 
   const audio = new Audio(url);
   currentAudioElement = audio;
