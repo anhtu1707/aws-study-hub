@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { GitHubIcon } from './Icons';
 
 interface HeaderProps {
   totalServices: number;
@@ -156,6 +157,30 @@ export const Header: React.FC<HeaderProps> = ({
           >
             Đặt lại
           </button>
+
+          <a
+            href="https://github.com/anhtu1707/aws-study-hub"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Mã nguồn & Phòng lab Docker trên GitHub"
+            style={{
+              background: 'var(--text-ink)',
+              color: '#FFFFFF',
+              border: '1px solid var(--text-ink)',
+              fontSize: '11.5px',
+              fontWeight: 700,
+              padding: '5px 11px',
+              borderRadius: '2px',
+              textDecoration: 'none',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              transition: 'opacity 0.15s ease'
+            }}
+          >
+            <GitHubIcon size={13} color="#FFFFFF" />
+            <span>GitHub</span>
+          </a>
         </div>
       </div>
 

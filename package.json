@@ -2,6 +2,11 @@
   "name": "aws-study-hub",
   "private": true,
   "version": "1.0.0",
+  "homepage": "https://aws-study-hub-beige.vercel.app/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anhtu1707/aws-study-hub.git"
+  },
   "type": "module",
   "scripts": {
     "dev": "vite",

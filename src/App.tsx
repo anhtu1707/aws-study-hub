@@ -8,7 +8,7 @@ import { ServiceDetailModal } from './components/ServiceDetailModal';
 import { QuizView } from './components/QuizView';
 import { ArchitectureView } from './components/ArchitectureView';
 import { AudioPlayerBar } from './components/AudioPlayerBar';
-import { SearchIcon, ArrowUpIcon } from './components/Icons';
+import { SearchIcon, ArrowUpIcon, GitHubIcon } from './components/Icons';
 
 export function App() {
   const [activeTab, setActiveTab] = useState<'catalog' | 'quiz' | 'patterns'>('catalog');
@@ -466,13 +466,32 @@ export function App() {
 
           <div
             className="mono"
-            style={{ display: 'flex', gap: '14px', fontSize: '11.5px', fontWeight: 600, color: 'var(--text-sepia)' }}
+            style={{ display: 'flex', alignItems: 'center', gap: '12px', fontSize: '11.5px', fontWeight: 600, color: 'var(--text-sepia)', flexWrap: 'wrap' }}
           >
             <span>{AWS_SERVICES.length} Dịch vụ</span>
             <span>•</span>
             <span>15 Phân hệ</span>
             <span>•</span>
-            <span>CLF/SAA/SAP/Specialty</span>
+            <span>60 Kiến trúc</span>
+            <span>•</span>
+            <span>110 Câu hỏi thi</span>
+            <span>•</span>
+            <a
+              href="https://github.com/anhtu1707/aws-study-hub"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                color: 'var(--text-ink)',
+                textDecoration: 'underline',
+                fontWeight: 700,
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '4px'
+              }}
+            >
+              <GitHubIcon size={12} color="var(--text-ink)" />
+              anhtu1707/aws-study-hub
+            </a>
           </div>
         </footer>
 

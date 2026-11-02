@@ -601,7 +601,15 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
                 💡 Lệnh Docker chuẩn (Linux / Mac / Windows): <code className="mono" style={{ color: 'var(--text-ink)', fontWeight: 700 }}>docker compose --profile {service.dockerLab.profile} up -d</code>
               </span>
               <span className="mono" style={{ fontSize: '10.5px', color: 'var(--text-sepia)' }}>
-                Yêu cầu: Đã cài Docker &amp; Clone repo về máy
+                Yêu cầu: Đã cài Docker &amp;{' '}
+                <a
+                  href="https://github.com/anhtu1707/aws-study-hub"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: 'var(--text-ink)', textDecoration: 'underline', fontWeight: 700 }}
+                >
+                  Clone repo GitHub
+                </a>
               </span>
             </div>
 
