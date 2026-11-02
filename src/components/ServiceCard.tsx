@@ -132,6 +132,21 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
               🐳 DOCKER LAB
             </span>
           )}
+
+          <span
+            className="mono"
+            style={{
+              fontSize: '9.5px',
+              fontWeight: 700,
+              color: '#8A5A2B',
+              border: '1px dashed #8A5A2B',
+              background: '#FAF6EE',
+              padding: '1px 5px',
+              borderRadius: '2px'
+            }}
+          >
+            🛠️ THAO TÁC
+          </span>
         </div>
 
         {/* Status Toggle Button */}
@@ -221,7 +236,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
             gap: '4px'
           }}
         >
-          Hồ sơ chi tiết
+          Hồ sơ &amp; Thao tác
           <svg style={{ width: '14px', height: '14px', stroke: 'currentColor', fill: 'none', strokeWidth: 2 }} viewBox="0 0 24 24">
             <polyline points="9 18 15 12 9 6" />
           </svg>

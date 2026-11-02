@@ -28,6 +28,15 @@ export interface DockerLabConfig {
   description: string;
 }
 
+export interface HandsOnGuide {
+  title: string;
+  objective: string;
+  consoleSteps: string[];
+  cliSteps: string[];
+  verification: string;
+  cleanup?: string;
+}
+
 export interface AWSService {
   id: string;
   code: string;
@@ -44,6 +53,7 @@ export interface AWSService {
   relatedServices: string[];
   freeTier: boolean;
   dockerLab?: DockerLabConfig;
+  handsOn?: HandsOnGuide;
 }
 
 export interface Flashcard {

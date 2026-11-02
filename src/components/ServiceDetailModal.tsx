@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { AWSService, LearningStatus } from '../types';
+import { getHandsOnGuide } from '../data/handsOnGuides';
 
 interface ServiceDetailModalProps {
   service: AWSService;
@@ -19,12 +20,9 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
   onClose
 }) => {
   const [copied, setCopied] = useState(false);
+  const [handsOnMode, setHandsOnMode] = useState<'console' | 'cli'>('console');
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(service.cliSnippet);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
+  const handsOn = service.handsOn || getHandsOnGuide(service);
 
   return (
     <div
@@ -302,41 +300,200 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
           </div>
         )}
 
-        {/* CLI Snippet Box */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span className="mono" style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>
-              AWS CLI Thực Chiến:
-            </span>
-            <button
-              type="button"
-              onClick={handleCopy}
+        {/* Hands-On Practical Operation Station */}
+        <div
+          style={{
+            background: 'var(--bg-card-warm)',
+            border: '2px dashed var(--text-ink)',
+            padding: '20px 22px',
+            borderRadius: '3px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '16px'
+          }}
+        >
+          {/* Header & Mode Switch */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span className="stamp-badge stamp-dark" style={{ fontSize: '11px', letterSpacing: '0.5px' }}>
+                🛠️ HƯỚNG DẪN THAO TÁC THỰC CHIẾN (HANDS-ON)
+              </span>
+              <span className="mono" style={{ fontSize: '10.5px', color: 'var(--text-muted)' }}>
+                Console &amp; CLI
+              </span>
+            </div>
+
+            {/* Switch Console vs CLI */}
+            <div style={{ display: 'flex', background: '#EAE4DC', padding: '2px', borderRadius: '3px' }}>
+              <button
+                type="button"
+                onClick={() => setHandsOnMode('console')}
+                style={{
+                  background: handsOnMode === 'console' ? 'var(--text-ink)' : 'transparent',
+                  color: handsOnMode === 'console' ? '#FFFFFF' : 'var(--text-ink)',
+                  border: 'none',
+                  padding: '4px 10px',
+                  fontSize: '11.5px',
+                  fontWeight: 700,
+                  borderRadius: '2px',
+                  cursor: 'pointer',
+                  transition: 'all 0.15s'
+                }}
+              >
+                🖥️ AWS Console (GUI)
+              </button>
+              <button
+                type="button"
+                onClick={() => setHandsOnMode('cli')}
+                style={{
+                  background: handsOnMode === 'cli' ? 'var(--text-ink)' : 'transparent',
+                  color: handsOnMode === 'cli' ? '#FFFFFF' : 'var(--text-ink)',
+                  border: 'none',
+                  padding: '4px 10px',
+                  fontSize: '11.5px',
+                  fontWeight: 700,
+                  borderRadius: '2px',
+                  cursor: 'pointer',
+                  transition: 'all 0.15s'
+                }}
+              >
+                💻 AWS CLI (Terminal)
+              </button>
+            </div>
+          </div>
+
+          {/* Title & Objective */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            <h4 style={{ margin: 0, fontSize: '15px', fontWeight: 800, color: 'var(--text-ink)' }}>
+              {handsOn.title}
+            </h4>
+            <div style={{ fontSize: '13px', color: 'var(--text-charcoal)', lineHeight: 1.5 }}>
+              <strong>🎯 Mục tiêu thao tác:</strong> {handsOn.objective}
+            </div>
+          </div>
+
+          {/* Steps Display */}
+          {handsOnMode === 'console' ? (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <div className="mono" style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-sepia)', textTransform: 'uppercase' }}>
+                Quy trình thao tác từng bước trên AWS Console:
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                {handsOn.consoleSteps.map((step, idx) => (
+                  <div
+                    key={idx}
+                    style={{
+                      background: '#FFFFFF',
+                      border: '1px solid var(--border-dashed)',
+                      padding: '10px 14px',
+                      borderRadius: '2px',
+                      fontSize: '13px',
+                      color: 'var(--text-ink)',
+                      lineHeight: 1.6,
+                      display: 'flex',
+                      gap: '10px'
+                    }}
+                  >
+                    <span
+                      className="mono"
+                      style={{
+                        fontWeight: 800,
+                        color: 'var(--text-ink)',
+                        background: 'var(--bg-card-warm)',
+                        padding: '1px 6px',
+                        borderRadius: '2px',
+                        alignSelf: 'flex-start',
+                        fontSize: '11px'
+                      }}
+                    >
+                      {idx + 1}
+                    </span>
+                    <div style={{ flex: 1 }}>
+                      {step.replace(/^\d+\.\s*/, '')}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span className="mono" style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-sepia)', textTransform: 'uppercase' }}>
+                  Chuỗi lệnh AWS CLI thao tác trực tiếp:
+                </span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    navigator.clipboard.writeText(handsOn.cliSteps.join('\n'));
+                    setCopied(true);
+                    setTimeout(() => setCopied(false), 2000);
+                  }}
+                  style={{
+                    background: 'transparent',
+                    border: '1px solid var(--border-dashed)',
+                    fontSize: '11px',
+                    padding: '2px 8px',
+                    borderRadius: '2px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  {copied ? '✓ Đã sao chép tất cả' : 'Sao chép toàn bộ lệnh'}
+                </button>
+              </div>
+
+              <div
+                className="mono"
+                style={{
+                  background: 'var(--text-ink)',
+                  color: '#E6E4E0',
+                  fontSize: '12px',
+                  padding: '14px 16px',
+                  borderRadius: '3px',
+                  lineHeight: 1.6,
+                  overflowX: 'auto',
+                  whiteSpace: 'pre-wrap'
+                }}
+              >
+                {handsOn.cliSteps.join('\n')}
+              </div>
+            </div>
+          )}
+
+          {/* Verification & Cleanup Tips */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '12px', paddingTop: '4px' }}>
+            <div
               style={{
-                background: 'transparent',
-                border: '1px solid var(--border-dashed)',
-                fontSize: '11px',
-                padding: '3px 8px',
+                background: '#F0F7F2',
+                border: '1px solid #D1E7DD',
+                borderLeft: '3px solid #2E7D32',
+                padding: '10px 12px',
                 borderRadius: '2px',
-                cursor: 'pointer',
-                color: 'var(--text-charcoal)'
+                fontSize: '12.5px',
+                lineHeight: 1.5,
+                color: '#155724'
               }}
             >
-              {copied ? 'Đã sao chép!' : 'Sao chép lệnh'}
-            </button>
-          </div>
-          <div
-            className="mono"
-            style={{
-              background: 'var(--text-ink)',
-              color: '#FFFFFF',
-              fontSize: '12.5px',
-              padding: '14px 16px',
-              borderRadius: '3px',
-              overflowX: 'auto',
-              lineHeight: 1.5
-            }}
-          >
-            {service.cliSnippet}
+              <strong>🔍 Dấu hiệu kiểm tra thành công (Verification):</strong>
+              <div style={{ marginTop: '3px' }}>{handsOn.verification}</div>
+            </div>
+
+            {handsOn.cleanup && (
+              <div
+                style={{
+                  background: '#FFF8E6',
+                  border: '1px solid #FFEBAA',
+                  borderLeft: '3px solid #B78103',
+                  padding: '10px 12px',
+                  borderRadius: '2px',
+                  fontSize: '12.5px',
+                  lineHeight: 1.5,
+                  color: '#7A5200'
+                }}
+              >
+                <strong>🧹 Dọn dẹp tài nguyên (Tránh phát sinh phí):</strong>
+                <div style={{ marginTop: '3px' }}>{handsOn.cleanup}</div>
+              </div>
+            )}
           </div>
         </div>
 
