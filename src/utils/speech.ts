@@ -219,11 +219,20 @@ const playNextGoogleChunk = (id: string) => {
   }
 
   const chunk = audioQueue[currentQueueIndex];
-  const url = `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=vi&q=${encodeURIComponent(chunk)}`;
+  // Same-origin Vite proxy to bypass external referer blocks
+  const url = `/api/tts?q=${encodeURIComponent(chunk)}`;
 
   const audio = new Audio(url);
   currentAudioElement = audio;
   audio.playbackRate = currentStatus.rate;
+
+  let hasFailed = false;
+  const handleChunkError = (reason: string) => {
+    if (hasFailed) return;
+    hasFailed = true;
+    console.warn(`TTS playback error (${reason}), falling back to browser speech`);
+    fallbackToBrowserSpeech(id, audioQueue.slice(currentQueueIndex).join('. '));
+  };
 
   audio.onended = () => {
     currentQueueIndex++;
@@ -231,14 +240,11 @@ const playNextGoogleChunk = (id: string) => {
   };
 
   audio.onerror = () => {
-    // If Google TTS fails (e.g. offline), fallback to browser Web Speech
-    console.warn('Google TTS failed to load chunk, falling back to Web Speech API');
-    fallbackToBrowserSpeech(id, audioQueue.slice(currentQueueIndex).join('. '));
+    handleChunkError('Audio element onerror');
   };
 
   audio.play().catch((err) => {
-    console.warn('Audio play prevented:', err);
-    fallbackToBrowserSpeech(id, audioQueue.slice(currentQueueIndex).join('. '));
+    handleChunkError(err?.message || 'Audio play() rejected');
   });
 };
 
