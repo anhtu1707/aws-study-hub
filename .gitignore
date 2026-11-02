@@ -7,3 +7,4 @@ dist-ssr
 .sharing.json
 history/
 .DS_Store
+lab_data/

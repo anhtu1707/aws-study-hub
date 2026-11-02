@@ -1,0 +1,152 @@
+version: '3.8'
+
+# ==============================================================================
+# AWS ENTERPRISE LAB SUITE (SAP-C02 & SPECIALTY DOMAINS)
+# Quản lý theo Profile để tiết kiệm RAM:
+#   docker compose --profile core up -d       (LocalStack S3, SQS, SNS, Lambda...)
+#   docker compose --profile nosql up -d      (DynamoDB + Web GUI)
+#   docker compose --profile database up -d   (RDS Aurora Postgres + Redis)
+#   docker compose --profile search up -d     (OpenSearch + Dashboards)
+#   docker compose --profile streaming up -d  (Amazon MQ RabbitMQ)
+#   docker compose --profile all up -d        (Bật toàn bộ bộ lab)
+# ==============================================================================
+
+services:
+  # 1. CORE AWS SERVICES (LocalStack All-in-One)
+  localstack:
+    image: localstack/localstack:latest
+    container_name: aws_localstack
+    profiles: ["core", "all"]
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=s3,sqs,sns,dynamodb,lambda,secretsmanager,kms,events,stepfunctions,kinesis,cloudwatch,iam,sts
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - AWS_DEFAULT_REGION=ap-southeast-1
+    volumes:
+      - "./lab_data/localstack:/var/lib/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - aws_lab_net
+
+  # 2. DEDICATED NOSQL & WEB GUI (DynamoDB + DynamoDB Admin)
+  dynamodb-local:
+    image: amazon/dynamodb-local:latest
+    container_name: aws_dynamodb
+    profiles: ["nosql", "all"]
+    ports:
+      - "8000:8000"
+    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath /data"
+    volumes:
+      - "./lab_data/dynamodb:/data"
+    networks:
+      - aws_lab_net
+
+  dynamodb-admin:
+    image: aaronshaf/dynamodb-admin:latest
+    container_name: aws_dynamodb_admin
+    profiles: ["nosql", "all"]
+    ports:
+      - "8001:8001"
+    environment:
+      - DYNAMO_ENDPOINT=http://dynamodb-local:8000
+      - AWS_REGION=ap-southeast-1
+    depends_on:
+      - dynamodb-local
+    networks:
+      - aws_lab_net
+
+  # 3. S3 STORAGE WITH VISUAL CONSOLE (MinIO)
+  minio-s3:
+    image: minio/minio:latest
+    container_name: aws_s3_minio
+    profiles: ["storage", "all"]
+    ports:
+      - "9000:9000"   # S3 API Endpoint
+      - "9001:9001"   # S3 Web Console UI
+    environment:
+      - MINIO_ROOT_USER=awsadmin
+      - MINIO_ROOT_PASSWORD=awspassword123
+    command: server /data --console-address ":9001"
+    volumes:
+      - "./lab_data/minio:/data"
+    networks:
+      - aws_lab_net
+
+  # 4. RELATIONAL DATABASE (Simulating RDS Aurora PostgreSQL)
+  rds-postgres:
+    image: postgres:16-alpine
+    container_name: aws_rds_postgres
+    profiles: ["database", "all"]
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=aws_enterprise_db
+      - POSTGRES_USER=awsadmin
+      - POSTGRES_PASSWORD=awspassword123
+    volumes:
+      - "./lab_data/postgres:/var/lib/postgresql/data"
+    networks:
+      - aws_lab_net
+
+  # 5. IN-MEMORY CACHE (Simulating Amazon ElastiCache Redis)
+  elasticache-redis:
+    image: redis:alpine
+    container_name: aws_elasticache_redis
+    profiles: ["database", "all"]
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - "./lab_data/redis:/data"
+    networks:
+      - aws_lab_net
+
+  # 6. MESSAGE BROKER (Simulating Amazon MQ)
+  amazon-mq-rabbit:
+    image: rabbitmq:3-management-alpine
+    container_name: aws_amazon_mq
+    profiles: ["streaming", "all"]
+    ports:
+      - "5672:5672"    # AMQP protocol
+      - "15672:15672"  # Web Management UI
+    environment:
+      - RABBITMQ_DEFAULT_USER=awsadmin
+      - RABBITMQ_DEFAULT_PASS=awspassword123
+    volumes:
+      - "./lab_data/rabbitmq:/var/lib/rabbitmq"
+    networks:
+      - aws_lab_net
+
+  # 7. SEARCH & VECTOR EMBEDDINGS (Simulating OpenSearch & Bedrock Vector RAG)
+  opensearch:
+    image: opensearchproject/opensearch:2.14.0
+    container_name: aws_opensearch
+    profiles: ["search", "all"]
+    ports:
+      - "9200:9200"
+    environment:
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m"
+      - DISABLE_SECURITY_PLUGIN=true
+    networks:
+      - aws_lab_net
+
+  opensearch-dashboards:
+    image: opensearchproject/opensearch-dashboards:2.14.0
+    container_name: aws_opensearch_ui
+    profiles: ["search", "all"]
+    ports:
+      - "5601:5601"
+    environment:
+      - 'OPENSEARCH_HOSTS=["http://opensearch:9200"]'
+      - DISABLE_SECURITY_DASHBOARDS_PLUGIN=true
+    depends_on:
+      - opensearch
+    networks:
+      - aws_lab_net
+
+networks:
+  aws_lab_net:
+    driver: bridge
