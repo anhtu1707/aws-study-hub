@@ -56,6 +56,12 @@ export interface AWSService {
   handsOn?: HandsOnGuide;
 }
 
+export interface ExamOption {
+  key: string;
+  text: string;
+  explanation?: string;
+}
+
 export interface Flashcard {
   id: string;
   scenario: string;
@@ -64,6 +70,10 @@ export interface Flashcard {
   explanation: string;
   serviceId: string;
   examCode: string;
+  domain?: string;
+  options?: ExamOption[];
+  correctKey?: string;
+  decisionRule?: string;
 }
 
 export interface ArchitecturePattern {

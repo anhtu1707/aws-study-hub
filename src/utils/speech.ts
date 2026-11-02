@@ -371,10 +371,14 @@ export const buildDetailedSpeech = (service: AWSService): string => {
   ].join('. ');
 };
 
-// Structured speech scripts: Flashcards
+// Structured speech scripts: Flashcards & Exam Questions
 export const buildFlashcardSpeech = (card: Flashcard, revealed: boolean): string => {
   if (!revealed) {
-    return `Tình huống đề thi ${card.examCode}. ${card.scenario}. Câu hỏi: ${card.question}. Hãy suy nghĩ câu trả lời trước khi lật thẻ đối chiếu.`;
+    const optionsText =
+      card.options && card.options.length > 0
+        ? ' Các lựa chọn: ' + card.options.map((o) => `Phương án ${o.key}: ${o.text}`).join('. ')
+        : '';
+    return `Tình huống đề thi ${card.examCode}. ${card.scenario}. Câu hỏi: ${card.question}.${optionsText} Hãy suy nghĩ câu trả lời.`;
   }
-  return `Tình huống đề thi ${card.examCode}. ${card.scenario}. Câu hỏi: ${card.question}. Đáp án chuẩn xác là: ${card.answer}. Lời giải thích chuyên sâu: ${card.explanation}.`;
+  return `Tình huống đề thi ${card.examCode}. ${card.scenario}. Câu hỏi: ${card.question}. Đáp án chuẩn xác là phương án ${card.correctKey || ''}: ${card.answer}. Lời giải thích chuyên sâu: ${card.explanation}. ${card.decisionRule ? 'Quy tắc 3 giây: ' + card.decisionRule : ''}`;
 };
