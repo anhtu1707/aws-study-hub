@@ -7,6 +7,7 @@ import { ServiceCard } from './components/ServiceCard';
 import { ServiceDetailModal } from './components/ServiceDetailModal';
 import { QuizView } from './components/QuizView';
 import { ArchitectureView } from './components/ArchitectureView';
+import { AudioPlayerBar } from './components/AudioPlayerBar';
 import { SearchIcon, ArrowUpIcon } from './components/Icons';
 
 export function App() {
@@ -476,6 +477,9 @@ export function App() {
         </footer>
 
       </div>
+
+      {/* Floating Audio Player Controller Bar */}
+      <AudioPlayerBar />
 
       {/* Floating Back to Top Button */}
       {showBackToTop && (

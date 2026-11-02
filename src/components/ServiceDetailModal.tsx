@@ -141,7 +141,7 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <button
               type="button"
-              onClick={() => speakStructuredText(`modal-${service.id}`, buildDetailedSpeech(service))}
+              onClick={() => speakStructuredText(`modal-${service.id}`, buildDetailedSpeech(service), `Hồ sơ ${service.code} • ${service.name}`)}
               title={isSpeaking ? 'Bấm để dừng giọng đọc' : 'Nghe toàn bộ hồ sơ (Bản chất, Mẹo thi & Bẫy chi phí) khi rảnh tay'}
               style={{
                 border: isSpeaking ? '1px solid #C0392B' : '1px solid var(--text-ink)',

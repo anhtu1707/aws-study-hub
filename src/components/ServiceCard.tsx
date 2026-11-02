@@ -173,7 +173,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
             type="button"
             onClick={(e) => {
               e.stopPropagation();
-              speakStructuredText(service.id, buildCardSpeech(service));
+              speakStructuredText(service.id, buildCardSpeech(service), `${service.code} • ${service.name}`);
             }}
             title={isSpeaking ? 'Bấm để dừng giọng đọc' : 'Nghe giọng đọc tóm tắt (Rảnh tay)'}
             style={{

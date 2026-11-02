@@ -95,7 +95,7 @@ export const QuizView: React.FC = () => {
             <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
               <button
                 type="button"
-                onClick={() => speakStructuredText(`card-${card.id}`, buildFlashcardSpeech(card, isRevealed))}
+                onClick={() => speakStructuredText(`card-${card.id}`, buildFlashcardSpeech(card, isRevealed), `Flashcard ${card.examCode} • Câu ${currentIndex + 1}`)}
                 title={isSpeaking ? 'Bấm để dừng đọc' : 'Nghe tình huống và lời giải (Hands-free audio)'}
                 style={{
                   background: isSpeaking ? '#FDF2F0' : 'var(--bg-card-warm)',

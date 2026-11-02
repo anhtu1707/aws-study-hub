@@ -162,3 +162,16 @@ export const ArrowUpIcon: React.FC<IconProps> = ({ size = 14, color = 'currentCo
     <polyline points="5 12 12 5 19 12" />
   </svg>
 );
+
+export const PlayIcon: React.FC<IconProps> = ({ size = 14, color = 'currentColor', style }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={style}>
+    <polygon points="5 3 19 12 5 21 5 3" />
+  </svg>
+);
+
+export const PauseIcon: React.FC<IconProps> = ({ size = 14, color = 'currentColor', style }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={style}>
+    <line x1="6" y1="4" x2="6" y2="20" />
+    <line x1="18" y1="4" x2="18" y2="20" />
+  </svg>
+);
