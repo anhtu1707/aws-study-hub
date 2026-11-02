@@ -349,10 +349,7 @@ export function App() {
         >
           <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
             <span style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-ink)' }}>
-              AWS Services Study Blueprint • Crafted in Torn Paper Aesthetic
-            </span>
-            <span style={{ fontSize: '11.5px', color: 'var(--text-muted)' }}>
-              Đầy đủ responsive: Điện thoại, Máy tính bảng &amp; Màn hình rộng. Tông màu nâu sáng dịu mắt, độ tương phản cao.
+              AWS Services Study Blueprint
             </span>
           </div>
 
@@ -362,9 +359,9 @@ export function App() {
           >
             <span>{AWS_SERVICES.length} Dịch vụ</span>
             <span>•</span>
-            <span>12 Phân hệ</span>
+            <span>15 Phân hệ</span>
             <span>•</span>
-            <span>CLF/SAA/SAP</span>
+            <span>CLF/SAA/SAP/Specialty</span>
           </div>
         </footer>
 

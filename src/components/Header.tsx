@@ -174,7 +174,7 @@ export const Header: React.FC<HeaderProps> = ({
             Sổ Tay Tự Học Toàn Bộ Dịch Vụ AWS
           </h1>
           <p style={{ fontSize: '14.5px', color: 'var(--text-charcoal)', maxWidth: '720px', lineHeight: 1.6 }}>
-            Bản đồ hệ thống hóa hơn <strong>{totalServices} dịch vụ AWS cốt lõi</strong> theo phong cách giấy xé ghi chú thủ công.
+            Bản đồ hệ thống hóa hơn <strong>{totalServices} dịch vụ AWS cốt lõi</strong>.
             Trang bị mẹo thi thực chiến, cạm bẫy chi phí hàng tháng, câu lệnh AWS CLI và bài toán tình huống.
           </p>
         </div>
