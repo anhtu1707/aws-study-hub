@@ -8,7 +8,8 @@ import { ServiceDetailModal } from './components/ServiceDetailModal';
 import { QuizView } from './components/QuizView';
 import { ArchitectureView } from './components/ArchitectureView';
 import { AudioPlayerBar } from './components/AudioPlayerBar';
-import { SearchIcon, ArrowUpIcon, GitHubIcon } from './components/Icons';
+import { BlessingModal } from './components/BlessingModal';
+import { SearchIcon, ArrowUpIcon, GitHubIcon, CoffeeIcon } from './components/Icons';
 
 export function App() {
   const [activeTab, setActiveTab] = useState<'catalog' | 'quiz' | 'patterns'>('catalog');
@@ -18,6 +19,7 @@ export function App() {
   const [selectedStatus, setSelectedStatus] = useState<LearningStatus | 'all'>('all');
   const [onlyFreeTier, setOnlyFreeTier] = useState(false);
   const [selectedService, setSelectedService] = useState<AWSService | null>(null);
+  const [isBlessingOpen, setIsBlessingOpen] = useState(false);
 
   // Pagination & Scroll states
   const [visibleCount, setVisibleCount] = useState(24);
@@ -233,6 +235,7 @@ export function App() {
           onExport={handleExport}
           onImport={handleImport}
           onReset={handleReset}
+          onOpenBlessing={() => setIsBlessingOpen(true)}
         />
 
         {/* Tab 1: Catalog */}
@@ -441,6 +444,71 @@ export function App() {
           />
         )}
 
+        {/* Blessing Callout Banner */}
+        <div
+          className="torn-both paper-shadow"
+          style={{
+            background: '#FFFDF9',
+            border: '1.5px dashed #8A5A2B',
+            padding: '20px 24px',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            gap: '16px',
+            marginTop: '36px'
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+            <div
+              style={{
+                width: '42px',
+                height: '42px',
+                background: '#FAF2EA',
+                border: '1px solid #E5D5C5',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0
+              }}
+            >
+              <CoffeeIcon size={20} color="#8A5A2B" />
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
+              <div style={{ fontSize: '15px', fontWeight: 800, color: 'var(--text-ink)' }}>
+                Nếu thấy hay hãy ban phước lành cho tui ☕
+              </div>
+              <div style={{ fontSize: '13px', color: 'var(--text-charcoal)' }}>
+                Ủng hộ tác giả qua <strong>VietQR Ngân hàng ACB (STK: 16601281)</strong> để tiếp thêm động lực duy trì và cập nhật dự án!
+              </div>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setIsBlessingOpen(true)}
+            style={{
+              background: '#8A5A2B',
+              color: '#FFFFFF',
+              border: 'none',
+              padding: '9px 18px',
+              fontSize: '12.5px',
+              fontWeight: 700,
+              borderRadius: '2px',
+              cursor: 'pointer',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              boxShadow: '0 2px 6px rgba(138,90,43,0.25)',
+              transition: 'all 0.15s ease'
+            }}
+          >
+            <CoffeeIcon size={14} color="#FFFFFF" />
+            <span>Mở Mã VietQR (ACB 16601281)</span>
+          </button>
+        </div>
+
         {/* Bottom Footer Strip */}
         <footer
           className="torn-top"
@@ -532,6 +600,12 @@ export function App() {
           <span>Đầu trang</span>
         </button>
       )}
+
+      {/* Blessing / Donate VietQR Modal */}
+      <BlessingModal
+        isOpen={isBlessingOpen}
+        onClose={() => setIsBlessingOpen(false)}
+      />
     </div>
   );
 }

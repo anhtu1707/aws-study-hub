@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { GitHubIcon } from './Icons';
+import { GitHubIcon, CoffeeIcon } from './Icons';
 
 interface HeaderProps {
   totalServices: number;
@@ -10,6 +10,7 @@ interface HeaderProps {
   onExport: () => void;
   onImport: (file: File) => void;
   onReset: () => void;
+  onOpenBlessing?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -20,7 +21,8 @@ export const Header: React.FC<HeaderProps> = ({
   setActiveTab,
   onExport,
   onImport,
-  onReset
+  onReset,
+  onOpenBlessing
 }) => {
   const percent = Math.round((learnedCount / totalServices) * 100) || 0;
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -181,6 +183,31 @@ export const Header: React.FC<HeaderProps> = ({
             <GitHubIcon size={13} color="#FFFFFF" />
             <span>GitHub</span>
           </a>
+
+          {onOpenBlessing && (
+            <button
+              type="button"
+              onClick={onOpenBlessing}
+              title="Nếu thấy hay hãy ban phước lành cho tui (VietQR ACB: 16601281)"
+              style={{
+                background: '#FFFDF9',
+                border: '1.5px solid #8A5A2B',
+                color: '#8A5A2B',
+                fontSize: '11.5px',
+                fontWeight: 700,
+                padding: '5px 11px',
+                borderRadius: '2px',
+                cursor: 'pointer',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '5px',
+                transition: 'all 0.15s ease'
+              }}
+            >
+              <CoffeeIcon size={13} color="#8A5A2B" />
+              <span>Ban Phước Lành ☕</span>
+            </button>
+          )}
         </div>
       </div>
 

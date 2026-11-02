@@ -598,7 +598,7 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
             {/* Cross-platform command note */}
             <div style={{ fontSize: '11px', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '6px', background: '#FFFFFF', padding: '6px 10px', borderRadius: '2px', border: '1px dashed var(--border-dashed)' }}>
               <span>
-                💡 Lệnh Docker chuẩn (Linux / Mac / Windows): <code className="mono" style={{ color: 'var(--text-ink)', fontWeight: 700 }}>docker compose --profile {service.dockerLab.profile} up -d</code>
+                 Lệnh Docker chuẩn (Linux / Mac / Windows): <code className="mono" style={{ color: 'var(--text-ink)', fontWeight: 700 }}>docker compose --profile {service.dockerLab.profile} up -d</code>
               </span>
               <span className="mono" style={{ fontSize: '10.5px', color: 'var(--text-sepia)' }}>
                 Yêu cầu: Đã cài Docker &amp;{' '}
