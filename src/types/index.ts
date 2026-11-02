@@ -83,4 +83,6 @@ export interface ArchitecturePattern {
   problem: string;
   solution: string;
   services: string[];
+  category?: string;
+  categoryName?: string;
 }

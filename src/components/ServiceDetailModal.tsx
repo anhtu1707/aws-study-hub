@@ -187,6 +187,102 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
           </div>
         </div>
 
+        {/* Quick Jump Navigation Bar */}
+        <div
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '8px',
+            padding: '10px 14px',
+            background: 'var(--bg-card-warm)',
+            border: '1px solid var(--border-dashed)',
+            borderRadius: '2px',
+            alignItems: 'center'
+          }}
+        >
+          <span className="mono" style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>
+            Điều hướng nhanh:
+          </span>
+          <button
+            type="button"
+            onClick={() => document.getElementById('modal-section-exam')?.scrollIntoView({ behavior: 'smooth' })}
+            style={{
+              background: '#FFFFFF',
+              border: '1.5px solid var(--text-ink)',
+              padding: '4px 10px',
+              fontSize: '11.5px',
+              fontWeight: 700,
+              cursor: 'pointer',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '5px',
+              color: 'var(--text-ink)'
+            }}
+          >
+            <LightbulbIcon size={12} color="var(--text-sepia)" />
+            Mẹo Thi Sát Đề &amp; Bẫy Câu Hỏi
+          </button>
+          <button
+            type="button"
+            onClick={() => document.getElementById('modal-section-pricing')?.scrollIntoView({ behavior: 'smooth' })}
+            style={{
+              background: '#FFFFFF',
+              border: '1.5px solid #8A5A2B',
+              padding: '4px 10px',
+              fontSize: '11.5px',
+              fontWeight: 700,
+              cursor: 'pointer',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '5px',
+              color: '#8A5A2B'
+            }}
+          >
+            <DollarIcon size={12} color="#8A5A2B" />
+            Cạm Bẫy Chi Phí (FinOps)
+          </button>
+          {service.dockerLab && (
+            <button
+              type="button"
+              onClick={() => document.getElementById('modal-section-docker')?.scrollIntoView({ behavior: 'smooth' })}
+              style={{
+                background: '#FFFFFF',
+                border: '1px solid var(--border-dashed)',
+                padding: '4px 10px',
+                fontSize: '11.5px',
+                fontWeight: 600,
+                cursor: 'pointer',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '5px',
+                color: 'var(--text-charcoal)'
+              }}
+            >
+              <DockerIcon size={12} color="var(--text-charcoal)" />
+              Lab Docker Cục Bộ
+            </button>
+          )}
+          <button
+            type="button"
+            onClick={() => document.getElementById('modal-section-handson')?.scrollIntoView({ behavior: 'smooth' })}
+            style={{
+              background: '#FFFFFF',
+              border: '1px solid var(--border-dashed)',
+              padding: '4px 10px',
+              fontSize: '11.5px',
+              fontWeight: 600,
+              cursor: 'pointer',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '5px',
+              color: 'var(--text-charcoal)'
+            }}
+          >
+            <ToolsIcon size={12} color="var(--text-charcoal)" />
+            Hướng Dẫn Thao Tác (Hands-on)
+          </button>
+        </div>
+
         {/* Full Architectural Explanation */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
           <div className="mono" style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>
@@ -222,6 +318,7 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
 
         {/* SECTION 1: MẸO THI SÁT ĐỀ & BẪY CÂU HỎI (EXAM INTELLIGENCE) */}
         <div
+          id="modal-section-exam"
           style={{
             background: '#FFFDF9',
             border: '1.5px solid var(--text-ink)',
@@ -330,6 +427,7 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
 
         {/* SECTION 2: CẠM BẪY CHI PHÍ & CHIẾN THUẬT FINOPS */}
         <div
+          id="modal-section-pricing"
           style={{
             background: '#FAF6EE',
             border: '1.5px solid #8A5A2B',
@@ -432,6 +530,7 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
         {/* Docker Lab Suite (If available for local practice) */}
         {service.dockerLab && (
           <div
+            id="modal-section-docker"
             style={{
               background: 'var(--bg-card-warm)',
               border: '1.5px dashed var(--text-ink)',
@@ -537,6 +636,7 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
 
         {/* Hands-On Practical Operation Station */}
         <div
+          id="modal-section-handson"
           style={{
             background: 'var(--bg-card-warm)',
             border: '2px dashed var(--text-ink)',
