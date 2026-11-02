@@ -1,0 +1,983 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <title>AWS Cloud Mastery - Sổ Tay Học Toàn Bộ Dịch Vụ AWS</title>
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      background-color: #FAF7F2;
+      color: #141210;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+    }
+    a {
+      color: #141210;
+      text-decoration: none;
+    }
+    a:hover {
+      color: #38312B;
+    }
+    /* Jagged torn paper top & bottom clip-paths */
+    .torn-top {
+      clip-path: polygon(
+        0% 8px, 2% 2px, 4% 7px, 6% 1px, 8% 8px, 10% 2px, 12% 7px, 14% 1px,
+        16% 8px, 18% 3px, 20% 7px, 22% 1px, 24% 8px, 26% 2px, 28% 7px, 30% 1px,
+        32% 8px, 34% 3px, 36% 7px, 38% 1px, 40% 8px, 42% 2px, 44% 7px, 46% 1px,
+        48% 8px, 50% 3px, 52% 7px, 54% 1px, 56% 8px, 58% 2px, 60% 7px, 62% 1px,
+        64% 8px, 66% 3px, 68% 7px, 70% 1px, 72% 8px, 74% 2px, 76% 7px, 78% 1px,
+        80% 8px, 82% 3px, 84% 7px, 86% 1px, 88% 8px, 90% 2px, 92% 7px, 94% 1px,
+        96% 8px, 98% 2px, 100% 7px, 100% 100%, 0% 100%
+      );
+    }
+    .torn-bottom {
+      clip-path: polygon(
+        0% 0%, 100% 0%, 100% calc(100% - 8px),
+        98% calc(100% - 2px), 96% calc(100% - 7px), 94% calc(100% - 1px),
+        92% calc(100% - 8px), 90% calc(100% - 2px), 88% calc(100% - 7px),
+        86% calc(100% - 1px), 84% calc(100% - 8px), 82% calc(100% - 3px),
+        80% calc(100% - 7px), 78% calc(100% - 1px), 76% calc(100% - 8px),
+        74% calc(100% - 2px), 72% calc(100% - 7px), 70% calc(100% - 1px),
+        68% calc(100% - 8px), 66% calc(100% - 3px), 64% calc(100% - 7px),
+        62% calc(100% - 1px), 60% calc(100% - 8px), 58% calc(100% - 2px),
+        56% calc(100% - 7px), 54% calc(100% - 1px), 52% calc(100% - 8px),
+        50% calc(100% - 3px), 48% calc(100% - 7px), 46% calc(100% - 1px),
+        44% calc(100% - 8px), 42% calc(100% - 2px), 40% calc(100% - 7px),
+        38% calc(100% - 1px), 36% calc(100% - 8px), 34% calc(100% - 3px),
+        32% calc(100% - 7px), 30% calc(100% - 1px), 28% calc(100% - 8px),
+        26% calc(100% - 2px), 24% calc(100% - 7px), 22% calc(100% - 1px),
+        20% calc(100% - 8px), 18% calc(100% - 3px), 16% calc(100% - 7px),
+        14% calc(100% - 1px), 12% calc(100% - 8px), 10% calc(100% - 2px),
+        8% calc(100% - 7px), 6% calc(100% - 1px), 4% calc(100% - 8px),
+        2% calc(100% - 2px), 0% calc(100% - 7px)
+      );
+    }
+    .torn-both {
+      clip-path: polygon(
+        0% 7px, 2% 2px, 4% 6px, 6% 1px, 8% 7px, 10% 2px, 12% 6px, 14% 1px,
+        16% 7px, 18% 3px, 20% 6px, 22% 1px, 24% 7px, 26% 2px, 28% 6px, 30% 1px,
+        32% 7px, 34% 3px, 36% 6px, 38% 1px, 40% 7px, 42% 2px, 44% 6px, 46% 1px,
+        48% 7px, 50% 3px, 52% 6px, 54% 1px, 56% 7px, 58% 2px, 60% 6px, 62% 1px,
+        64% 7px, 66% 3px, 68% 6px, 70% 1px, 72% 7px, 74% 2px, 76% 6px, 78% 1px,
+        80% 7px, 82% 3px, 84% 6px, 86% 1px, 88% 7px, 90% 2px, 92% 6px, 94% 1px,
+        96% 7px, 98% 2px, 100% 6px,
+        100% calc(100% - 7px),
+        98% calc(100% - 2px), 96% calc(100% - 6px), 94% calc(100% - 1px),
+        92% calc(100% - 7px), 90% calc(100% - 2px), 88% calc(100% - 6px),
+        86% calc(100% - 1px), 84% calc(100% - 7px), 82% calc(100% - 3px),
+        80% calc(100% - 6px), 78% calc(100% - 1px), 76% calc(100% - 7px),
+        74% calc(100% - 2px), 72% calc(100% - 6px), 70% calc(100% - 1px),
+        68% calc(100% - 7px), 66% calc(100% - 3px), 64% calc(100% - 6px),
+        62% calc(100% - 1px), 60% calc(100% - 7px), 58% calc(100% - 2px),
+        56% calc(100% - 6px), 54% calc(100% - 1px), 52% calc(100% - 7px),
+        50% calc(100% - 3px), 48% calc(100% - 6px), 46% calc(100% - 1px),
+        44% calc(100% - 7px), 42% calc(100% - 2px), 40% calc(100% - 6px),
+        38% calc(100% - 1px), 36% calc(100% - 7px), 34% calc(100% - 3px),
+        32% calc(100% - 6px), 30% calc(100% - 1px), 28% calc(100% - 7px),
+        26% calc(100% - 2px), 24% calc(100% - 6px), 22% calc(100% - 1px),
+        20% calc(100% - 7px), 18% calc(100% - 3px), 16% calc(100% - 6px),
+        14% calc(100% - 1px), 12% calc(100% - 7px), 10% calc(100% - 2px),
+        8% calc(100% - 6px), 6% calc(100% - 1px), 4% calc(100% - 7px),
+        2% calc(100% - 2px), 0% calc(100% - 6px)
+      );
+    }
+  </style>
+</helmet>
+
+<div style="width: 100%; min-height: 100vh; box-sizing: border-box; background-color: #FAF7F2; background-image: radial-gradient(#E8DFC8 0.75px, transparent 0.75px); background-size: 24px 24px; padding: 28px 24px 80px 24px; display: flex; flex-direction: column; align-items: center">
+
+  <!-- Main Container -->
+  <div style="width: 100%; max-width: 1320px; display: flex; flex-direction: column; gap: 32px">
+
+    <!-- Top Paper Header -->
+    <header class="torn-bottom" style="position: relative; background: #FFFFFF; border: 1px solid #E4D9C8; border-bottom: none; box-shadow: 0 4px 18px rgba(50, 40, 30, 0.05); padding: 40px 36px 44px 36px; border-radius: 4px 4px 0 0; display: flex; flex-direction: column; gap: 20px">
+      <!-- Washi Tape Pins -->
+      <div style="position: absolute; top: -14px; left: 40px; width: 110px; height: 26px; background: rgba(240, 230, 215, 0.85); transform: rotate(-3deg); border-left: 2px dashed #C8B9A6; border-right: 2px dashed #C8B9A6; box-shadow: 0 1px 3px rgba(0,0,0,0.06)"></div>
+      <div style="position: absolute; top: -14px; right: 40px; width: 110px; height: 26px; background: rgba(240, 230, 215, 0.85); transform: rotate(2deg); border-left: 2px dashed #C8B9A6; border-right: 2px dashed #C8B9A6; box-shadow: 0 1px 3px rgba(0,0,0,0.06)"></div>
+
+      <!-- Top Row with Stamps -->
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; border-bottom: 1px dashed #D6C8B5; padding-bottom: 18px">
+        <div style="display: flex; align-items: center; gap: 12px">
+          <!-- Ink Stamp Tag -->
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; background: #141210; color: #FFFFFF; border-radius: 2px">
+            AWS ARCHITECT ROADMAP
+          </span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #73675C; font-weight: 600">
+            REV. 2026 // SAA-C03 • SAP-C02
+          </span>
+        </div>
+
+        <!-- Quick Summary Stats -->
+        <div style="display: flex; align-items: center; gap: 20px; font-size: 13px; font-weight: 600; color: #433B34">
+          <div style="display: flex; align-items: center; gap: 6px">
+            <span style="width: 8px; height: 8px; border-radius: 50%; background: #141210; display: inline-block"></span>
+            <span>Tổng dịch vụ: <strong>24</strong> cốt lõi</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 6px">
+            <span style="width: 8px; height: 8px; border-radius: 50%; background: #2E7D32; display: inline-block"></span>
+            <span>Đã học: <strong>{{stats.learnedCount}}</strong> / 24 ({{stats.learnedPercent}}%)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Heading & Description -->
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 24px">
+        <div style="flex: 1 1 650px; min-width: 0; display: flex; flex-direction: column; gap: 10px">
+          <h1 style="margin: 0; font-size: 34px; font-weight: 800; letter-spacing: -0.03em; color: #141210; line-height: 1.15">
+            Sổ Tay Tự Học Toàn Bộ Dịch Vụ AWS
+          </h1>
+          <p style="margin: 0; font-size: 15px; color: #574D43; max-width: 720px; line-height: 1.6">
+            Hệ thống hóa toàn bộ dịch vụ AWS theo phân hệ chuẩn: Compute, Storage, Database, Network, Security &amp; AI. Phong cách giấy xé ghi chú với mẹo thi thực tế, phân biệt bản chất dịch vụ và cạm bẫy chi phí hàng tháng.
+          </p>
+        </div>
+
+        <!-- Target Certifications Sticky Tag -->
+        <div style="background: #FAF5EB; border: 1px dashed #CBB89F; padding: 14px 18px; border-radius: 3px; display: flex; flex-direction: column; gap: 6px; box-shadow: inset 0 0 10px rgba(180, 160, 130, 0.08)">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; color: #8A7A6A; text-transform: uppercase; letter-spacing: 0.08em">
+            Mục tiêu chứng chỉ
+          </div>
+          <div style="display: flex; gap: 6px; flex-wrap: wrap">
+            <span style="font-size: 11px; font-weight: 700; background: #FFFFFF; border: 1px solid #D9CBBA; padding: 2px 7px; border-radius: 2px; color: #141210">CLF-C02</span>
+            <span style="font-size: 11px; font-weight: 700; background: #141210; color: #FFFFFF; padding: 2px 7px; border-radius: 2px">SAA-C03</span>
+            <span style="font-size: 11px; font-weight: 700; background: #FFFFFF; border: 1px solid #D9CBBA; padding: 2px 7px; border-radius: 2px; color: #141210">DVA-C02</span>
+            <span style="font-size: 11px; font-weight: 700; background: #FFFFFF; border: 1px solid #D9CBBA; padding: 2px 7px; border-radius: 2px; color: #141210">SAP-C02</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Roadmap Progress Bar (Paper Meter) -->
+      <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 4px">
+        <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; color: #61554A">
+          <span>Tiến độ ghi nhớ kiến thức</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-weight: 700; color: #141210">{{stats.learnedPercent}}% Hoàn thành</span>
+        </div>
+        <div style="width: 100%; height: 10px; background: #EFE6D7; border-radius: 2px; overflow: hidden; border: 1px solid #DFD0BD; padding: 1px; box-sizing: border-box">
+          <div style="height: 100%; background: #141210; width: {{stats.progressWidth}}; border-radius: 1px; transition: width 0.3s ease"></div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Controls Shelf: Search & Filter Pills -->
+    <div style="display: flex; flex-direction: column; gap: 16px">
+
+      <!-- Search & Level Bar -->
+      <div style="display: flex; flex-wrap: wrap; gap: 14px; justify-content: space-between; align-items: center">
+        <!-- Search Input with Notebook Paper Style -->
+        <div style="flex: 1 1 340px; position: relative">
+          <input
+            type="text"
+            placeholder="Tìm theo tên dịch vụ (S3, EC2, Bedrock...), từ khóa hoặc tác vụ..."
+            value="{{searchQuery}}"
+            onInput="{{onSearchInput}}"
+            style="width: 100%; box-sizing: border-box; background: #FFFFFF; border: 1px solid #D5C7B5; border-bottom: 2px solid #141210; padding: 12px 16px 12px 42px; font-family: inherit; font-size: 14px; color: #141210; border-radius: 3px; outline: none; box-shadow: 0 2px 6px rgba(40,30,20,0.03)"
+          />
+          <svg style="position: absolute; left: 14px; top: 13px; width: 18px; height: 18px; stroke: #7A6C5F; fill: none; stroke-width: 2" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </div>
+
+        <!-- Level Selector Tabs -->
+        <div style="display: flex; align-items: center; gap: 6px; background: #EFE7DA; padding: 4px; border-radius: 4px; border: 1px solid #DACABA">
+          <button
+            type="button"
+            onClick="{{pickAllLevel}}"
+            style="border: none; background: {{allLevelBg}}; color: {{allLevelColor}}; font-family: inherit; font-size: 12px; font-weight: 700; padding: 7px 12px; border-radius: 3px; cursor: pointer"
+          >
+            Mọi cấp độ
+          </button>
+          <button
+            type="button"
+            onClick="{{pickFoundationalLevel}}"
+            style="border: none; background: {{foundationalLevelBg}}; color: {{foundationalLevelColor}}; font-family: inherit; font-size: 12px; font-weight: 700; padding: 7px 12px; border-radius: 3px; cursor: pointer"
+          >
+            Foundational
+          </button>
+          <button
+            type="button"
+            onClick="{{pickAssociateLevel}}"
+            style="border: none; background: {{associateLevelBg}}; color: {{associateLevelColor}}; font-family: inherit; font-size: 12px; font-weight: 700; padding: 7px 12px; border-radius: 3px; cursor: pointer"
+          >
+            Associate
+          </button>
+          <button
+            type="button"
+            onClick="{{pickProLevel}}"
+            style="border: none; background: {{proLevelBg}}; color: {{proLevelColor}}; font-family: inherit; font-size: 12px; font-weight: 700; padding: 7px 12px; border-radius: 3px; cursor: pointer"
+          >
+            Professional
+          </button>
+        </div>
+      </div>
+
+      <!-- Category Filter Pills (Torn Label Strips) -->
+      <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center">
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: #7B6E61; margin-right: 4px">
+          PHÂN HỆ:
+        </span>
+        <sc-for list="{{categoryButtons}}" as="cat" hint-placeholder-count="8">
+          <button
+            type="button"
+            onClick="{{cat.pick}}"
+            style="border: 1px solid {{cat.borderColor}}; background: {{cat.bg}}; color: {{cat.color}}; font-family: inherit; font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: 2px; cursor: pointer; box-shadow: {{cat.shadow}}; transition: all 0.15s ease"
+          >
+            {{cat.label}} ({{cat.count}})
+          </button>
+        </sc-for>
+      </div>
+
+    </div>
+
+    <!-- Active Filter Status Note -->
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px dashed #D8CABB; padding-bottom: 10px; font-size: 13px; color: #5D5246">
+      <div>
+        Đang hiển thị: <strong style="color: #141210">{{filteredCount}}</strong> dịch vụ phù hợp
+      </div>
+      <div style="display: flex; gap: 16px; align-items: center">
+        <span style="font-size: 12px; color: #75685B">Gợi ý: Nhấn vào thẻ để xem phân tích chi tiết &amp; mẹo thi</span>
+      </div>
+    </div>
+
+    <!-- Services Grid -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 26px">
+      <sc-for list="{{servicesList}}" as="item" hint-placeholder-count="6">
+        <!-- Service Torn Paper Card -->
+        <article
+          class="torn-bottom"
+          onClick="{{item.select}}"
+          style="background: #FFFFFF; border: 1px solid #E2D7C7; border-bottom: none; box-shadow: 0 4px 16px rgba(45, 35, 25, 0.05); padding: 24px 22px 30px 22px; border-radius: 3px 3px 0 0; display: flex; flex-direction: column; gap: 14px; position: relative; cursor: pointer; transition: transform 0.15s ease, box-shadow 0.15s ease"
+        >
+          <!-- Corner Tape Accent -->
+          <div style="position: absolute; top: -10px; right: 28px; width: 64px; height: 20px; background: rgba(235, 222, 204, 0.7); transform: rotate(1.5deg); border-left: 1px dashed #C2B19D; border-right: 1px dashed #C2B19D"></div>
+
+          <!-- Card Top: Category & Level Badges -->
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px">
+            <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap">
+              <!-- Category Pill -->
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; text-transform: uppercase; background: #FAF5EB; border: 1px solid #DFD0BD; color: #43392F; padding: 2px 7px; border-radius: 2px">
+                {{item.categoryName}}
+              </span>
+              <!-- Level Tag -->
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; background: #141210; color: #FFFFFF; padding: 2px 6px; border-radius: 2px">
+                {{item.level}}
+              </span>
+            </div>
+
+            <!-- Learned Toggle Checkmark Button -->
+            <button
+              type="button"
+              onClick="{{item.toggleLearned}}"
+              title="Đánh dấu đã học"
+              style="border: 1px solid {{item.checkBorder}}; background: {{item.checkBg}}; color: {{item.checkColor}}; width: 28px; height: 28px; border-radius: 2px; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0"
+            >
+              <svg style="width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.5" viewBox="0 0 24 24" aria-hidden="true">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Service Identity -->
+          <div style="display: flex; flex-direction: column; gap: 4px">
+            <div style="display: flex; align-items: baseline; gap: 8px">
+              <h2 style="margin: 0; font-size: 22px; font-weight: 800; color: #141210; font-family: 'JetBrains Mono', monospace">
+                {{item.code}}
+              </h2>
+              <span style="font-size: 13px; font-weight: 600; color: #6D6054">
+                {{item.name}}
+              </span>
+            </div>
+            <p style="margin: 0; font-size: 13.5px; color: #362F28; line-height: 1.55">
+              {{item.summary}}
+            </p>
+          </div>
+
+          <!-- Key Exam Gotcha / Sticky Tear Note -->
+          <div style="background: #F9F5EC; border-left: 3px solid #141210; border-top: 1px dashed #DFCDBA; border-bottom: 1px dashed #DFCDBA; border-right: 1px dashed #DFCDBA; padding: 10px 12px; font-size: 12px; line-height: 1.5; color: #433930">
+            <strong style="color: #141210; font-weight: 700">Mẹo thi &amp; Bẫy chi phí:</strong> {{item.examTip}}
+          </div>
+
+          <!-- Card Footer: Tags & Action -->
+          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed #E5D9CB; padding-top: 12px; margin-top: auto">
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #837568">
+              {{item.useCaseTag}}
+            </span>
+            <span style="font-size: 12px; font-weight: 700; color: #141210; display: flex; align-items: center; gap: 4px">
+              Xem chi tiết
+              <svg style="width: 14px; height: 14px; stroke: #141210; fill: none; stroke-width: 2" viewBox="0 0 24 24" aria-hidden="true">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </span>
+          </div>
+        </article>
+      </sc-for>
+    </div>
+
+    <!-- Deep-dive Drawer / Modal (When a service is selected) -->
+    <sc-if value="{{hasSelectedService}}" hint-placeholder-val="{{false}}">
+      <div style="position: fixed; inset: 0; background: rgba(20, 18, 16, 0.45); backdrop-filter: blur(2px); display: flex; justify-content: center; align-items: center; z-index: 100; padding: 20px">
+        <div
+          class="torn-both"
+          style="width: 100%; max-width: 760px; max-height: 90vh; overflow-y: auto; background: #FFFFFF; border: 1px solid #D5C7B5; box-shadow: 0 16px 40px rgba(25, 20, 15, 0.2); padding: 36px 32px; display: flex; flex-direction: column; gap: 24px; position: relative"
+        >
+          <!-- Top Washi Strip -->
+          <div style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); width: 140px; height: 26px; background: rgba(240, 230, 215, 0.9); border-left: 2px dashed #C8B9A6; border-right: 2px dashed #C8B9A6"></div>
+
+          <!-- Modal Header -->
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; border-bottom: 2px dashed #D6C8B5; padding-bottom: 16px">
+            <div style="display: flex; flex-direction: column; gap: 4px">
+              <div style="display: flex; align-items: center; gap: 8px">
+                <span style="font-family: 'JetBrains Mono', monospace; font-size: 26px; font-weight: 800; color: #141210">
+                  {{activeService.code}}
+                </span>
+                <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; background: #141210; color: #FFFFFF; padding: 2px 7px; border-radius: 2px">
+                  {{activeService.level}}
+                </span>
+              </div>
+              <h3 style="margin: 0; font-size: 18px; font-weight: 700; color: #43392F">
+                {{activeService.name}}
+              </h3>
+            </div>
+
+            <!-- Close Button -->
+            <button
+              type="button"
+              onClick="{{closeDetail}}"
+              style="border: 1px solid #141210; background: #FAF5EB; color: #141210; font-weight: 800; width: 34px; height: 34px; border-radius: 2px; cursor: pointer; display: flex; align-items: center; justify-content: center"
+              aria-label="Đóng cửa sổ chi tiết"
+            >
+              <svg style="width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2.5" viewBox="0 0 24 24" aria-hidden="true">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Description Block -->
+          <div style="display: flex; flex-direction: column; gap: 8px">
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: #8A7A6A; text-transform: uppercase">
+              Bản chất dịch vụ &amp; Khi nào nên chọn?
+            </div>
+            <p style="margin: 0; font-size: 14.5px; color: #2B241E; line-height: 1.6">
+              {{activeService.fullDescription}}
+            </p>
+          </div>
+
+          <!-- Exam Scenarios & Traps (Ruled Notebook Sheet) -->
+          <div style="background: #FAF7F0; border: 1px dashed #CDBFA9; padding: 18px 20px; border-radius: 2px; display: flex; flex-direction: column; gap: 12px">
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: #141210; text-transform: uppercase; display: flex; align-items: center; gap: 6px">
+              <svg style="width: 14px; height: 14px; stroke: #141210; fill: none; stroke-width: 2" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+              Tình huống ra đề thi (Exam Scenarios):
+            </div>
+            <div style="font-size: 13.5px; color: #3A3127; line-height: 1.6">
+              {{activeService.examScenario}}
+            </div>
+          </div>
+
+          <!-- CLI Cheat-Sheet Monospace Box -->
+          <div style="display: flex; flex-direction: column; gap: 8px">
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: #8A7A6A; text-transform: uppercase">
+              AWS CLI Thực Chiến:
+            </div>
+            <div style="background: #141210; color: #FFFFFF; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; padding: 14px 18px; border-radius: 3px; line-height: 1.5; overflow-x: auto">
+              {{activeService.cliSnippet}}
+            </div>
+          </div>
+
+          <!-- Related Services -->
+          <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; border-top: 1px dashed #D6C8B5; padding-top: 16px">
+            <div style="font-size: 12px; color: #695E52">
+              Thường kết hợp với: <strong style="color: #141210">{{activeService.relatedServices}}</strong>
+            </div>
+            <div style="display: flex; gap: 10px">
+              <button
+                type="button"
+                onClick="{{activeService.modalToggleLearned}}"
+                style="border: 1px solid #141210; background: {{activeService.modalBtnBg}}; color: {{activeService.modalBtnColor}}; font-family: inherit; font-size: 12px; font-weight: 700; padding: 8px 16px; border-radius: 2px; cursor: pointer"
+              >
+                {{activeService.modalBtnText}}
+              </button>
+              <button
+                type="button"
+                onClick="{{closeDetail}}"
+                style="border: 1px solid #CDBFA9; background: #FFFFFF; color: #141210; font-family: inherit; font-size: 12px; font-weight: 700; padding: 8px 16px; border-radius: 2px; cursor: pointer"
+              >
+                Đóng
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- Bottom Footer Paper Strip -->
+    <footer class="torn-top" style="background: #FFFFFF; border: 1px solid #E2D7C7; border-top: none; padding: 24px 30px; border-radius: 0 0 4px 4px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; box-shadow: 0 4px 16px rgba(45,35,25,0.04)">
+      <div style="display: flex; flex-direction: column; gap: 2px">
+        <span style="font-size: 13px; font-weight: 700; color: #141210">
+          AWS Learning Blueprint • Crafted in Torn Paper Aesthetic
+        </span>
+        <span style="font-size: 11.5px; color: #7B6E61">
+          Hỗ trợ đầy đủ màn hình Desktop, Laptop và Điện thoại. Thiết kế màu nâu sáng, tương phản cao, chuẩn công thái học.
+        </span>
+      </div>
+
+      <div style="display: flex; gap: 16px; font-size: 12px; font-family: 'JetBrains Mono', monospace; font-weight: 600; color: #52473D">
+        <span>24 Services</span>
+        <span>•</span>
+        <span>10 Categories</span>
+        <span>•</span>
+        <span>3 Exam Levels</span>
+      </div>
+    </footer>
+
+  </div>
+</div>
+</x-dc>
+
+<script type="text/x-dc" data-dc-script data-props='{"accentColor":{"editor":"color","default":"#141210"},"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeCategory: 'all',
+      searchQuery: '',
+      selectedLevel: 'all',
+      selectedServiceId: null,
+      learnedMap: {
+        's3': true,
+        'ec2': true,
+        'iam': true,
+        'lambda': true,
+        'vpc': true,
+        'rds': true
+      }
+    };
+  }
+
+  getAllServices() {
+    return [
+      {
+        id: 'ec2',
+        code: 'EC2',
+        name: 'Elastic Compute Cloud',
+        category: 'compute',
+        categoryName: 'Compute',
+        level: 'Associate',
+        summary: 'Máy chủ ảo điện toán đám mây linh hoạt, hỗ trợ đa dạng instance types (T4g, C6i, M6i), Auto Scaling và Spot pricing.',
+        examTip: 'Spot instances tiết kiệm tới 90% nhưng bị thu hồi sau 2 phút cảnh báo; Reserved/Savings Plans cam kết 1-3 năm.',
+        useCaseTag: 'Web Server, Batch, Microservices',
+        fullDescription: 'Amazon EC2 cung cấp tài nguyên máy tính có thể cấu hình kích cỡ tùy ý trên đám mây. Bạn toàn quyền kiểm soát hệ điều hành (Linux/Windows), chọn kiến trúc CPU x86 hoặc AWS Graviton (ARM). Hỗ trợ gắn thêm EBS volume làm ổ đĩa gốc hoặc dữ liệu phụ.',
+        examScenario: 'Đề bài hỏi: Một ứng dụng xử lý batch có thể chịu lỗi gián đoạn, cần tối ưu chi phí thấp nhất thì chọn gì? => Luôn chọn EC2 Spot Instance.',
+        cliSnippet: 'aws ec2 run-instances --image-id ami-0c55b159cbfafe1f0 --instance-type t4g.micro --key-name MyKeyPair',
+        relatedServices: 'EBS, Auto Scaling, ALB, VPC'
+      },
+      {
+        id: 'lambda',
+        code: 'Lambda',
+        name: 'Serverless Compute',
+        category: 'compute',
+        categoryName: 'Compute',
+        level: 'Associate',
+        summary: 'Chạy mã không cần quản trị máy chủ, tự động scale theo sự kiện, tính tiền theo thời gian chạy tới mili-giây.',
+        examTip: 'Thời gian chạy tối đa là 15 phút (900s). Lưu ý Cold Start khi tích hợp VPC hoặc khi chạy Java/C#.',
+        useCaseTag: 'Event-driven, API Backend, Automation',
+        fullDescription: 'AWS Lambda cho phép chạy code theo phản hồi từ hàng chục nguồn sự kiện AWS (S3 upload, DynamoDB stream, API Gateway request, SQS message). Bạn chỉ trả tiền khi code thực thi, không chịu phí nhàn rỗi.',
+        examScenario: 'Xử lý file ảnh ngay khi người dùng upload vào S3 bucket và lưu metadata vào DynamoDB? => Lambda kích hoạt từ S3 Event Notification.',
+        cliSnippet: 'aws lambda invoke --function-name ResizeImage --payload \'{"src":"raw.jpg"}\' response.json',
+        relatedServices: 'API Gateway, S3, SQS, EventBridge'
+      },
+      {
+        id: 'ecs',
+        code: 'ECS',
+        name: 'Elastic Container Service',
+        category: 'compute',
+        categoryName: 'Compute',
+        level: 'Associate',
+        summary: 'Nền tảng quản lý container Docker gọn nhẹ, tích hợp chặt chẽ với AWS IAM, ALB và CloudWatch.',
+        examTip: 'ECS Launch Type: Fargate (serverless, không quản lý EC2) vs EC2 Launch Type (tự quản lý cluster).',
+        useCaseTag: 'Docker, Microservices, Batch Task',
+        fullDescription: 'Amazon Elastic Container Service là dịch vụ dàn dựng container có độ tin cậy và khả năng mở rộng cao. Dễ dàng triển khai microservices Docker với Task Definitions, Services và Service Discovery.',
+        examScenario: 'Cần chuyển ứng dụng container Docker lên AWS mà không muốn bận tâm vá lỗi HĐH hay phân bổ máy chủ? => ECS với AWS Fargate.',
+        cliSnippet: 'aws ecs update-service --cluster prod-cluster --service web-app --force-new-deployment',
+        relatedServices: 'Fargate, ECR, ALB, IAM'
+      },
+      {
+        id: 'fargate',
+        code: 'Fargate',
+        name: 'Serverless Container Engine',
+        category: 'compute',
+        categoryName: 'Compute',
+        level: 'Associate',
+        summary: 'Động cơ serverless cho container, chạy cả ECS và EKS mà không cần cấu hình cụm máy chủ EC2.',
+        examTip: 'Không có quyền truy cập root vào máy chủ vật lý bên dưới; tính phí theo vCPU và Memory cấp phát cho Task.',
+        useCaseTag: 'Serverless Docker, Kubernetes Tasks',
+        fullDescription: 'AWS Fargate loại bỏ hoàn toàn gánh nặng quản lý máy chủ cho container. Bạn định nghĩa lượng CPU và RAM cần thiết, Fargate lập tức cấp phát tài nguyên thực thi và tự cô lập môi trường.',
+        examScenario: 'Team phát triển muốn chạy các Pod Kubernetes nhưng không có kỹ sư DevOps để quản lý node EC2? => EKS chạy trên Fargate.',
+        cliSnippet: 'aws ecs create-service --launch-type FARGATE --network-configuration "awsvpcConfiguration={subnets=[subnet-123],securityGroups=[sg-456]}"',
+        relatedServices: 'ECS, EKS, ALB'
+      },
+      {
+        id: 's3',
+        code: 'S3',
+        name: 'Simple Storage Service',
+        category: 'storage',
+        categoryName: 'Storage',
+        level: 'Foundational',
+        summary: 'Lưu trữ đối tượng (Object Storage) độ bền 99.999999999% (11 số 9), khả năng mở rộng vô hạn và bảo mật nhiều lớp.',
+        examTip: 'Các tầng lưu trữ: Standard, Intelligent-Tiering, Standard-IA, One Zone-IA, Glacier Flexible, Glacier Deep Archive.',
+        useCaseTag: 'Static Hosting, Data Lake, Backups',
+        fullDescription: 'Amazon S3 cho phép lưu trữ và bảo vệ bất kỳ khối lượng dữ liệu nào. Đi kèm các tính năng Versioning, S3 Object Lock (WORM), Lifecycle Rules tự động hạ cấp xuống Glacier, và S3 Replication (CRR/SRR).',
+        examScenario: 'Cần lưu trữ hồ sơ tài chính trong 7 năm theo luật định, nghiêm cấm sửa xóa dưới mọi hình thức? => S3 Object Lock với chế độ Compliance.',
+        cliSnippet: 'aws s3 sync ./build s3://my-cloud-portfolio --acl public-read',
+        relatedServices: 'CloudFront, Glacier, Lambda, IAM'
+      },
+      {
+        id: 'ebs',
+        code: 'EBS',
+        name: 'Elastic Block Store',
+        category: 'storage',
+        categoryName: 'Storage',
+        level: 'Associate',
+        summary: 'Ổ cứng khối (Block Storage) gắn liền với EC2, độ trễ thấp, hỗ trợ snapshot định kỳ sao lưu lên S3.',
+        examTip: 'EBS bị giới hạn trong 1 Availability Zone cụ thể; muốn dùng chung nhiều instance qua mạng thì dùng EFS.',
+        useCaseTag: 'Root Volume, Database OS Disk, IOPS',
+        fullDescription: 'Amazon EBS cung cấp các ổ đĩa dạng khối liên tục cho các máy chủ EC2. Các loại volume: gp3/gp2 (mục đích chung), io2 Block Express (IOPS cực cao cho DB chuyên dụng), st1 (HDD thông lượng cao), sc1 (HDD lạnh).',
+        examScenario: 'Cần cơ sở dữ liệu quan hệ tự cài trên EC2 yêu cầu 64,000 IOPS ổn định? => Chọn EBS io2 Block Express.',
+        cliSnippet: 'aws ec2 create-snapshot --volume-id vol-049df61146c4d7901 --description "Nightly Backup"',
+        relatedServices: 'EC2, S3 (cho snapshots), KMS'
+      },
+      {
+        id: 'efs',
+        code: 'EFS',
+        name: 'Elastic File System',
+        category: 'storage',
+        categoryName: 'Storage',
+        level: 'Associate',
+        summary: 'Hệ thống tệp mạng (NFSv4) được quản lý, cho phép hàng nghìn máy chủ EC2 và Lambda mount đồng thời trên nhiều AZ.',
+        examTip: 'Chuẩn giao thức POSIX cho Linux. Chỉ dùng cho Linux (Windows dùng FSx for Windows File Server).',
+        useCaseTag: 'Shared File, CMS (WordPress), Linux Data',
+        fullDescription: 'Amazon EFS tự động co giãn theo dung lượng bạn thêm hoặc bớt tệp, không cần dự trù trước dung lượng. Tệp được lưu trữ sao chép qua nhiều AZ đem lại độ sẵn sàng tối đa.',
+        examScenario: 'Cụm máy chủ EC2 chạy WordPress nhiều instance cần đọc ghi chung thư mục wp-content? => Gắn Amazon EFS.',
+        cliSnippet: 'sudo mount -t efs -o tls fs-12345678:/ /mnt/efs',
+        relatedServices: 'EC2, ECS, Lambda, Fargate'
+      },
+      {
+        id: 'rds',
+        code: 'RDS',
+        name: 'Relational Database Service',
+        category: 'database',
+        categoryName: 'Database',
+        level: 'Associate',
+        summary: 'Dịch vụ CSDL quan hệ quản trị hoàn toàn (PostgreSQL, MySQL, MariaDB, Oracle, SQL Server) với Multi-AZ và Read Replicas.',
+        examTip: 'Multi-AZ là đồng bộ (Synchronous) phục vụ High Availability; Read Replicas là bất đồng bộ (Asynchronous) phục vụ tăng tải Đọc.',
+        useCaseTag: 'OLTP, Enterprise Apps, E-commerce',
+        fullDescription: 'Amazon RDS tự động hóa các tác vụ quản trị tốn thời gian như cấp phát phần cứng, cấu hình CSDL, vá lỗi phần mềm và sao lưu tự động. Tính năng failover tự động trong vài phút khi xảy ra sự cố AZ.',
+        examScenario: 'Hệ thống e-commerce bị nghẽn tải đọc báo cáo cuối tháng, cơ sở dữ liệu đang dùng RDS MySQL? => Tạo RDS Read Replica.',
+        cliSnippet: 'aws rds create-db-instance-read-replica --db-instance-identifier rds-replica --source-db-instance-identifier rds-primary',
+        relatedServices: 'Aurora, EC2, KMS, Secrets Manager'
+      },
+      {
+        id: 'dynamodb',
+        code: 'DynamoDB',
+        name: 'NoSQL Key-Value Database',
+        category: 'database',
+        categoryName: 'Database',
+        level: 'Associate',
+        summary: 'CSDL NoSQL serverless tốc độ mili-giây ở bất kỳ quy mô nào, hỗ trợ ACID transactions và Global Tables đa vùng.',
+        examTip: 'Partition Key quyết định phân phối dữ liệu; dùng DAX (DynamoDB Accelerator) để đạt độ trễ micro-giây cho read-heavy.',
+        useCaseTag: 'Gaming Leaderboard, Shopping Cart, IoT',
+        fullDescription: 'Amazon DynamoDB là cơ sở dữ liệu phi quan hệ được quản trị toàn phần. Hỗ trợ On-Demand capacity (tự co giãn) hoặc Provisioned capacity. Tích hợp DynamoDB Streams để trigger Lambda khi có dữ liệu mới.',
+        examScenario: 'Ứng dụng di động cần lưu session người dùng với hàng triệu request/giây và thời gian phản hồi dưới 10ms? => DynamoDB.',
+        cliSnippet: 'aws dynamodb put-item --table-name Users --item \'{"UserId":{"S":"u100"},"Name":{"S":"An"}}\'',
+        relatedServices: 'Lambda, DAX, API Gateway, Cognito'
+      },
+      {
+        id: 'aurora',
+        code: 'Aurora',
+        name: 'Enterprise Cloud-Native RDBMS',
+        category: 'database',
+        categoryName: 'Database',
+        level: 'Professional',
+        summary: 'CSDL quan hệ độc quyền của AWS tương thích MySQL/PostgreSQL, tốc độ gấp 3-5 lần, tự sao lưu 6 bản trên 3 AZ.',
+        examTip: 'Aurora Serverless v2 tự co giãn trong tích tắc; Aurora Global Database sao chép đa vùng với độ trễ dưới 1 giây.',
+        useCaseTag: 'High Performance RDBMS, Mission-critical',
+        fullDescription: 'Amazon Aurora tái kiến trúc tầng lưu trữ phân tán độc lập với tầng tính toán. Khi primary instance gặp lỗi, một trong các Read Replicas lập tức được thăng cấp làm Primary trong vòng dưới 30 giây.',
+        examScenario: 'Hệ thống thanh toán ngân hàng yêu cầu RPO gần bằng 0 và RTO dưới 1 phút trên phạm vi quốc tế? => Aurora Global Database.',
+        cliSnippet: 'aws rds create-db-cluster --db-cluster-identifier aurora-prod --engine aurora-postgresql',
+        relatedServices: 'RDS, Secrets Manager, Lambda'
+      },
+      {
+        id: 'vpc',
+        code: 'VPC',
+        name: 'Virtual Private Cloud',
+        category: 'networking',
+        categoryName: 'Networking',
+        level: 'Associate',
+        summary: 'Mạng riêng ảo cô lập trên AWS, tự kiểm soát dải IP (CIDR), Subnet public/private, Route Table, IGW và NAT Gateway.',
+        examTip: 'Security Group là Stateful (cho phép vào là tự cho phép ra); NACL là Stateless (phải khai báo cả Inbound và Outbound).',
+        useCaseTag: 'Network Isolation, Multi-tier Architecture',
+        fullDescription: 'Amazon VPC là nền tảng cốt lõi của mọi kiến trúc hạ tầng AWS. Cho phép kết nối an toàn với On-Premises thông qua AWS Site-to-Site VPN hoặc AWS Direct Connect.',
+        examScenario: 'EC2 trong Private Subnet cần ra Internet tải bản cập nhật phần mềm nhưng không cho phép Internet kết nối ngược vào? => NAT Gateway đặt ở Public Subnet.',
+        cliSnippet: 'aws ec2 create-vpc --cidr-block 10.0.0.0/16 --tag-specifications "ResourceType=vpc,Tags=[{Key=Name,Value=MainVPC}]"',
+        relatedServices: 'Route 53, Direct Connect, Transit Gateway'
+      },
+      {
+        id: 'cloudfront',
+        code: 'CloudFront',
+        name: 'Global Content Delivery Network',
+        category: 'networking',
+        categoryName: 'Networking',
+        level: 'Foundational',
+        summary: 'Mạng lưới CDN phân phối nội dung toàn cầu với hơn 600 Edge Locations, giảm độ trễ và tích hợp bảo vệ AWS WAF & Shield.',
+        examTip: 'Tích hợp S3 bằng OAC (Origin Access Control) để chặn truy cập trực tiếp vào S3; dùng Lambda@Edge / CloudFront Functions để tùy biến header.',
+        useCaseTag: 'Static Web, Video Streaming, API Acceleration',
+        fullDescription: 'Amazon CloudFront tăng tốc độ phân phối trang web tĩnh và động, video, hình ảnh và API đến người dùng trên toàn thế giới với độ trễ tối thiểu và tốc độ truyền tải cao.',
+        examScenario: 'Người dùng toàn cầu truy cập S3 bucket tại us-east-1 bị chậm? => Đặt CloudFront CDN phía trước S3.',
+        cliSnippet: 'aws cloudfront create-invalidation --distribution-id E123456 --paths "/*"',
+        relatedServices: 'S3, Route 53, WAF, ACM'
+      },
+      {
+        id: 'route53',
+        code: 'Route 53',
+        name: 'Managed DNS & Domain Service',
+        category: 'networking',
+        categoryName: 'Networking',
+        level: 'Associate',
+        summary: 'Dịch vụ phân giải tên miền DNS chuẩn đám mây, độ sẵn sàng 100% SLA, hỗ trợ kiểm tra sức khỏe (Health Checks).',
+        examTip: 'Các chính sách định tuyến: Simple, Weighted, Latency, Failover (cho Disaster Recovery), Geolocation và Geoproximity.',
+        useCaseTag: 'DNS Routing, Disaster Recovery, Global Traffic',
+        fullDescription: 'Amazon Route 53 kết nối các yêu cầu của người dùng tới cơ sở hạ tầng chạy trên AWS (như EC2, ALB, CloudFront) hoặc bất kỳ máy chủ nào ngoài AWS. Hỗ trợ bản ghi Alias trỏ thẳng vào tài nguyên AWS không tốn phí truy vấn.',
+        examScenario: 'Cần tự động chuyển hướng toàn bộ traffic sang Region dự phòng khi Region chính bị sập? => Route 53 Failover Routing kết hợp Health Check.',
+        cliSnippet: 'aws route53 list-resource-record-sets --hosted-zone-id Z12345678',
+        relatedServices: 'CloudFront, ALB, VPC'
+      },
+      {
+        id: 'iam',
+        code: 'IAM',
+        name: 'Identity & Access Management',
+        category: 'security',
+        categoryName: 'Security & IAM',
+        level: 'Foundational',
+        summary: 'Quản lý quyền truy cập và danh tính vào AWS Services. Nguyên tắc đặc quyền tối thiểu (Least Privilege) và MFA.',
+        examTip: 'IAM Role dùng để cấp quyền tạm thời cho tài nguyên AWS (như EC2, Lambda) mà KHÔNG BAO GIỜ lưu cứng Access Key trong code.',
+        useCaseTag: 'Authentication, Authorization, Compliance',
+        fullDescription: 'AWS IAM là trung tâm kiểm soát bảo mật của toàn bộ tài khoản. Quản lý Users, Groups, Roles và Policies (JSON documents). Luôn khóa tài khoản Root và kích hoạt Hardware MFA.',
+        examScenario: 'Ứng dụng chạy trên EC2 cần quyền ghi log vào S3, làm sao để an toàn nhất? => Gán IAM Role với IAM Instance Profile cho EC2.',
+        cliSnippet: 'aws iam create-role --role-name LambdaS3Access --assume-role-policy-document file://trust-policy.json',
+        relatedServices: 'KMS, Organizations, Secrets Manager'
+      },
+      {
+        id: 'kms',
+        code: 'KMS',
+        name: 'Key Management Service',
+        category: 'security',
+        categoryName: 'Security & IAM',
+        level: 'Associate',
+        summary: 'Dịch vụ tạo và quản lý khóa mã hóa tuân thủ FIPS 140-2, kiểm soát mã hóa dữ liệu tại chỗ (At-Rest) trên mọi dịch vụ AWS.',
+        examTip: 'KMS Key Policy là cơ chế kiểm soát duy nhất có thể cấp quyền truy cập khóa KMS (kể cả IAM Admin cũng không được phép nếu Policy không cho).',
+        useCaseTag: 'Data Encryption, Compliance, Secrets Security',
+        fullDescription: 'AWS KMS cho phép mã hóa dữ liệu với cơ chế Envelope Encryption (mã hóa phong bì). Tích hợp sâu vào S3, EBS, RDS, DynamoDB để mã hóa chỉ với một cú click chuột.',
+        examScenario: 'Doanh nghiệp cần kiểm toán chính xác ai, khi nào đã sử dụng khóa giải mã cơ sở dữ liệu? => KMS kết hợp với CloudTrail.',
+        cliSnippet: 'aws kms encrypt --key-id 1234abcd-12ab-34cd-56ef-1234567890ab --plaintext "SecretData" --output text',
+        relatedServices: 'CloudTrail, S3, EBS, Secrets Manager'
+      },
+      {
+        id: 'secrets-manager',
+        code: 'Secrets',
+        name: 'Secrets Manager',
+        category: 'security',
+        categoryName: 'Security & IAM',
+        level: 'Associate',
+        summary: 'Lưu trữ, xoay vòng (Rotate) và truy xuất thông tin nhạy cảm (mật khẩu DB, API keys) một cách an toàn và tự động.',
+        examTip: 'Tự động Rotate mật khẩu RDS bằng Lambda tích hợp sẵn; phân biệt với Parameter Store (chỉ lưu config, không tự động xoay vòng mật khẩu DB).',
+        useCaseTag: 'Credential Storage, Database Password Rotation',
+        fullDescription: 'AWS Secrets Manager thay thế việc lưu cứng thông tin xác thực trong mã nguồn bằng một lệnh gọi API đơn giản. Giúp hệ thống vượt qua các tiêu chuẩn bảo mật khắt khe như PCI-DSS, SOC 2.',
+        examScenario: 'Ứng dụng cần định kỳ thay đổi mật khẩu database RDS mỗi 30 ngày mà không gây gián đoạn hệ thống? => Secrets Manager Automatic Rotation.',
+        cliSnippet: 'aws secretsmanager get-secret-value --secret-id prod/db/password',
+        relatedServices: 'RDS, Lambda, KMS, IAM'
+      },
+      {
+        id: 'sqs',
+        code: 'SQS',
+        name: 'Simple Queue Service',
+        category: 'serverless',
+        categoryName: 'Serverless',
+        level: 'Associate',
+        summary: 'Hàng đợi thông điệp serverless giúp tách rời (decouple) các thành phần vi dịch vụ, triệt tiêu nghẽn tải.',
+        examTip: 'Standard Queue có throughput không giới hạn nhưng có thể trùng (at-least-once); FIFO Queue đảm bảo đúng thứ tự và chính xác 1 lần (300 msg/s).',
+        useCaseTag: 'Message Queue, Decoupling, Buffering',
+        fullDescription: 'Amazon SQS loại bỏ sự phức tạp và chi phí liên quan đến việc quản lý middleware hướng thông điệp. Hỗ trợ Dead Letter Queue (DLQ) để cô lập các tin nhắn bị lỗi không xử lý được.',
+        examScenario: 'Hệ thống đặt đơn hàng cao điểm ngày Flash Sale có thể làm sập service xử lý hóa đơn phía sau? => Đặt SQS Queue ở giữa làm bộ đệm.',
+        cliSnippet: 'aws sqs send-message --queue-url https://sqs.us-east-1.amazonaws.com/123/order-queue --message-body \'{"orderId":999}\'',
+        relatedServices: 'Lambda, SNS, EC2 Auto Scaling'
+      },
+      {
+        id: 'sns',
+        code: 'SNS',
+        name: 'Simple Notification Service',
+        category: 'serverless',
+        categoryName: 'Serverless',
+        level: 'Associate',
+        summary: 'Dịch vụ thông báo Pub/Sub (Publish/Subscribe) đẩy thông điệp từ 1 nguồn tới hàng triệu người nhận hoặc subscriber.',
+        examTip: 'Mô hình Fan-out: 1 SNS Topic phát tán tin nhắn tới nhiều SQS Queues khác nhau để các service xử lý song song.',
+        useCaseTag: 'Pub/Sub, Push Notifications, Fan-out Pattern',
+        fullDescription: 'Amazon SNS hỗ trợ gửi thông điệp tới ứng dụng qua SQS, Lambda, HTTP Webhook, và tới người dùng cuối qua SMS, Email thoại di động và Mobile Push.',
+        examScenario: 'Khi có giao dịch gian lận, cần gửi email cho Admin đồng thời kích hoạt Lambda chặn tài khoản và gửi SQS cho đội Fraud? => SNS Fan-out.',
+        cliSnippet: 'aws sns publish --topic-arn arn:aws:sns:us-east-1:123:Alerts --message "Server CPU High"',
+        relatedServices: 'SQS, Lambda, CloudWatch Alarms'
+      },
+      {
+        id: 'eventbridge',
+        code: 'EventBridge',
+        name: 'Serverless Event Bus',
+        category: 'serverless',
+        categoryName: 'Serverless',
+        level: 'Associate',
+        summary: 'Event bus không máy chủ kết nối dữ liệu từ các ứng dụng của bạn, SaaS tích hợp sẵn (Datadog, Zendesk) và toàn bộ AWS.',
+        examTip: 'Thay thế CloudWatch Events trước đây. Hỗ trợ Content Filtering (lọc event dựa trên JSON pattern) và Schema Registry.',
+        useCaseTag: 'Event-driven Architecture, SaaS Integration',
+        fullDescription: 'Amazon EventBridge giúp xây dựng kiến trúc hướng sự kiện linh hoạt. Định tuyến sự kiện theo các quy tắc (Rules) đến các mục tiêu như Lambda, ECS Task, Step Functions.',
+        examScenario: 'Tự động phát hiện khi có ai đó sửa đổi Security Group mở port 22 ra 0.0.0.0/0 và gửi thông báo cảnh báo tức thì? => EventBridge Rule bắt API Call từ CloudTrail.',
+        cliSnippet: 'aws events put-events --entries file://event-payload.json',
+        relatedServices: 'CloudTrail, Lambda, Step Functions'
+      },
+      {
+        id: 'bedrock',
+        code: 'Bedrock',
+        name: 'Generative AI Foundation Models',
+        category: 'aiml',
+        categoryName: 'AI & ML',
+        level: 'Professional',
+        summary: 'Nền tảng serverless truy cập các mô hình AI tạo sinh (Foundation Models) hàng đầu (Claude 3.5, Llama 3, Titan) qua một API.',
+        examTip: 'Không bao giờ dùng dữ liệu khách hàng để huấn luyện model gốc; hỗ trợ RAG (Knowledge Bases) và Agents tự hành.',
+        useCaseTag: 'GenAI, RAG, AI Agents, Enterprise LLM',
+        fullDescription: 'Amazon Bedrock là cách dễ nhất để xây dựng và mở rộng các ứng dụng GenAI với các mô hình nền tảng. Tích hợp sẵn Guardrails để lọc nội dung độc hại và bảo vệ thông tin PII.',
+        examScenario: 'Doanh nghiệp muốn tích hợp chatbot AI hỏi đáp nội bộ tài liệu PDF trên S3 với bảo mật doanh nghiệp nghiêm ngặt? => Bedrock Knowledge Bases với OpenSearch Serverless.',
+        cliSnippet: 'aws bedrock-runtime invoke-model --model-id anthropic.claude-3-sonnet-20240229-v1:0 --body \'{"prompt":"Hello"}\' out.json',
+        relatedServices: 'S3, OpenSearch, Lambda, IAM'
+      },
+      {
+        id: 'sagemaker',
+        code: 'SageMaker',
+        name: 'End-to-End Machine Learning',
+        category: 'aiml',
+        categoryName: 'AI & ML',
+        level: 'Professional',
+        summary: 'Nền tảng học máy toàn diện cho data scientists và developers từ gắn nhãn, chuẩn bị dữ liệu, training đến deploy model endpoint.',
+        examTip: 'SageMaker Clarify phát hiện thiên vị (bias); SageMaker Spot Training giúp giảm chi phí huấn luyện model tới 70%.',
+        useCaseTag: 'MLOps, Model Training, Real-time Inference',
+        fullDescription: 'Amazon SageMaker hỗ trợ xây dựng, huấn luyện và triển khai mô hình học máy ở quy mô lớn với Studio IDE, Autopilot (AutoML), và các thuật toán được tối ưu hóa riêng cho GPU/AWS Trainium.',
+        examScenario: 'Triển khai mô hình Deep Learning cần scale endpoint theo số lượng request và giám sát model drift theo thời gian? => SageMaker Real-time Inference Endpoint.',
+        cliSnippet: 'aws sagemaker create-training-job --training-job-name churn-pred --algorithm-specification ...',
+        relatedServices: 'S3, ECR, CloudWatch, Bedrock'
+      },
+      {
+        id: 'cloudwatch',
+        code: 'CloudWatch',
+        name: 'Monitoring & Observability',
+        category: 'devops',
+        categoryName: 'DevOps & Monitor',
+        level: 'Foundational',
+        summary: 'Thu thập và hiển thị các metrics, logs, cấu hình cảnh báo (Alarms) và tự động phản ứng với các thay đổi hiệu năng.',
+        examTip: 'Phân biệt: CloudWatch giám sát HIỆU NĂNG (CPU, RAM qua agent, Disk, Latency); CloudTrail ghi lại AI ĐÃ LÀM GÌ (Audit/API Calls).',
+        useCaseTag: 'Metrics, Alarms, Logs Insights, Dashboards',
+        fullDescription: 'Amazon CloudWatch cung cấp cái nhìn toàn diện về tài nguyên AWS và ứng dụng on-premises. CloudWatch Container Insights và Lambda Insights giúp đo lường microservices chuyên sâu.',
+        examScenario: 'Muốn tự động kích hoạt EC2 Auto Scaling thêm máy chủ khi CPU trung bình vượt quá 80% trong 5 phút? => CloudWatch Metric Alarm.',
+        cliSnippet: 'aws cloudwatch put-metric-alarm --alarm-name CpuHigh --metric-name CPUUtilization --threshold 80',
+        relatedServices: 'EC2 Auto Scaling, SNS, Lambda, CloudTrail'
+      },
+      {
+        id: 'cloudtrail',
+        code: 'CloudTrail',
+        name: 'User Activity & API Auditing',
+        category: 'devops',
+        categoryName: 'DevOps & Monitor',
+        level: 'Foundational',
+        summary: 'Ghi lại mọi hoạt động người dùng và lệnh gọi API trên toàn tài khoản, bằng chứng tối quan trọng cho kiểm toán và bảo mật.',
+        examTip: 'Mặc định lưu log 90 ngày miễn phí trong Event History; để lưu trữ vĩnh viễn cần tạo Trail gửi log vào S3 bucket có mã hóa KMS.',
+        useCaseTag: 'Security Audit, Compliance, Forensics',
+        fullDescription: 'AWS CloudTrail theo dõi các hành động được thực hiện qua AWS Management Console, AWS SDKs, công cụ dòng lệnh CLI. Giúp trả lời các câu hỏi: Ai đã xóa S3 bucket lúc 2 giờ sáng?',
+        examScenario: 'Phát hiện một EC2 instance lạ bị khởi chạy vào ban đêm trong khu vực Tokyo, cần điều tra ai đã tạo? => Tra cứu CloudTrail Event History tìm lệnh RunInstances.',
+        cliSnippet: 'aws cloudtrail lookup-events --lookup-attributes AttributeKey=EventName,AttributeValue=RunInstances',
+        relatedServices: 'S3, CloudWatch Logs, Athena, KMS'
+      },
+      {
+        id: 'cloudformation',
+        code: 'CloudFormation',
+        name: 'Infrastructure as Code (IaC)',
+        category: 'devops',
+        categoryName: 'DevOps & Monitor',
+        level: 'Associate',
+        summary: 'Mô hình hóa và cấp phát toàn bộ tài nguyên AWS bằng code mẫu YAML hoặc JSON một cách an toàn và có thể lặp lại.',
+        examTip: 'Drift Detection giúp phát hiện tài nguyên bị thay đổi thủ công ngoài template; Rollback tự động khi có lỗi trong quá trình tạo stack.',
+        useCaseTag: 'IaC, DevOps Automation, Disaster Recovery',
+        fullDescription: 'AWS CloudFormation cho phép coi hạ tầng như code phần mềm. Hỗ trợ Change Sets để xem trước các thay đổi trước khi áp dụng, và StackSets để triển khai đồng loạt trên nhiều tài khoản và nhiều Region.',
+        examScenario: 'Cần nhân bản môi trường Staging giống hệt Production trong một Region mới chỉ trong 10 phút? => Triển khai CloudFormation Template.',
+        cliSnippet: 'aws cloudformation deploy --template-file template.yaml --stack-name ProductionStack',
+        relatedServices: 'S3, IAM, CodePipeline, Systems Manager'
+      }
+    ];
+  }
+
+  getFilteredServices() {
+    const list = this.getAllServices();
+    const cat = this.state.activeCategory;
+    const q = this.state.searchQuery.trim().toLowerCase();
+    const lvl = this.state.selectedLevel;
+
+    return list.filter((item) => {
+      // Category filter
+      if (cat !== 'all' && item.category !== cat) {
+        return false;
+      }
+      // Level filter
+      if (lvl !== 'all' && item.level.toLowerCase() !== lvl.toLowerCase()) {
+        return false;
+      }
+      // Search query
+      if (q) {
+        const text = (item.code + ' ' + item.name + ' ' + item.summary + ' ' + item.examTip + ' ' + item.categoryName).toLowerCase();
+        if (!text.includes(q)) {
+          return false;
+        }
+      }
+      return true;
+    });
+  }
+
+  renderVals() {
+    const all = this.getAllServices();
+    const filtered = this.getFilteredServices();
+    const learned = this.state.learnedMap || {};
+    const learnedCount = Object.keys(learned).filter(k => learned[k]).length;
+    const learnedPercent = Math.round((learnedCount / all.length) * 100);
+
+    // Categories definition
+    const cats = [
+      { id: 'all', label: 'Tất cả' },
+      { id: 'compute', label: 'Compute' },
+      { id: 'storage', label: 'Storage' },
+      { id: 'database', label: 'Database' },
+      { id: 'networking', label: 'Networking' },
+      { id: 'security', label: 'Security & IAM' },
+      { id: 'serverless', label: 'Serverless' },
+      { id: 'aiml', label: 'AI & ML' },
+      { id: 'devops', label: 'DevOps & Monitor' }
+    ];
+
+    const categoryButtons = cats.map((c) => {
+      const isSel = this.state.activeCategory === c.id;
+      const count = c.id === 'all' ? all.length : all.filter(s => s.category === c.id).length;
+      return {
+        id: c.id,
+        label: c.label,
+        count: count,
+        bg: isSel ? '#141210' : '#FFFFFF',
+        color: isSel ? '#FFFFFF' : '#332C26',
+        borderColor: isSel ? '#141210' : '#DACABA',
+        shadow: isSel ? '0 2px 8px rgba(0,0,0,0.12)' : '0 1px 3px rgba(0,0,0,0.03)',
+        pick: () => this.setState({ activeCategory: c.id })
+      };
+    });
+
+    // Level buttons state
+    const lvl = this.state.selectedLevel;
+    const isAllLvl = lvl === 'all';
+    const isFoundLvl = lvl === 'foundational';
+    const isAssocLvl = lvl === 'associate';
+    const isProLvl = lvl === 'professional';
+
+    // Prepare service items with handlers
+    const servicesList = filtered.map((item) => {
+      const isLearned = Boolean(learned[item.id]);
+      return {
+        ...item,
+        isLearned: isLearned,
+        checkBg: isLearned ? '#141210' : '#FAF7F0',
+        checkColor: isLearned ? '#FFFFFF' : '#8A7A6A',
+        checkBorder: isLearned ? '#141210' : '#CBB89F',
+        toggleLearned: (e) => {
+          if (e && e.stopPropagation) e.stopPropagation();
+          const next = { ...this.state.learnedMap };
+          if (next[item.id]) {
+            delete next[item.id];
+          } else {
+            next[item.id] = true;
+          }
+          this.setState({ learnedMap: next });
+        },
+        select: () => {
+          this.setState({ selectedServiceId: item.id });
+        }
+      };
+    });
+
+    // Selected service for detail drawer
+    let activeService = null;
+    if (this.state.selectedServiceId) {
+      const found = all.find(s => s.id === this.state.selectedServiceId);
+      if (found) {
+        const isL = Boolean(learned[found.id]);
+        activeService = {
+          ...found,
+          isLearned: isL,
+          modalBtnText: isL ? 'Đã thuộc (Bỏ đánh dấu)' : 'Đánh dấu đã hiểu bài',
+          modalBtnBg: isL ? '#FAF5EB' : '#141210',
+          modalBtnColor: isL ? '#141210' : '#FFFFFF',
+          modalToggleLearned: () => {
+            const next = { ...this.state.learnedMap };
+            if (next[found.id]) {
+              delete next[found.id];
+            } else {
+              next[found.id] = true;
+            }
+            this.setState({ learnedMap: next });
+          }
+        };
+      }
+    }
+
+    return {
+      searchQuery: this.state.searchQuery,
+      onSearchInput: (e) => this.setState({ searchQuery: e.target.value }),
+      filteredCount: filtered.length,
+      categoryButtons: categoryButtons,
+      servicesList: servicesList,
+      hasSelectedService: Boolean(activeService),
+      activeService: activeService,
+      closeDetail: () => this.setState({ selectedServiceId: null }),
+      stats: {
+        learnedCount: learnedCount,
+        learnedPercent: learnedPercent,
+        progressWidth: `${Math.max(5, learnedPercent)}%`
+      },
+      allLevelBg: isAllLvl ? '#141210' : 'transparent',
+      allLevelColor: isAllLvl ? '#FFFFFF' : '#4A3F35',
+      foundationalLevelBg: isFoundLvl ? '#141210' : 'transparent',
+      foundationalLevelColor: isFoundLvl ? '#FFFFFF' : '#4A3F35',
+      associateLevelBg: isAssocLvl ? '#141210' : 'transparent',
+      associateLevelColor: isAssocLvl ? '#FFFFFF' : '#4A3F35',
+      proLevelBg: isProLvl ? '#141210' : 'transparent',
+      proLevelColor: isProLvl ? '#FFFFFF' : '#4A3F35',
+      pickAllLevel: () => this.setState({ selectedLevel: 'all' }),
+      pickFoundationalLevel: () => this.setState({ selectedLevel: 'foundational' }),
+      pickAssociateLevel: () => this.setState({ selectedLevel: 'associate' }),
+      pickProLevel: () => this.setState({ selectedLevel: 'professional' })
+    };
+  }
+}
+</script>
+</body>
+</html>

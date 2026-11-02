@@ -1,0 +1,45 @@
+{
+  "v": 3,
+  "createdOnFiles": {
+    "v": 1,
+    "at": "2026-11-02T07:50:42Z"
+  },
+  "title": "AWS Services Study Hub - Torn Paper",
+  "launch": {
+    "view": "canvas"
+  },
+  "pages": [],
+  "boards": {
+    "Main.dc.html": {
+      "x": 0,
+      "y": 0,
+      "w": 1440,
+      "h": 900,
+      "expand": "fill",
+      "title": "Desktop Learning Hub",
+      "is_interactive": true
+    },
+    "Mobile.dc.html": {
+      "x": 1520,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "Mobile Learning View",
+      "is_interactive": true
+    }
+  },
+  "order": [
+    "Main.dc.html",
+    "Mobile.dc.html"
+  ],
+  "notes": {
+    "roadmap-header": {
+      "x": 0,
+      "y": -220,
+      "text": "AWS Cloud Mastery • Torn Paper Craft System",
+      "kind": "title1",
+      "maxW": 1910
+    }
+  },
+  "designSystems": []
+}

@@ -1,0 +1,597 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <title>AWS Cloud Mastery - Mobile View</title>
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      background-color: #FAF7F2;
+      color: #141210;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.45;
+    }
+    a {
+      color: #141210;
+      text-decoration: none;
+    }
+    .torn-top {
+      clip-path: polygon(
+        0% 6px, 3% 2px, 6% 5px, 9% 1px, 12% 6px, 15% 2px, 18% 5px, 21% 1px,
+        24% 6px, 27% 3px, 30% 5px, 33% 1px, 36% 6px, 39% 2px, 42% 5px, 45% 1px,
+        48% 6px, 51% 3px, 54% 5px, 57% 1px, 60% 6px, 63% 2px, 66% 5px, 69% 1px,
+        72% 6px, 75% 3px, 78% 5px, 81% 1px, 84% 6px, 87% 2px, 90% 5px, 93% 1px,
+        96% 6px, 98% 2px, 100% 5px, 100% 100%, 0% 100%
+      );
+    }
+    .torn-bottom {
+      clip-path: polygon(
+        0% 0%, 100% 0%, 100% calc(100% - 6px),
+        97% calc(100% - 2px), 94% calc(100% - 5px), 91% calc(100% - 1px),
+        88% calc(100% - 6px), 85% calc(100% - 2px), 82% calc(100% - 5px),
+        79% calc(100% - 1px), 76% calc(100% - 6px), 73% calc(100% - 3px),
+        70% calc(100% - 5px), 67% calc(100% - 1px), 64% calc(100% - 6px),
+        61% calc(100% - 2px), 58% calc(100% - 5px), 55% calc(100% - 1px),
+        52% calc(100% - 6px), 49% calc(100% - 3px), 46% calc(100% - 5px),
+        43% calc(100% - 1px), 40% calc(100% - 6px), 37% calc(100% - 2px),
+        34% calc(100% - 5px), 31% calc(100% - 1px), 28% calc(100% - 6px),
+        25% calc(100% - 3px), 22% calc(100% - 5px), 19% calc(100% - 1px),
+        16% calc(100% - 6px), 13% calc(100% - 2px), 10% calc(100% - 5px),
+        7% calc(100% - 1px), 4% calc(100% - 6px), 2% calc(100% - 2px),
+        0% calc(100% - 5px)
+      );
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+  </style>
+</helmet>
+
+<!-- Mobile Device Screen Container (390 x 844) -->
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #FAF7F2; background-image: radial-gradient(#E8DFC8 0.75px, transparent 0.75px); background-size: 20px 20px; display: flex; flex-direction: column; overflow: hidden; position: relative">
+
+  <!-- Scrollable Content Area -->
+  <div style="flex: 1 1 0; overflow-y: auto; padding: 16px 14px 80px 14px; display: flex; flex-direction: column; gap: 16px">
+
+    <!-- Top Paper Header -->
+    <header class="torn-bottom" style="position: relative; background: #FFFFFF; border: 1px solid #E2D7C7; border-bottom: none; box-shadow: 0 3px 12px rgba(45, 35, 25, 0.05); padding: 22px 16px 26px 16px; border-radius: 4px 4px 0 0; display: flex; flex-direction: column; gap: 12px">
+      <!-- Mini Washi Tape Pin -->
+      <div style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 80px; height: 20px; background: rgba(240, 230, 215, 0.85); border-left: 2px dashed #C8B9A6; border-right: 2px dashed #C8B9A6"></div>
+
+      <!-- Stamp & Title -->
+      <div style="display: flex; justify-content: space-between; align-items: center">
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; background: #141210; color: #FFFFFF; padding: 3px 8px; border-radius: 2px; letter-spacing: 0.05em">
+          AWS POCKET ROADMAP
+        </span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: #141210">
+          {{stats.learnedCount}}/24 Đã thuộc
+        </span>
+      </div>
+
+      <div>
+        <h1 style="margin: 0; font-size: 22px; font-weight: 800; color: #141210; letter-spacing: -0.02em">
+          Sổ Tay AWS Di Động
+        </h1>
+        <p style="margin: 4px 0 0 0; font-size: 12.5px; color: #615549; line-height: 1.45">
+          Ôn tập nhanh các dịch vụ AWS cốt lõi, cạm bẫy câu hỏi thi và kịch bản thực chiến mọi lúc mọi nơi.
+        </p>
+      </div>
+
+      <!-- Mini Progress Meter -->
+      <div style="display: flex; flex-direction: column; gap: 5px">
+        <div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; color: #6D5E51">
+          <span>Tiến độ ghi nhớ</span>
+          <span>{{stats.learnedPercent}}%</span>
+        </div>
+        <div style="width: 100%; height: 7px; background: #EFE6D7; border-radius: 2px; overflow: hidden; border: 1px solid #DFD0BD">
+          <div style="height: 100%; background: #141210; width: {{stats.progressWidth}}"></div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Search Box -->
+    <div style="position: relative">
+      <input
+        type="text"
+        placeholder="Tìm EC2, S3, IAM, Bedrock..."
+        value="{{searchQuery}}"
+        onInput="{{onSearchInput}}"
+        style="width: 100%; box-sizing: border-box; background: #FFFFFF; border: 1px solid #D5C7B5; border-bottom: 2px solid #141210; padding: 10px 12px 10px 38px; font-family: inherit; font-size: 13px; color: #141210; border-radius: 3px; outline: none"
+      />
+      <svg style="position: absolute; left: 12px; top: 11px; width: 16px; height: 16px; stroke: #7A6C5F; fill: none; stroke-width: 2" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+    </div>
+
+    <!-- Category Filter Bar (Horizontal Scroll) -->
+    <div class="no-scrollbar" style="display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px">
+      <sc-for list="{{categoryButtons}}" as="cat" hint-placeholder-count="5">
+        <button
+          type="button"
+          onClick="{{cat.pick}}"
+          style="white-space: nowrap; border: 1px solid {{cat.borderColor}}; background: {{cat.bg}}; color: {{cat.color}}; font-family: inherit; font-size: 11.5px; font-weight: 700; padding: 5px 11px; border-radius: 2px; cursor: pointer"
+        >
+          {{cat.label}} ({{cat.count}})
+        </button>
+      </sc-for>
+    </div>
+
+    <!-- Service Card Stack -->
+    <div style="display: flex; flex-direction: column; gap: 14px">
+      <sc-for list="{{servicesList}}" as="item" hint-placeholder-count="4">
+        <div
+          class="torn-bottom"
+          onClick="{{item.select}}"
+          style="background: #FFFFFF; border: 1px solid #E2D7C7; border-bottom: none; box-shadow: 0 2px 8px rgba(45, 35, 25, 0.04); padding: 16px 14px 20px 14px; border-radius: 3px 3px 0 0; display: flex; flex-direction: column; gap: 10px; cursor: pointer; position: relative"
+        >
+          <!-- Top Row: Badge & Check -->
+          <div style="display: flex; justify-content: space-between; align-items: center">
+            <div style="display: flex; align-items: center; gap: 6px">
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 800; color: #141210">
+                {{item.code}}
+              </span>
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 700; background: #FAF5EB; border: 1px solid #DFD0BD; color: #52473D; padding: 2px 5px; border-radius: 2px">
+                {{item.categoryName}}
+              </span>
+            </div>
+
+            <!-- Learned Check Button -->
+            <button
+              type="button"
+              onClick="{{item.toggleLearned}}"
+              style="border: 1px solid {{item.checkBorder}}; background: {{item.checkBg}}; color: {{item.checkColor}}; width: 26px; height: 26px; border-radius: 2px; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0"
+            >
+              <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2.5" viewBox="0 0 24 24" aria-hidden="true">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Name & Summary -->
+          <div style="display: flex; flex-direction: column; gap: 2px">
+            <div style="font-size: 12px; font-weight: 600; color: #66584B">
+              {{item.name}}
+            </div>
+            <div style="font-size: 13px; color: #2C2621; line-height: 1.45">
+              {{item.summary}}
+            </div>
+          </div>
+
+          <!-- Highlight Tip -->
+          <div style="background: #F8F4EB; border-left: 2.5px solid #141210; padding: 8px 10px; font-size: 11.5px; line-height: 1.45; color: #433930">
+            <strong style="color: #141210">Mẹo thi:</strong> {{item.examTip}}
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+  </div>
+
+  <!-- Mobile Bottom Sticky Bar -->
+  <nav style="position: absolute; bottom: 0; left: 0; right: 0; height: 56px; background: #FFFFFF; border-top: 1px solid #DACABA; display: flex; justify-content: space-around; align-items: center; padding: 0 12px; box-shadow: 0 -2px 10px rgba(0,0,0,0.04)">
+    <button
+      type="button"
+      onClick="{{pickAllCat}}"
+      style="border: none; background: transparent; display: flex; flex-direction: column; align-items: center; gap: 3px; font-family: inherit; font-size: 10px; font-weight: 700; color: #141210; cursor: pointer"
+    >
+      <svg style="width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2" viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="3" y="3" width="7" height="7"></rect>
+        <rect x="14" y="3" width="7" height="7"></rect>
+        <rect x="14" y="14" width="7" height="7"></rect>
+        <rect x="3" y="14" width="7" height="7"></rect>
+      </svg>
+      Tất cả
+    </button>
+
+    <button
+      type="button"
+      onClick="{{pickComputeCat}}"
+      style="border: none; background: transparent; display: flex; flex-direction: column; align-items: center; gap: 3px; font-family: inherit; font-size: 10px; font-weight: 700; color: #6D6054; cursor: pointer"
+    >
+      <svg style="width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2" viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+        <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+        <line x1="6" y1="6" x2="6.01" y2="6"></line>
+        <line x1="6" y1="18" x2="6.01" y2="18"></line>
+      </svg>
+      Compute
+    </button>
+
+    <button
+      type="button"
+      onClick="{{pickStorageCat}}"
+      style="border: none; background: transparent; display: flex; flex-direction: column; align-items: center; gap: 3px; font-family: inherit; font-size: 10px; font-weight: 700; color: #6D6054; cursor: pointer"
+    >
+      <svg style="width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+      </svg>
+      Storage
+    </button>
+
+    <button
+      type="button"
+      onClick="{{pickDbCat}}"
+      style="border: none; background: transparent; display: flex; flex-direction: column; align-items: center; gap: 3px; font-family: inherit; font-size: 10px; font-weight: 700; color: #6D6054; cursor: pointer"
+    >
+      <svg style="width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2" viewBox="0 0 24 24" aria-hidden="true">
+        <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+        <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+      </svg>
+      Database
+    </button>
+  </nav>
+
+  <!-- Mobile Detail Sheet (When selected) -->
+  <sc-if value="{{hasSelectedService}}" hint-placeholder-val="{{false}}">
+    <div style="position: absolute; inset: 0; background: rgba(20, 18, 16, 0.5); backdrop-filter: blur(2px); z-index: 50; display: flex; flex-direction: column; justify-content: flex-end">
+      <div
+        class="torn-top"
+        style="width: 100%; max-height: 85%; background: #FFFFFF; border-top: 1px solid #D6C8B5; padding: 24px 18px 28px 18px; box-sizing: border-box; overflow-y: auto; display: flex; flex-direction: column; gap: 16px"
+      >
+        <!-- Header -->
+        <div style="display: flex; justify-content: space-between; align-items: flex-start">
+          <div style="display: flex; flex-direction: column; gap: 2px">
+            <div style="display: flex; align-items: center; gap: 6px">
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 800; color: #141210">
+                {{activeService.code}}
+              </span>
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; background: #141210; color: #FFFFFF; padding: 2px 6px; border-radius: 2px">
+                {{activeService.level}}
+              </span>
+            </div>
+            <span style="font-size: 13px; font-weight: 600; color: #574A3E">
+              {{activeService.name}}
+            </span>
+          </div>
+
+          <button
+            type="button"
+            onClick="{{closeDetail}}"
+            style="border: 1px solid #141210; background: #FAF5EB; width: 30px; height: 30px; border-radius: 2px; cursor: pointer; display: flex; align-items: center; justify-content: center"
+            aria-label="Đóng"
+          >
+            <svg style="width: 16px; height: 16px; stroke: #141210; fill: none; stroke-width: 2.5" viewBox="0 0 24 24" aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Description -->
+        <p style="margin: 0; font-size: 13px; color: #2C2621; line-height: 1.5">
+          {{activeService.fullDescription}}
+        </p>
+
+        <!-- Exam Scenario -->
+        <div style="background: #F8F4EB; border-left: 3px solid #141210; padding: 12px; font-size: 12px; line-height: 1.5; color: #3C332A">
+          <strong style="color: #141210">Tình huống thi:</strong> {{activeService.examScenario}}
+        </div>
+
+        <!-- CLI Snippet -->
+        <div style="background: #141210; color: #FFFFFF; font-family: 'JetBrains Mono', monospace; font-size: 11px; padding: 12px; border-radius: 2px; overflow-x: auto; line-height: 1.4">
+          {{activeService.cliSnippet}}
+        </div>
+
+        <!-- Action Button -->
+        <div style="display: flex; gap: 8px; margin-top: 4px">
+          <button
+            type="button"
+            onClick="{{activeService.modalToggleLearned}}"
+            style="flex: 1; border: 1px solid #141210; background: {{activeService.modalBtnBg}}; color: {{activeService.modalBtnColor}}; font-family: inherit; font-size: 12px; font-weight: 700; padding: 10px; border-radius: 2px; cursor: pointer"
+          >
+            {{activeService.modalBtnText}}
+          </button>
+          <button
+            type="button"
+            onClick="{{closeDetail}}"
+            style="border: 1px solid #D6C8B5; background: #FFFFFF; color: #141210; font-family: inherit; font-size: 12px; font-weight: 700; padding: 10px 16px; border-radius: 2px; cursor: pointer"
+          >
+            Đóng
+          </button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+</x-dc>
+
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeCategory: 'all',
+      searchQuery: '',
+      selectedServiceId: null,
+      learnedMap: {
+        's3': true,
+        'ec2': true,
+        'iam': true,
+        'lambda': true
+      }
+    };
+  }
+
+  getAllServices() {
+    return [
+      {
+        id: 'ec2',
+        code: 'EC2',
+        name: 'Elastic Compute Cloud',
+        category: 'compute',
+        categoryName: 'Compute',
+        level: 'Associate',
+        summary: 'Máy chủ ảo điện toán đám mây linh hoạt, hỗ trợ Spot, On-Demand, Auto Scaling.',
+        examTip: 'Spot tiết kiệm 90% chi phí nhưng bị thu hồi sau 2 phút cảnh báo.',
+        fullDescription: 'Cung cấp năng lực tính toán linh hoạt. Lựa chọn instance type x86 hoặc Graviton ARM, gắn thêm EBS volume làm ổ đĩa.',
+        examScenario: 'Xử lý batch chịu lỗi gián đoạn với chi phí thấp nhất => Chọn EC2 Spot Instance.',
+        cliSnippet: 'aws ec2 run-instances --image-id ami-123 --instance-type t4g.micro'
+      },
+      {
+        id: 'lambda',
+        code: 'Lambda',
+        name: 'Serverless Compute',
+        category: 'compute',
+        categoryName: 'Compute',
+        level: 'Associate',
+        summary: 'Chạy mã không cần máy chủ, tự động scale theo event, tối đa 15 phút thực thi.',
+        examTip: 'Giới hạn 15 phút (900s). Lưu ý Cold Start khi tích hợp VPC.',
+        fullDescription: 'Chạy mã theo sự kiện từ S3, DynamoDB, API Gateway, SQS. Tính phí tới mili-giây thời gian chạy thực tế.',
+        examScenario: 'Tự động tạo thumbnail ngay khi ảnh được upload lên S3 => Lambda trigger.',
+        cliSnippet: 'aws lambda invoke --function-name ResizeImage res.json'
+      },
+      {
+        id: 's3',
+        code: 'S3',
+        name: 'Simple Storage Service',
+        category: 'storage',
+        categoryName: 'Storage',
+        level: 'Foundational',
+        summary: 'Lưu trữ đối tượng độ bền 11 số 9, lưu trữ vô hạn, phân tầng Lifecycle.',
+        examTip: 'Glacier Deep Archive rẻ nhất; S3 Object Lock chống sửa/xóa dữ liệu.',
+        fullDescription: 'Lưu trữ bất kỳ khối lượng dữ liệu nào với độ bền tối đa. Hỗ trợ hosting web tĩnh, CORS, Versioning và mã hóa.',
+        examScenario: 'Lưu hồ sơ kiểm toán trong 7 năm cấm sửa xóa => S3 Object Lock Compliance Mode.',
+        cliSnippet: 'aws s3 sync ./build s3://my-bucket'
+      },
+      {
+        id: 'ebs',
+        code: 'EBS',
+        name: 'Elastic Block Store',
+        category: 'storage',
+        categoryName: 'Storage',
+        level: 'Associate',
+        summary: 'Ổ đĩa khối hiệu năng cao gắn cho EC2 trong cùng 1 Availability Zone.',
+        examTip: 'Chỉ gắn trong 1 AZ duy nhất; sao lưu định kỳ qua EBS Snapshot lên S3.',
+        fullDescription: 'Ổ cứng liên tục cho EC2. gp3 cho mục đích chung, io2 Block Express cho database cần IOPS cực lớn.',
+        examScenario: 'Database quan hệ tự cài trên EC2 cần 64,000 IOPS => io2 Block Express.',
+        cliSnippet: 'aws ec2 create-snapshot --volume-id vol-123'
+      },
+      {
+        id: 'rds',
+        code: 'RDS',
+        name: 'Relational Database Service',
+        category: 'database',
+        categoryName: 'Database',
+        level: 'Associate',
+        summary: 'CSDL quan hệ quản trị toàn diện (PostgreSQL, MySQL...) có Multi-AZ và Read Replica.',
+        examTip: 'Multi-AZ là đồng bộ (High Availability); Read Replica là bất đồng bộ (Scale Đọc).',
+        fullDescription: 'Tự động hóa sao lưu, vá lỗi hệ điều hành và failover trong vài phút khi có sự cố hạ tầng.',
+        examScenario: 'Ứng dụng bị chậm do quá tải đọc báo cáo => Tạo RDS Read Replica.',
+        cliSnippet: 'aws rds create-db-instance-read-replica --db-instance-identifier rep'
+      },
+      {
+        id: 'dynamodb',
+        code: 'DynamoDB',
+        name: 'NoSQL Database',
+        category: 'database',
+        categoryName: 'Database',
+        level: 'Associate',
+        summary: 'CSDL NoSQL serverless tốc độ mili-giây, co giãn vô hạn, hỗ trợ Global Tables.',
+        examTip: 'Dùng DAX (In-Memory Accelerator) để đạt độ trễ micro-giây cho read-heavy.',
+        fullDescription: 'Cơ sở dữ liệu NoSQL Key-Value và Document quản trị hoàn toàn, không lo quản lý dung lượng hay máy chủ.',
+        examScenario: 'Lưu session giỏ hàng với hàng triệu request/giây phản hồi dưới 10ms => DynamoDB.',
+        cliSnippet: 'aws dynamodb put-item --table-name Cart --item \'{"id":{"S":"1"}}\''
+      },
+      {
+        id: 'vpc',
+        code: 'VPC',
+        name: 'Virtual Private Cloud',
+        category: 'networking',
+        categoryName: 'Networking',
+        level: 'Associate',
+        summary: 'Mạng riêng ảo cô lập trên AWS: Subnet, Route Table, IGW, NAT Gateway.',
+        examTip: 'Security Group là Stateful; NACL là Stateless (kiểm tra cả 2 chiều vào/ra).',
+        fullDescription: 'Nền tảng hạ tầng mạng an toàn. Kết nối an toàn với máy chủ on-premise qua VPN hoặc Direct Connect.',
+        examScenario: 'EC2 ở Private Subnet cần ra Internet tải update mà không lộ IP public => NAT Gateway.',
+        cliSnippet: 'aws ec2 create-vpc --cidr-block 10.0.0.0/16'
+      },
+      {
+        id: 'cloudfront',
+        code: 'CloudFront',
+        name: 'Global CDN',
+        category: 'networking',
+        categoryName: 'Networking',
+        level: 'Foundational',
+        summary: 'Mạng lưới CDN phân phối nội dung toàn cầu tại hơn 600 Edge Locations.',
+        examTip: 'Dùng Origin Access Control (OAC) để chặn truy cập trực tiếp vào S3.',
+        fullDescription: 'Tăng tốc tải trang web, video và API cho người dùng toàn cầu với độ trễ thấp nhất.',
+        examScenario: 'Người dùng toàn cầu tải static web từ S3 bị chậm => Đặt CloudFront phía trước S3.',
+        cliSnippet: 'aws cloudfront create-invalidation --distribution-id E123 --paths "/*"'
+      },
+      {
+        id: 'iam',
+        code: 'IAM',
+        name: 'Identity & Access Management',
+        category: 'security',
+        categoryName: 'Security & IAM',
+        level: 'Foundational',
+        summary: 'Quản lý quyền truy cập và danh tính: Users, Roles, Policies theo Least Privilege.',
+        examTip: 'Gán IAM Role cho EC2/Lambda thay vì lưu Access Key cứng trong code.',
+        fullDescription: 'Trung tâm kiểm soát an ninh AWS. Khóa Root account, kích hoạt MFA và cấp quyền tối thiểu.',
+        examScenario: 'EC2 cần ghi log vào S3 an toàn nhất => Gán IAM Role cho EC2 instance.',
+        cliSnippet: 'aws iam create-role --role-name AppRole --assume-role-policy file://p.json'
+      },
+      {
+        id: 'sqs',
+        code: 'SQS',
+        name: 'Simple Queue Service',
+        category: 'serverless',
+        categoryName: 'Serverless',
+        level: 'Associate',
+        summary: 'Hàng đợi tin nhắn phân tán giúp tách rời ứng dụng, triệt tiêu nghẽn tải.',
+        examTip: 'Standard Queue có throughput vô hạn (at-least-once); FIFO Queue đảm bảo thứ tự (300 msg/s).',
+        fullDescription: 'Bộ đệm thông điệp tin cậy cao giữa các microservices, hỗ trợ Dead Letter Queue cho tin lỗi.',
+        examScenario: 'Lượng đơn hàng đặt đột biến trong Flash Sale làm nghẽn server => Dùng SQS đệm.',
+        cliSnippet: 'aws sqs send-message --queue-url https://sqs... --message-body "Order#1"'
+      },
+      {
+        id: 'bedrock',
+        code: 'Bedrock',
+        name: 'Generative AI Platform',
+        category: 'aiml',
+        categoryName: 'AI & ML',
+        level: 'Professional',
+        summary: 'Nền tảng GenAI serverless cung cấp các mô hình Foundation Models hàng đầu (Claude, Llama).',
+        examTip: 'Không dùng dữ liệu khách hàng để train model; hỗ trợ Knowledge Bases cho RAG.',
+        fullDescription: 'Xây dựng ứng dụng AI tạo sinh bảo mật doanh nghiệp qua một API thống nhất.',
+        examScenario: 'Doanh nghiệp muốn chatbot hỏi đáp nội bộ trên tài liệu S3 bảo mật => Bedrock Knowledge Bases.',
+        cliSnippet: 'aws bedrock-runtime invoke-model --model-id anthropic.claude-3-sonnet-v1'
+      },
+      {
+        id: 'cloudwatch',
+        code: 'CloudWatch',
+        name: 'Monitoring & Logs',
+        category: 'devops',
+        categoryName: 'DevOps & Monitor',
+        level: 'Foundational',
+        summary: 'Giám sát metrics, thu thập logs, tạo dashboards và kích hoạt Alarms tự động.',
+        examTip: 'CloudWatch theo dõi HIỆU NĂNG; CloudTrail theo dõi AI ĐÃ GỌI API NÀO.',
+        fullDescription: 'Cung cấp dữ liệu theo dõi toàn diện cho tài nguyên AWS và ứng dụng phân tán.',
+        examScenario: 'Tự động mở rộng EC2 khi CPU > 80% liên tục 5 phút => CloudWatch Alarm kích hoạt Auto Scaling.',
+        cliSnippet: 'aws cloudwatch put-metric-alarm --alarm-name HighCpu --metric-name CPU'
+      }
+    ];
+  }
+
+  getFilteredServices() {
+    const list = this.getAllServices();
+    const cat = this.state.activeCategory;
+    const q = this.state.searchQuery.trim().toLowerCase();
+
+    return list.filter((item) => {
+      if (cat !== 'all' && item.category !== cat) return false;
+      if (q) {
+        const text = (item.code + ' ' + item.name + ' ' + item.summary + ' ' + item.examTip).toLowerCase();
+        if (!text.includes(q)) return false;
+      }
+      return true;
+    });
+  }
+
+  renderVals() {
+    const all = this.getAllServices();
+    const filtered = this.getFilteredServices();
+    const learned = this.state.learnedMap || {};
+    const learnedCount = Object.keys(learned).filter(k => learned[k]).length;
+    const learnedPercent = Math.round((learnedCount / 24) * 100);
+
+    const cats = [
+      { id: 'all', label: 'Tất cả' },
+      { id: 'compute', label: 'Compute' },
+      { id: 'storage', label: 'Storage' },
+      { id: 'database', label: 'Database' },
+      { id: 'networking', label: 'Networking' },
+      { id: 'security', label: 'Security' },
+      { id: 'serverless', label: 'Serverless' },
+      { id: 'aiml', label: 'AI/ML' }
+    ];
+
+    const categoryButtons = cats.map((c) => {
+      const isSel = this.state.activeCategory === c.id;
+      const count = c.id === 'all' ? all.length : all.filter(s => s.category === c.id).length;
+      return {
+        id: c.id,
+        label: c.label,
+        count: count,
+        bg: isSel ? '#141210' : '#FFFFFF',
+        color: isSel ? '#FFFFFF' : '#332C26',
+        borderColor: isSel ? '#141210' : '#DACABA',
+        pick: () => this.setState({ activeCategory: c.id })
+      };
+    });
+
+    const servicesList = filtered.map((item) => {
+      const isL = Boolean(learned[item.id]);
+      return {
+        ...item,
+        isLearned: isL,
+        checkBg: isL ? '#141210' : '#FAF7F0',
+        checkColor: isL ? '#FFFFFF' : '#8A7A6A',
+        checkBorder: isL ? '#141210' : '#CBB89F',
+        toggleLearned: (e) => {
+          if (e && e.stopPropagation) e.stopPropagation();
+          const next = { ...this.state.learnedMap };
+          if (next[item.id]) delete next[item.id];
+          else next[item.id] = true;
+          this.setState({ learnedMap: next });
+        },
+        select: () => this.setState({ selectedServiceId: item.id })
+      };
+    });
+
+    let activeService = null;
+    if (this.state.selectedServiceId) {
+      const found = all.find(s => s.id === this.state.selectedServiceId);
+      if (found) {
+        const isL = Boolean(learned[found.id]);
+        activeService = {
+          ...found,
+          isLearned: isL,
+          modalBtnText: isL ? 'Đã thuộc (Bỏ dấu)' : 'Đánh dấu đã hiểu',
+          modalBtnBg: isL ? '#FAF5EB' : '#141210',
+          modalBtnColor: isL ? '#141210' : '#FFFFFF',
+          modalToggleLearned: () => {
+            const next = { ...this.state.learnedMap };
+            if (next[found.id]) delete next[found.id];
+            else next[found.id] = true;
+            this.setState({ learnedMap: next });
+          }
+        };
+      }
+    }
+
+    return {
+      searchQuery: this.state.searchQuery,
+      onSearchInput: (e) => this.setState({ searchQuery: e.target.value }),
+      categoryButtons: categoryButtons,
+      servicesList: servicesList,
+      hasSelectedService: Boolean(activeService),
+      activeService: activeService,
+      closeDetail: () => this.setState({ selectedServiceId: null }),
+      stats: {
+        learnedCount: learnedCount,
+        learnedPercent: learnedPercent,
+        progressWidth: `${Math.max(5, learnedPercent)}%`
+      },
+      pickAllCat: () => this.setState({ activeCategory: 'all' }),
+      pickComputeCat: () => this.setState({ activeCategory: 'compute' }),
+      pickStorageCat: () => this.setState({ activeCategory: 'storage' }),
+      pickDbCat: () => this.setState({ activeCategory: 'database' })
+    };
+  }
+}
+</script>
+</body>
+</html>

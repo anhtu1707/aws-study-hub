@@ -1,0 +1,9 @@
+node_modules
+dist
+dist-ssr
+*.local
+.artifact-server.json
+.artifact-server.log
+.sharing.json
+history/
+.DS_Store
