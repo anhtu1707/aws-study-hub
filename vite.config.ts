@@ -41,6 +41,7 @@ const ttsProxyPlugin = (): Plugin => ({
 });
 
 export default defineConfig({
+  base: './',
   plugins: [react(), ttsProxyPlugin()],
   server: {
     port: 3000
