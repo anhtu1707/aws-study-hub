@@ -1,5 +1,6 @@
 import React from 'react';
 import { AWSCategory, ExamLevel, LearningStatus } from '../types';
+import { CloseIcon } from './Icons';
 
 interface FilterBarProps {
   searchQuery: string;
@@ -105,12 +106,14 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                 border: 'none',
                 color: 'var(--text-muted)',
                 cursor: 'pointer',
-                fontSize: '16px',
-                padding: '4px'
+                padding: '4px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
               }}
               aria-label="Xóa tìm kiếm"
             >
-              ✕
+              <CloseIcon size={14} />
             </button>
           )}
         </div>

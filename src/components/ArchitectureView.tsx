@@ -13,7 +13,7 @@ export const ArchitectureView: React.FC<ArchitectureViewProps> = ({ onSelectServ
       <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <span className="stamp-badge stamp-dark">WELL-ARCHITECTED BLUEPRINTS</span>
-          <span className="mono stamp-badge stamp-kraft">4 MẪU THỰC CHIẾN</span>
+          <span className="mono stamp-badge stamp-kraft">{ARCHITECTURE_PATTERNS.length} MẪU THỰC CHIẾN</span>
         </div>
         <h2 style={{ fontSize: '26px', margin: 0 }}>
           Mẫu Kiến Trúc AWS Tiêu Chuẩn Doanh Nghiệp

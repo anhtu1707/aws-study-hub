@@ -1,5 +1,6 @@
 import React from 'react';
 import { AWSService, LearningStatus } from '../types';
+import { DockerIcon, ToolsIcon } from './Icons';
 
 interface ServiceCardProps {
   service: AWSService;
@@ -125,11 +126,15 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
                 color: '#1D588F',
                 border: '1px solid #1D588F',
                 background: '#EDF4FC',
-                padding: '1px 5px',
-                borderRadius: '2px'
+                padding: '2px 5px',
+                borderRadius: '2px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '4px'
               }}
             >
-              🐳 DOCKER LAB
+              <DockerIcon size={11} color="#1D588F" />
+              DOCKER LAB
             </span>
           )}
 
@@ -141,11 +146,15 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
               color: '#8A5A2B',
               border: '1px dashed #8A5A2B',
               background: '#FAF6EE',
-              padding: '1px 5px',
-              borderRadius: '2px'
+              padding: '2px 5px',
+              borderRadius: '2px',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '4px'
             }}
           >
-            🛠️ THAO TÁC
+            <ToolsIcon size={10} color="#8A5A2B" />
+            THAO TÁC
           </span>
         </div>
 

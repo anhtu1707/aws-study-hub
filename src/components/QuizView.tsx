@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FLASHCARDS } from '../data/services';
+import { CheckIcon, TargetIcon } from './Icons';
 
 export const QuizView: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -92,10 +93,20 @@ export const QuizView: React.FC = () => {
                 fontSize: '11.5px',
                 fontWeight: 700,
                 borderRadius: '2px',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px'
               }}
             >
-              {isMastered ? '✓ Đã thuộc bài toán này' : '○ Đánh dấu đã thuộc'}
+              {isMastered ? (
+                <>
+                  <CheckIcon size={12} color={isMastered ? '#FFFFFF' : '#155724'} />
+                  <span>Đã thuộc bài toán này</span>
+                </>
+              ) : (
+                <span>Đánh dấu đã thuộc</span>
+              )}
             </button>
           </div>
 
@@ -114,8 +125,9 @@ export const QuizView: React.FC = () => {
           </div>
 
           {/* Question */}
-          <div style={{ fontSize: '16px', fontWeight: 700, color: 'var(--text-ink)', lineHeight: 1.4 }}>
-            👉 {card.question}
+          <div style={{ fontSize: '16px', fontWeight: 700, color: 'var(--text-ink)', lineHeight: 1.4, display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+            <TargetIcon size={16} color="var(--text-ink)" style={{ marginTop: '3px', flexShrink: 0 }} />
+            <span>{card.question}</span>
           </div>
 
           {/* Answer Section (Revealed) */}

@@ -1,6 +1,23 @@
 import React, { useState } from 'react';
 import { AWSService, LearningStatus } from '../types';
 import { getHandsOnGuide } from '../data/handsOnGuides';
+import { getDetailedExamAndPricing } from '../data/examAndPricingDetails';
+import {
+  DockerIcon,
+  ToolsIcon,
+  TargetIcon,
+  LightbulbIcon,
+  WarningIcon,
+  ConsoleIcon,
+  TerminalIcon,
+  CheckIcon,
+  TrashIcon,
+  CloseIcon,
+  CopyIcon,
+  DollarIcon,
+  KeyIcon,
+  ExternalLinkIcon
+} from './Icons';
 
 interface ServiceDetailModalProps {
   service: AWSService;
@@ -21,8 +38,10 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
 }) => {
   const [copied, setCopied] = useState(false);
   const [handsOnMode, setHandsOnMode] = useState<'console' | 'cli'>('console');
+  const [activeDossierTab, setActiveDossierTab] = useState<'exam' | 'pricing'>('exam');
 
   const handsOn = service.handsOn || getHandsOnGuide(service);
+  const intelligence = getDetailedExamAndPricing(service);
 
   return (
     <div
@@ -44,8 +63,8 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
         onClick={(e) => e.stopPropagation()}
         style={{
           width: '100%',
-          maxWidth: '780px',
-          maxHeight: '90vh',
+          maxWidth: '820px',
+          maxHeight: '92vh',
           overflowY: 'auto',
           background: '#FFFFFF',
           border: '1px solid var(--border-dashed)',
@@ -82,7 +101,7 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
           }}
         >
           <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
               <span className="mono" style={{ fontSize: '28px', fontWeight: 800, color: 'var(--text-ink)' }}>
                 {service.code}
               </span>
@@ -96,6 +115,11 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
                   </span>
                 ))}
               </div>
+              {service.freeTier && (
+                <span className="stamp-badge" style={{ fontSize: '10px', background: '#E8F5E9', color: '#2E7D32', border: '1px dashed #2E7D32' }}>
+                  FREE TIER
+                </span>
+              )}
             </div>
             <h3 style={{ margin: 0, fontSize: '18px', fontWeight: 700, color: 'var(--text-charcoal)' }}>
               {service.name}
@@ -109,7 +133,6 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
               border: '1px solid var(--text-ink)',
               background: 'var(--bg-card-warm)',
               color: 'var(--text-ink)',
-              fontWeight: 800,
               width: '34px',
               height: '34px',
               borderRadius: '2px',
@@ -120,11 +143,11 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
             }}
             aria-label="Đóng cửa sổ"
           >
-            ✕
+            <CloseIcon size={14} color="var(--text-ink)" />
           </button>
         </div>
 
-        {/* Full Explanation */}
+        {/* Full Architectural Explanation */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
           <div className="mono" style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>
             Bản chất dịch vụ &amp; Kiến trúc nền tảng:
@@ -146,61 +169,245 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
             gap: '6px'
           }}
         >
-          <div className="mono" style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-ink)', textTransform: 'uppercase' }}>
-            🎯 Khi nào nên chọn dịch vụ này?
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <TargetIcon size={14} color="var(--text-ink)" />
+            <span className="mono" style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-ink)', textTransform: 'uppercase' }}>
+              Khi nào nên chọn dịch vụ này trong kiến trúc thực tế?
+            </span>
           </div>
           <div style={{ fontSize: '13.5px', color: 'var(--text-charcoal)', lineHeight: 1.55 }}>
             {service.whenToChoose}
           </div>
         </div>
 
-        {/* Exam Trap & Pricing Trap Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '16px' }}>
-
-          {/* Exam Trap */}
-          <div
-            style={{
-              background: '#FFFDF9',
-              borderLeft: '3px solid var(--text-ink)',
-              borderTop: '1px dashed var(--border-dashed)',
-              borderBottom: '1px dashed var(--border-dashed)',
-              borderRight: '1px dashed var(--border-dashed)',
-              padding: '14px 16px',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '6px'
-            }}
-          >
-            <div className="mono" style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-ink)', textTransform: 'uppercase' }}>
-              💡 Mẹo thi sát đề (Exam Tips):
-            </div>
-            <div style={{ fontSize: '13px', color: 'var(--text-charcoal)', lineHeight: 1.55 }}>
-              {service.examTip}
-            </div>
+        {/* Deep Intelligence Station: Exam Tips & Pricing Gotchas */}
+        <div
+          style={{
+            background: '#FCFBF9',
+            border: '1.5px solid var(--text-ink)',
+            borderRadius: '3px',
+            display: 'flex',
+            flexDirection: 'column',
+            overflow: 'hidden'
+          }}
+        >
+          {/* Station Tabs */}
+          <div style={{ display: 'flex', borderBottom: '1px solid var(--text-ink)', background: 'var(--bg-card-warm)' }}>
+            <button
+              type="button"
+              onClick={() => setActiveDossierTab('exam')}
+              style={{
+                flex: 1,
+                padding: '12px 16px',
+                border: 'none',
+                borderRight: '1px solid var(--border-dashed)',
+                background: activeDossierTab === 'exam' ? '#FFFFFF' : 'transparent',
+                fontWeight: activeDossierTab === 'exam' ? 800 : 600,
+                color: activeDossierTab === 'exam' ? 'var(--text-ink)' : 'var(--text-muted)',
+                fontSize: '12.5px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px'
+              }}
+            >
+              <LightbulbIcon size={14} color={activeDossierTab === 'exam' ? 'var(--text-ink)' : 'var(--text-muted)'} />
+              MẸO THI SÁT ĐỀ &amp; BẪY CÂU HỎI (EXAM INTELLIGENCE)
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveDossierTab('pricing')}
+              style={{
+                flex: 1,
+                padding: '12px 16px',
+                border: 'none',
+                background: activeDossierTab === 'pricing' ? '#FFFFFF' : 'transparent',
+                fontWeight: activeDossierTab === 'pricing' ? 800 : 600,
+                color: activeDossierTab === 'pricing' ? '#8A5A2B' : 'var(--text-muted)',
+                fontSize: '12.5px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px'
+              }}
+            >
+              <DollarIcon size={14} color={activeDossierTab === 'pricing' ? '#8A5A2B' : 'var(--text-muted)'} />
+              CẠM BẪY CHI PHÍ &amp; CHIẾN THUẬT FINOPS (PRICING GOTCHAS)
+            </button>
           </div>
 
-          {/* Pricing Gotcha */}
-          <div
-            style={{
-              background: '#FAF6EE',
-              borderLeft: '3px solid #8A5A2B',
-              borderTop: '1px dashed var(--border-dashed)',
-              borderBottom: '1px dashed var(--border-dashed)',
-              borderRight: '1px dashed var(--border-dashed)',
-              padding: '14px 16px',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '6px'
-            }}
-          >
-            <div className="mono" style={{ fontSize: '11px', fontWeight: 700, color: '#8A5A2B', textTransform: 'uppercase' }}>
-              ⚠️ Cạm bẫy chi phí (Pricing Gotcha):
-            </div>
-            <div style={{ fontSize: '13px', color: 'var(--text-charcoal)', lineHeight: 1.55 }}>
-              {service.pricingGotcha}
-            </div>
-          </div>
+          {/* Tab 1: Detailed Exam Tips */}
+          {activeDossierTab === 'exam' && (
+            <div style={{ padding: '20px 22px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              {/* Core Exam Concept */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                <span className="mono" style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-sepia)', textTransform: 'uppercase' }}>
+                  Bản chất câu hỏi thi kiểm tra:
+                </span>
+                <div style={{ fontSize: '13.5px', color: 'var(--text-ink)', lineHeight: 1.55 }}>
+                  {intelligence.exam.coreConcept}
+                </div>
+              </div>
 
+              {/* Keywords to spot */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                <span className="mono" style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-sepia)', textTransform: 'uppercase' }}>
+                  Từ khóa "vàng" nhận diện bài toán trong đề:
+                </span>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                  {intelligence.exam.keywords.map((kw, i) => (
+                    <span
+                      key={i}
+                      className="mono"
+                      style={{
+                        fontSize: '11px',
+                        fontWeight: 700,
+                        background: 'var(--bg-card-warm)',
+                        border: '1px solid var(--border-dashed)',
+                        padding: '2px 8px',
+                        borderRadius: '2px',
+                        color: 'var(--text-ink)'
+                      }}
+                    >
+                      {kw}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Common Exam Traps & Distractors */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <WarningIcon size={13} color="#C0392B" />
+                  <span className="mono" style={{ fontSize: '11px', fontWeight: 700, color: '#C0392B', textTransform: 'uppercase' }}>
+                    Cạm bẫy câu hỏi thường gặp &amp; Cách loại trừ đáp án nhiễu:
+                  </span>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  {intelligence.exam.trapsAndDistractors.map((trap, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        background: '#FFFDF9',
+                        borderLeft: '3px solid #C0392B',
+                        border: '1px solid #F5D3CE',
+                        borderLeftWidth: '3px',
+                        padding: '8px 12px',
+                        fontSize: '13px',
+                        lineHeight: 1.5,
+                        color: 'var(--text-charcoal)'
+                      }}
+                    >
+                      {trap}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* 3-Second Decision Rule */}
+              <div
+                style={{
+                  background: '#F0F7F2',
+                  border: '1px solid #C3E6CB',
+                  borderLeft: '3px solid #2E7D32',
+                  padding: '10px 14px',
+                  borderRadius: '2px',
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  gap: '8px'
+                }}
+              >
+                <CheckIcon size={14} color="#2E7D32" style={{ marginTop: '2px', flexShrink: 0 }} />
+                <div style={{ fontSize: '13px', color: '#155724', lineHeight: 1.5 }}>
+                  <strong>Quy tắc 3 giây chọn đáp án:</strong> {intelligence.exam.decisionRule}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Tab 2: Detailed Pricing Gotchas & FinOps */}
+          {activeDossierTab === 'pricing' && (
+            <div style={{ padding: '20px 22px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              {/* Billing Model */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                <span className="mono" style={{ fontSize: '11px', fontWeight: 700, color: '#8A5A2B', textTransform: 'uppercase' }}>
+                  Mô hình tính cước cốt lõi:
+                </span>
+                <div style={{ fontSize: '13.5px', color: 'var(--text-ink)', lineHeight: 1.55 }}>
+                  {intelligence.pricing.billingModel}
+                </div>
+              </div>
+
+              {/* Hidden Costs Grid */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <WarningIcon size={13} color="#8A5A2B" />
+                  <span className="mono" style={{ fontSize: '11px', fontWeight: 700, color: '#8A5A2B', textTransform: 'uppercase' }}>
+                    Các loại chi phí ngầm dễ gây sốc hóa đơn (Hidden Costs):
+                  </span>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  {intelligence.pricing.hiddenCosts.map((cost, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        background: '#FAF6EE',
+                        borderLeft: '3px solid #8A5A2B',
+                        border: '1px solid #EADBCE',
+                        borderLeftWidth: '3px',
+                        padding: '8px 12px',
+                        fontSize: '13px',
+                        lineHeight: 1.5,
+                        color: 'var(--text-charcoal)'
+                      }}
+                    >
+                      {cost}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Free Tier Rule & Thresholds */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <KeyIcon size={13} color="var(--text-ink)" />
+                  <span className="mono" style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-sepia)', textTransform: 'uppercase' }}>
+                    Quy tắc Free Tier &amp; Ngưỡng miễn phí:
+                  </span>
+                </div>
+                <div style={{ fontSize: '13px', color: 'var(--text-charcoal)', lineHeight: 1.5, background: 'var(--bg-card-warm)', padding: '8px 12px', borderRadius: '2px', border: '1px solid var(--border-dashed)' }}>
+                  {intelligence.pricing.freeTierRules}
+                </div>
+              </div>
+
+              {/* Cost Optimization Tactics */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                <span className="mono" style={{ fontSize: '11px', fontWeight: 700, color: '#2E7D32', textTransform: 'uppercase' }}>
+                  Chiến thuật cắt giảm chi phí tối đa (FinOps Tactics):
+                </span>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  {intelligence.pricing.costOptimizationTactics.map((tactic, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'flex-start',
+                        gap: '8px',
+                        fontSize: '13px',
+                        lineHeight: 1.5,
+                        color: '#1E4620'
+                      }}
+                    >
+                      <CheckIcon size={13} color="#2E7D32" style={{ marginTop: '3px', flexShrink: 0 }} />
+                      <span>{tactic}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Docker Lab Suite (If available for local practice) */}
@@ -217,8 +424,9 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
             }}
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span className="stamp-badge stamp-dark" style={{ fontSize: '11px' }}>
-                🐳 PHÒNG LAB DOCKER CỤC BỘ (THỰC HÀNH TEST)
+              <span className="stamp-badge stamp-dark" style={{ fontSize: '11px', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                <DockerIcon size={12} color="#FFFFFF" />
+                PHÒNG LAB DOCKER CỤC BỘ (THỰC HÀNH TEST)
               </span>
               <span className="mono" style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
                 Target: {service.dockerLab.profile}
@@ -241,8 +449,9 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
                   <button
                     type="button"
                     onClick={() => navigator.clipboard.writeText(service.dockerLab!.command)}
-                    style={{ fontSize: '11px', background: 'transparent', border: '1px solid var(--border-dashed)', padding: '2px 6px', borderRadius: '2px', cursor: 'pointer' }}
+                    style={{ fontSize: '11px', background: 'transparent', border: '1px solid var(--border-dashed)', padding: '2px 6px', borderRadius: '2px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
                   >
+                    <CopyIcon size={11} />
                     Copy
                   </button>
                 </div>
@@ -259,8 +468,9 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
                   <button
                     type="button"
                     onClick={() => navigator.clipboard.writeText(service.dockerLab!.stopCommand)}
-                    style={{ fontSize: '11px', background: 'transparent', border: '1px solid var(--border-dashed)', padding: '2px 6px', borderRadius: '2px', cursor: 'pointer' }}
+                    style={{ fontSize: '11px', background: 'transparent', border: '1px solid var(--border-dashed)', padding: '2px 6px', borderRadius: '2px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
                   >
+                    <CopyIcon size={11} />
                     Copy
                   </button>
                 </div>
@@ -268,11 +478,13 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
             </div>
 
             <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '10px', paddingTop: '4px' }}>
-              <div style={{ fontSize: '12px', color: 'var(--text-sepia)' }}>
-                Endpoint: <code className="mono" style={{ color: 'var(--text-ink)', fontWeight: 600 }}>{service.dockerLab.endpoint}</code>
+              <div style={{ fontSize: '12px', color: 'var(--text-sepia)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span>Endpoint: <code className="mono" style={{ color: 'var(--text-ink)', fontWeight: 600 }}>{service.dockerLab.endpoint}</code></span>
                 {service.dockerLab.guiUrl && (
-                  <span style={{ marginLeft: '12px' }}>
-                    Web GUI: <a href={service.dockerLab.guiUrl} target="_blank" rel="noreferrer" style={{ textDecoration: 'underline', fontWeight: 700, color: 'var(--text-ink)' }}>Mở Web Console ↗</a>
+                  <span style={{ marginLeft: '10px' }}>
+                    <a href={service.dockerLab.guiUrl} target="_blank" rel="noreferrer" style={{ textDecoration: 'underline', fontWeight: 700, color: 'var(--text-ink)', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                      Mở Web Console <ExternalLinkIcon size={11} />
+                    </a>
                   </span>
                 )}
               </div>
@@ -281,7 +493,7 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
                 type="button"
                 onClick={() => {
                   onStatusChange('mastered');
-                  alert('✓ Đã lưu tiến độ: Dịch vụ này đã được đánh dấu là ĐÃ THUỘC!');
+                  alert('Đã lưu tiến độ: Dịch vụ này đã được đánh dấu là ĐÃ THUỘC!');
                 }}
                 style={{
                   background: 'var(--text-ink)',
@@ -291,10 +503,14 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
                   fontSize: '11.5px',
                   fontWeight: 700,
                   borderRadius: '2px',
-                  cursor: 'pointer'
+                  cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px'
                 }}
               >
-                ✓ Đã Hoàn Thành Lab &amp; Lưu Tiến Độ
+                <CheckIcon size={13} color="#FFFFFF" />
+                Đã Hoàn Thành Lab &amp; Lưu Tiến Độ
               </button>
             </div>
           </div>
@@ -315,8 +531,9 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
           {/* Header & Mode Switch */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span className="stamp-badge stamp-dark" style={{ fontSize: '11px', letterSpacing: '0.5px' }}>
-                🛠️ HƯỚNG DẪN THAO TÁC THỰC CHIẾN (HANDS-ON)
+              <span className="stamp-badge stamp-dark" style={{ fontSize: '11px', letterSpacing: '0.5px', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                <ToolsIcon size={12} color="#FFFFFF" />
+                HƯỚNG DẪN THAO TÁC THỰC CHIẾN (HANDS-ON)
               </span>
               <span className="mono" style={{ fontSize: '10.5px', color: 'var(--text-muted)' }}>
                 Console &amp; CLI
@@ -337,10 +554,14 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
                   fontWeight: 700,
                   borderRadius: '2px',
                   cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
                   transition: 'all 0.15s'
                 }}
               >
-                🖥️ AWS Console (GUI)
+                <ConsoleIcon size={12} color={handsOnMode === 'console' ? '#FFFFFF' : 'var(--text-ink)'} />
+                AWS Console (GUI)
               </button>
               <button
                 type="button"
@@ -354,10 +575,14 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
                   fontWeight: 700,
                   borderRadius: '2px',
                   cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
                   transition: 'all 0.15s'
                 }}
               >
-                💻 AWS CLI (Terminal)
+                <TerminalIcon size={12} color={handsOnMode === 'cli' ? '#FFFFFF' : 'var(--text-ink)'} />
+                AWS CLI (Terminal)
               </button>
             </div>
           </div>
@@ -367,8 +592,9 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
             <h4 style={{ margin: 0, fontSize: '15px', fontWeight: 800, color: 'var(--text-ink)' }}>
               {handsOn.title}
             </h4>
-            <div style={{ fontSize: '13px', color: 'var(--text-charcoal)', lineHeight: 1.5 }}>
-              <strong>🎯 Mục tiêu thao tác:</strong> {handsOn.objective}
+            <div style={{ fontSize: '13px', color: 'var(--text-charcoal)', lineHeight: 1.5, display: 'flex', alignItems: 'flex-start', gap: '6px' }}>
+              <TargetIcon size={13} color="var(--text-ink)" style={{ marginTop: '2px', flexShrink: 0 }} />
+              <span><strong>Mục tiêu thao tác:</strong> {handsOn.objective}</span>
             </div>
           </div>
 
@@ -434,10 +660,14 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
                     fontSize: '11px',
                     padding: '2px 8px',
                     borderRadius: '2px',
-                    cursor: 'pointer'
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '4px'
                   }}
                 >
-                  {copied ? '✓ Đã sao chép tất cả' : 'Sao chép toàn bộ lệnh'}
+                  <CopyIcon size={11} />
+                  {copied ? 'Đã sao chép tất cả' : 'Sao chép toàn bộ lệnh'}
                 </button>
               </div>
 
@@ -473,8 +703,11 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
                 color: '#155724'
               }}
             >
-              <strong>🔍 Dấu hiệu kiểm tra thành công (Verification):</strong>
-              <div style={{ marginTop: '3px' }}>{handsOn.verification}</div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
+                <CheckIcon size={13} color="#2E7D32" />
+                <strong>Dấu hiệu kiểm tra thành công (Verification):</strong>
+              </div>
+              <div>{handsOn.verification}</div>
             </div>
 
             {handsOn.cleanup && (
@@ -490,8 +723,11 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
                   color: '#7A5200'
                 }}
               >
-                <strong>🧹 Dọn dẹp tài nguyên (Tránh phát sinh phí):</strong>
-                <div style={{ marginTop: '3px' }}>{handsOn.cleanup}</div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
+                  <TrashIcon size={13} color="#B78103" />
+                  <strong>Dọn dẹp tài nguyên (Tránh phát sinh phí):</strong>
+                </div>
+                <div>{handsOn.cleanup}</div>
               </div>
             )}
           </div>

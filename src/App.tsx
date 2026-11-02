@@ -7,6 +7,7 @@ import { ServiceCard } from './components/ServiceCard';
 import { ServiceDetailModal } from './components/ServiceDetailModal';
 import { QuizView } from './components/QuizView';
 import { ArchitectureView } from './components/ArchitectureView';
+import { SearchIcon } from './components/Icons';
 
 export function App() {
   const [activeTab, setActiveTab] = useState<'catalog' | 'quiz' | 'patterns'>('catalog');
@@ -276,7 +277,7 @@ export function App() {
                   alignItems: 'center'
                 }}
               >
-                <span style={{ fontSize: '24px' }}>🔍</span>
+                <SearchIcon size={32} color="var(--text-sepia)" />
                 <h3 style={{ margin: 0, fontSize: '18px' }}>Không tìm thấy dịch vụ AWS nào phù hợp</h3>
                 <p style={{ margin: 0, fontSize: '13.5px', color: 'var(--text-sepia)' }}>
                   Hãy thử gõ từ khóa khác hoặc bấm nút "Tất cả" trên thanh phân hệ.
