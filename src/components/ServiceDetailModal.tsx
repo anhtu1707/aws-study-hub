@@ -38,7 +38,6 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
 }) => {
   const [copied, setCopied] = useState(false);
   const [handsOnMode, setHandsOnMode] = useState<'console' | 'cli'>('console');
-  const [activeDossierTab, setActiveDossierTab] = useState<'exam' | 'pricing'>('exam');
 
   const handsOn = service.handsOn || getHandsOnGuide(service);
   const intelligence = getDetailedExamAndPricing(service);
@@ -180,234 +179,213 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
           </div>
         </div>
 
-        {/* Deep Intelligence Station: Exam Tips & Pricing Gotchas */}
+        {/* SECTION 1: MẸO THI SÁT ĐỀ & BẪY CÂU HỎI (EXAM INTELLIGENCE) */}
         <div
           style={{
-            background: '#FCFBF9',
+            background: '#FFFDF9',
             border: '1.5px solid var(--text-ink)',
+            borderLeft: '4px solid var(--text-ink)',
             borderRadius: '3px',
+            padding: '18px 20px',
             display: 'flex',
             flexDirection: 'column',
-            overflow: 'hidden'
+            gap: '14px'
           }}
         >
-          {/* Station Tabs */}
-          <div style={{ display: 'flex', borderBottom: '1px solid var(--text-ink)', background: 'var(--bg-card-warm)' }}>
-            <button
-              type="button"
-              onClick={() => setActiveDossierTab('exam')}
-              style={{
-                flex: 1,
-                padding: '12px 16px',
-                border: 'none',
-                borderRight: '1px solid var(--border-dashed)',
-                background: activeDossierTab === 'exam' ? '#FFFFFF' : 'transparent',
-                fontWeight: activeDossierTab === 'exam' ? 800 : 600,
-                color: activeDossierTab === 'exam' ? 'var(--text-ink)' : 'var(--text-muted)',
-                fontSize: '12.5px',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '8px'
-              }}
-            >
-              <LightbulbIcon size={14} color={activeDossierTab === 'exam' ? 'var(--text-ink)' : 'var(--text-muted)'} />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+            <span className="stamp-badge stamp-dark" style={{ fontSize: '11px', letterSpacing: '0.5px', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+              <LightbulbIcon size={13} color="#FFFFFF" />
               MẸO THI SÁT ĐỀ &amp; BẪY CÂU HỎI (EXAM INTELLIGENCE)
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveDossierTab('pricing')}
-              style={{
-                flex: 1,
-                padding: '12px 16px',
-                border: 'none',
-                background: activeDossierTab === 'pricing' ? '#FFFFFF' : 'transparent',
-                fontWeight: activeDossierTab === 'pricing' ? 800 : 600,
-                color: activeDossierTab === 'pricing' ? '#8A5A2B' : 'var(--text-muted)',
-                fontSize: '12.5px',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '8px'
-              }}
-            >
-              <DollarIcon size={14} color={activeDossierTab === 'pricing' ? '#8A5A2B' : 'var(--text-muted)'} />
-              CẠM BẪY CHI PHÍ &amp; CHIẾN THUẬT FINOPS (PRICING GOTCHAS)
-            </button>
+            </span>
+            <span className="mono" style={{ fontSize: '10.5px', color: 'var(--text-muted)' }}>
+              Trọng tâm các kỳ thi AWS SAA • SAP • Specialty
+            </span>
           </div>
 
-          {/* Tab 1: Detailed Exam Tips */}
-          {activeDossierTab === 'exam' && (
-            <div style={{ padding: '20px 22px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              {/* Core Exam Concept */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                <span className="mono" style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-sepia)', textTransform: 'uppercase' }}>
-                  Bản chất câu hỏi thi kiểm tra:
-                </span>
-                <div style={{ fontSize: '13.5px', color: 'var(--text-ink)', lineHeight: 1.55 }}>
-                  {intelligence.exam.coreConcept}
-                </div>
-              </div>
-
-              {/* Keywords to spot */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                <span className="mono" style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-sepia)', textTransform: 'uppercase' }}>
-                  Từ khóa "vàng" nhận diện bài toán trong đề:
-                </span>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-                  {intelligence.exam.keywords.map((kw, i) => (
-                    <span
-                      key={i}
-                      className="mono"
-                      style={{
-                        fontSize: '11px',
-                        fontWeight: 700,
-                        background: 'var(--bg-card-warm)',
-                        border: '1px solid var(--border-dashed)',
-                        padding: '2px 8px',
-                        borderRadius: '2px',
-                        color: 'var(--text-ink)'
-                      }}
-                    >
-                      {kw}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {/* Common Exam Traps & Distractors */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <WarningIcon size={13} color="#C0392B" />
-                  <span className="mono" style={{ fontSize: '11px', fontWeight: 700, color: '#C0392B', textTransform: 'uppercase' }}>
-                    Cạm bẫy câu hỏi thường gặp &amp; Cách loại trừ đáp án nhiễu:
-                  </span>
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                  {intelligence.exam.trapsAndDistractors.map((trap, i) => (
-                    <div
-                      key={i}
-                      style={{
-                        background: '#FFFDF9',
-                        borderLeft: '3px solid #C0392B',
-                        border: '1px solid #F5D3CE',
-                        borderLeftWidth: '3px',
-                        padding: '8px 12px',
-                        fontSize: '13px',
-                        lineHeight: 1.5,
-                        color: 'var(--text-charcoal)'
-                      }}
-                    >
-                      {trap}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* 3-Second Decision Rule */}
-              <div
-                style={{
-                  background: '#F0F7F2',
-                  border: '1px solid #C3E6CB',
-                  borderLeft: '3px solid #2E7D32',
-                  padding: '10px 14px',
-                  borderRadius: '2px',
-                  display: 'flex',
-                  alignItems: 'flex-start',
-                  gap: '8px'
-                }}
-              >
-                <CheckIcon size={14} color="#2E7D32" style={{ marginTop: '2px', flexShrink: 0 }} />
-                <div style={{ fontSize: '13px', color: '#155724', lineHeight: 1.5 }}>
-                  <strong>Quy tắc 3 giây chọn đáp án:</strong> {intelligence.exam.decisionRule}
-                </div>
-              </div>
+          {/* Core concept */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            <span className="mono" style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-sepia)', textTransform: 'uppercase' }}>
+              Bản chất cốt lõi câu hỏi thi kiểm tra:
+            </span>
+            <div style={{ fontSize: '13.5px', color: 'var(--text-ink)', lineHeight: 1.55, fontWeight: 500 }}>
+              {intelligence.exam.coreConcept}
             </div>
-          )}
+          </div>
 
-          {/* Tab 2: Detailed Pricing Gotchas & FinOps */}
-          {activeDossierTab === 'pricing' && (
-            <div style={{ padding: '20px 22px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              {/* Billing Model */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                <span className="mono" style={{ fontSize: '11px', fontWeight: 700, color: '#8A5A2B', textTransform: 'uppercase' }}>
-                  Mô hình tính cước cốt lõi:
+          {/* Keywords to spot in questions */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+            <span className="mono" style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-sepia)', textTransform: 'uppercase' }}>
+              Từ khóa "vàng" nhận diện bài toán trong đề thi:
+            </span>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+              {intelligence.exam.keywords.map((kw, i) => (
+                <span
+                  key={i}
+                  className="mono"
+                  style={{
+                    fontSize: '11px',
+                    fontWeight: 700,
+                    background: 'var(--bg-card-warm)',
+                    border: '1px solid var(--border-dashed)',
+                    padding: '2px 8px',
+                    borderRadius: '2px',
+                    color: 'var(--text-ink)'
+                  }}
+                >
+                  {kw}
                 </span>
-                <div style={{ fontSize: '13.5px', color: 'var(--text-ink)', lineHeight: 1.55 }}>
-                  {intelligence.pricing.billingModel}
-                </div>
-              </div>
-
-              {/* Hidden Costs Grid */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <WarningIcon size={13} color="#8A5A2B" />
-                  <span className="mono" style={{ fontSize: '11px', fontWeight: 700, color: '#8A5A2B', textTransform: 'uppercase' }}>
-                    Các loại chi phí ngầm dễ gây sốc hóa đơn (Hidden Costs):
-                  </span>
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                  {intelligence.pricing.hiddenCosts.map((cost, i) => (
-                    <div
-                      key={i}
-                      style={{
-                        background: '#FAF6EE',
-                        borderLeft: '3px solid #8A5A2B',
-                        border: '1px solid #EADBCE',
-                        borderLeftWidth: '3px',
-                        padding: '8px 12px',
-                        fontSize: '13px',
-                        lineHeight: 1.5,
-                        color: 'var(--text-charcoal)'
-                      }}
-                    >
-                      {cost}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Free Tier Rule & Thresholds */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <KeyIcon size={13} color="var(--text-ink)" />
-                  <span className="mono" style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-sepia)', textTransform: 'uppercase' }}>
-                    Quy tắc Free Tier &amp; Ngưỡng miễn phí:
-                  </span>
-                </div>
-                <div style={{ fontSize: '13px', color: 'var(--text-charcoal)', lineHeight: 1.5, background: 'var(--bg-card-warm)', padding: '8px 12px', borderRadius: '2px', border: '1px solid var(--border-dashed)' }}>
-                  {intelligence.pricing.freeTierRules}
-                </div>
-              </div>
-
-              {/* Cost Optimization Tactics */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                <span className="mono" style={{ fontSize: '11px', fontWeight: 700, color: '#2E7D32', textTransform: 'uppercase' }}>
-                  Chiến thuật cắt giảm chi phí tối đa (FinOps Tactics):
-                </span>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                  {intelligence.pricing.costOptimizationTactics.map((tactic, i) => (
-                    <div
-                      key={i}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'flex-start',
-                        gap: '8px',
-                        fontSize: '13px',
-                        lineHeight: 1.5,
-                        color: '#1E4620'
-                      }}
-                    >
-                      <CheckIcon size={13} color="#2E7D32" style={{ marginTop: '3px', flexShrink: 0 }} />
-                      <span>{tactic}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              ))}
             </div>
-          )}
+          </div>
+
+          {/* Common Exam Traps & Distractors */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <WarningIcon size={13} color="#C0392B" />
+              <span className="mono" style={{ fontSize: '11px', fontWeight: 700, color: '#C0392B', textTransform: 'uppercase' }}>
+                Cạm bẫy câu hỏi thường gặp &amp; Cách loại trừ đáp án nhiễu:
+              </span>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+              {intelligence.exam.trapsAndDistractors.map((trap, i) => (
+                <div
+                  key={i}
+                  style={{
+                    background: '#FFFFFF',
+                    borderLeft: '3px solid #C0392B',
+                    border: '1px solid #F5D3CE',
+                    borderLeftWidth: '3px',
+                    padding: '8px 12px',
+                    fontSize: '13px',
+                    lineHeight: 1.5,
+                    color: 'var(--text-charcoal)'
+                  }}
+                >
+                  {trap}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* 3-Second Decision Rule */}
+          <div
+            style={{
+              background: '#F0F7F2',
+              border: '1px solid #C3E6CB',
+              borderLeft: '3px solid #2E7D32',
+              padding: '10px 14px',
+              borderRadius: '2px',
+              display: 'flex',
+              alignItems: 'flex-start',
+              gap: '8px'
+            }}
+          >
+            <CheckIcon size={14} color="#2E7D32" style={{ marginTop: '2px', flexShrink: 0 }} />
+            <div style={{ fontSize: '13px', color: '#155724', lineHeight: 1.5 }}>
+              <strong>Quy tắc 3 giây chọn đáp án:</strong> {intelligence.exam.decisionRule}
+            </div>
+          </div>
+        </div>
+
+        {/* SECTION 2: CẠM BẪY CHI PHÍ & CHIẾN THUẬT FINOPS */}
+        <div
+          style={{
+            background: '#FAF6EE',
+            border: '1.5px solid #8A5A2B',
+            borderLeft: '4px solid #8A5A2B',
+            borderRadius: '3px',
+            padding: '18px 20px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '14px'
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+            <span className="stamp-badge" style={{ fontSize: '11px', letterSpacing: '0.5px', display: 'inline-flex', alignItems: 'center', gap: '6px', background: '#8A5A2B', color: '#FFFFFF' }}>
+              <DollarIcon size={13} color="#FFFFFF" />
+              CẠM BẪY CHI PHÍ &amp; CHIẾN THUẬT FINOPS (PRICING GOTCHAS)
+            </span>
+            <span className="mono" style={{ fontSize: '10.5px', color: '#8A5A2B' }}>
+              Kiểm soát ngân sách &amp; Tránh phát sinh sốc hóa đơn
+            </span>
+          </div>
+
+          {/* Billing Model */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            <span className="mono" style={{ fontSize: '11px', fontWeight: 700, color: '#8A5A2B', textTransform: 'uppercase' }}>
+              Mô hình tính cước cốt lõi:
+            </span>
+            <div style={{ fontSize: '13.5px', color: 'var(--text-ink)', lineHeight: 1.55 }}>
+              {intelligence.pricing.billingModel}
+            </div>
+          </div>
+
+          {/* Hidden Costs Grid */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <WarningIcon size={13} color="#8A5A2B" />
+              <span className="mono" style={{ fontSize: '11px', fontWeight: 700, color: '#8A5A2B', textTransform: 'uppercase' }}>
+                Các loại chi phí ngầm dễ gây sốc hóa đơn (Hidden Costs):
+              </span>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+              {intelligence.pricing.hiddenCosts.map((cost, i) => (
+                <div
+                  key={i}
+                  style={{
+                    background: '#FFFFFF',
+                    borderLeft: '3px solid #8A5A2B',
+                    border: '1px solid #EADBCE',
+                    borderLeftWidth: '3px',
+                    padding: '8px 12px',
+                    fontSize: '13px',
+                    lineHeight: 1.5,
+                    color: 'var(--text-charcoal)'
+                  }}
+                >
+                  {cost}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Free Tier Rule & Thresholds */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <KeyIcon size={13} color="var(--text-ink)" />
+              <span className="mono" style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-sepia)', textTransform: 'uppercase' }}>
+                Quy tắc Free Tier &amp; Ngưỡng miễn phí:
+              </span>
+            </div>
+            <div style={{ fontSize: '13px', color: 'var(--text-charcoal)', lineHeight: 1.5, background: '#FFFFFF', padding: '8px 12px', borderRadius: '2px', border: '1px solid var(--border-dashed)' }}>
+              {intelligence.pricing.freeTierRules}
+            </div>
+          </div>
+
+          {/* Cost Optimization Tactics */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+            <span className="mono" style={{ fontSize: '11px', fontWeight: 700, color: '#2E7D32', textTransform: 'uppercase' }}>
+              Chiến thuật cắt giảm chi phí tối đa (FinOps Tactics):
+            </span>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+              {intelligence.pricing.costOptimizationTactics.map((tactic, i) => (
+                <div
+                  key={i}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    gap: '8px',
+                    fontSize: '13px',
+                    lineHeight: 1.5,
+                    color: '#1E4620'
+                  }}
+                >
+                  <CheckIcon size={13} color="#2E7D32" style={{ marginTop: '3px', flexShrink: 0 }} />
+                  <span>{tactic}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Docker Lab Suite (If available for local practice) */}
