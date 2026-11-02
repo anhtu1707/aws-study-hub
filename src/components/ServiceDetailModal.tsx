@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AWSService, LearningStatus } from '../types';
 import { getHandsOnGuide } from '../data/handsOnGuides';
 import { getDetailedExamAndPricing } from '../data/examAndPricingDetails';
+import { speakStructuredText, buildDetailedSpeech, subscribeSpeech, stopSpeech } from '../utils/speech';
 import {
   DockerIcon,
   ToolsIcon,
@@ -16,7 +17,9 @@ import {
   CopyIcon,
   DollarIcon,
   KeyIcon,
-  ExternalLinkIcon
+  ExternalLinkIcon,
+  SpeakerIcon,
+  StopIcon
 } from './Icons';
 
 interface ServiceDetailModalProps {
@@ -38,6 +41,13 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
 }) => {
   const [copied, setCopied] = useState(false);
   const [handsOnMode, setHandsOnMode] = useState<'console' | 'cli'>('console');
+  const [isSpeaking, setIsSpeaking] = useState(false);
+
+  useEffect(() => {
+    return subscribeSpeech((speakingId) => {
+      setIsSpeaking(speakingId === `modal-${service.id}`);
+    });
+  }, [service.id]);
 
   const handsOn = service.handsOn || getHandsOnGuide(service);
   const intelligence = getDetailedExamAndPricing(service);
@@ -55,7 +65,10 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
         zIndex: 100,
         padding: '20px'
       }}
-      onClick={onClose}
+      onClick={() => {
+        stopSpeech();
+        onClose();
+      }}
     >
       <div
         className="torn-both"
@@ -125,25 +138,53 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
             </h3>
           </div>
 
-          <button
-            type="button"
-            onClick={onClose}
-            style={{
-              border: '1px solid var(--text-ink)',
-              background: 'var(--bg-card-warm)',
-              color: 'var(--text-ink)',
-              width: '34px',
-              height: '34px',
-              borderRadius: '2px',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}
-            aria-label="Đóng cửa sổ"
-          >
-            <CloseIcon size={14} color="var(--text-ink)" />
-          </button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <button
+              type="button"
+              onClick={() => speakStructuredText(`modal-${service.id}`, buildDetailedSpeech(service))}
+              title={isSpeaking ? 'Bấm để dừng giọng đọc' : 'Nghe toàn bộ hồ sơ (Bản chất, Mẹo thi & Bẫy chi phí) khi rảnh tay'}
+              style={{
+                border: isSpeaking ? '1px solid #C0392B' : '1px solid var(--text-ink)',
+                background: isSpeaking ? '#FDF2F0' : 'var(--bg-card-warm)',
+                color: isSpeaking ? '#C0392B' : 'var(--text-ink)',
+                padding: '7px 12px',
+                borderRadius: '2px',
+                cursor: 'pointer',
+                fontSize: '11.5px',
+                fontWeight: 700,
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px'
+              }}
+              aria-label="Nghe đọc hồ sơ âm thanh"
+            >
+              {isSpeaking ? <StopIcon size={12} color="#C0392B" /> : <SpeakerIcon size={12} color="var(--text-ink)" />}
+              <span>{isSpeaking ? 'Dừng đọc' : 'Nghe Hồ Sơ (Audio)'}</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                stopSpeech();
+                onClose();
+              }}
+              style={{
+                border: '1px solid var(--text-ink)',
+                background: 'var(--bg-card-warm)',
+                color: 'var(--text-ink)',
+                width: '34px',
+                height: '34px',
+                borderRadius: '2px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+              aria-label="Đóng cửa sổ"
+            >
+              <CloseIcon size={14} color="var(--text-ink)" />
+            </button>
+          </div>
         </div>
 
         {/* Full Architectural Explanation */}

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { AWSService, LearningStatus } from '../types';
-import { DockerIcon, ToolsIcon } from './Icons';
+import { DockerIcon, ToolsIcon, SpeakerIcon, StopIcon } from './Icons';
+import { speakStructuredText, buildCardSpeech, subscribeSpeech } from '../utils/speech';
 
 interface ServiceCardProps {
   service: AWSService;
@@ -15,6 +16,14 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
   onStatusChange,
   onSelect
 }) => {
+  const [isSpeaking, setIsSpeaking] = useState(false);
+
+  useEffect(() => {
+    return subscribeSpeech((speakingId) => {
+      setIsSpeaking(speakingId === service.id);
+    });
+  }, [service.id]);
+
   const nextStatusMap: Record<LearningStatus, LearningStatus> = {
     not_started: 'in_progress',
     in_progress: 'mastered',
@@ -158,35 +167,64 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
           </span>
         </div>
 
-        {/* Status Toggle Button */}
-        <button
-          type="button"
-          onClick={(e) => {
-            e.stopPropagation();
-            onStatusChange(nextStatusMap[status]);
-          }}
-          title="Nhấn để đổi trạng thái học tập"
-          style={{
-            border: `1px solid ${statusConfig.border}`,
-            background: statusConfig.bg,
-            color: statusConfig.color,
-            fontSize: '11px',
-            fontWeight: 700,
-            padding: '3px 9px',
-            borderRadius: '2px',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '4px'
-          }}
-        >
-          {status === 'mastered' && (
-            <svg style={{ width: '12px', height: '12px', stroke: 'currentColor', fill: 'none', strokeWidth: 3 }} viewBox="0 0 24 24">
-              <polyline points="20 6 9 17 4 12" />
-            </svg>
-          )}
-          {statusConfig.label}
-        </button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          {/* Hands-Free Text to Speech Button */}
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              speakStructuredText(service.id, buildCardSpeech(service));
+            }}
+            title={isSpeaking ? 'Bấm để dừng giọng đọc' : 'Nghe giọng đọc tóm tắt (Rảnh tay)'}
+            style={{
+              border: isSpeaking ? '1px solid #C0392B' : '1px solid var(--border-dashed)',
+              background: isSpeaking ? '#FDF2F0' : 'var(--bg-card-warm)',
+              color: isSpeaking ? '#C0392B' : 'var(--text-ink)',
+              fontSize: '11px',
+              fontWeight: 700,
+              padding: '3px 8px',
+              borderRadius: '2px',
+              cursor: 'pointer',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '4px'
+            }}
+            aria-label={isSpeaking ? 'Dừng đọc' : 'Nghe tóm tắt'}
+          >
+            {isSpeaking ? <StopIcon size={11} color="#C0392B" /> : <SpeakerIcon size={11} color="var(--text-ink)" />}
+            <span>{isSpeaking ? 'Dừng' : 'Nghe'}</span>
+          </button>
+
+          {/* Status Toggle Button */}
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              onStatusChange(nextStatusMap[status]);
+            }}
+            title="Nhấn để đổi trạng thái học tập"
+            style={{
+              border: `1px solid ${statusConfig.border}`,
+              background: statusConfig.bg,
+              color: statusConfig.color,
+              fontSize: '11px',
+              fontWeight: 700,
+              padding: '3px 9px',
+              borderRadius: '2px',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '4px'
+            }}
+          >
+            {status === 'mastered' && (
+              <svg style={{ width: '12px', height: '12px', stroke: 'currentColor', fill: 'none', strokeWidth: 3 }} viewBox="0 0 24 24">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            )}
+            {statusConfig.label}
+          </button>
+        </div>
       </div>
 
       {/* Service Name & Acronym */}

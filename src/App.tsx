@@ -7,7 +7,7 @@ import { ServiceCard } from './components/ServiceCard';
 import { ServiceDetailModal } from './components/ServiceDetailModal';
 import { QuizView } from './components/QuizView';
 import { ArchitectureView } from './components/ArchitectureView';
-import { SearchIcon } from './components/Icons';
+import { SearchIcon, ArrowUpIcon } from './components/Icons';
 
 export function App() {
   const [activeTab, setActiveTab] = useState<'catalog' | 'quiz' | 'patterns'>('catalog');
@@ -17,6 +17,10 @@ export function App() {
   const [selectedStatus, setSelectedStatus] = useState<LearningStatus | 'all'>('all');
   const [onlyFreeTier, setOnlyFreeTier] = useState(false);
   const [selectedService, setSelectedService] = useState<AWSService | null>(null);
+
+  // Pagination & Scroll states
+  const [visibleCount, setVisibleCount] = useState(24);
+  const [showBackToTop, setShowBackToTop] = useState(false);
 
   // LocalStorage state for progress
   const [statusMap, setStatusMap] = useState<Record<string, LearningStatus>>(() => {
@@ -113,6 +117,29 @@ export function App() {
       return true;
     });
   }, [searchQuery, selectedCategory, selectedLevel, selectedStatus, onlyFreeTier, statusMap]);
+
+  // Reset pagination when search or filters change
+  useEffect(() => {
+    setVisibleCount(24);
+  }, [searchQuery, selectedCategory, selectedLevel, selectedStatus, onlyFreeTier]);
+
+  // Paginated visible services
+  const displayedServices = useMemo(() => {
+    return filteredServices.slice(0, visibleCount);
+  }, [filteredServices, visibleCount]);
+
+  // Back to top scroll listener
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowBackToTop(window.scrollY > 350);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   // Handlers
   const handleStatusChange = (serviceId: string, newStatus: LearningStatus) => {
@@ -234,36 +261,119 @@ export function App() {
                 borderBottom: '2px dashed var(--border-dashed)',
                 paddingBottom: '10px',
                 fontSize: '13px',
-                color: 'var(--text-sepia)'
+                color: 'var(--text-sepia)',
+                flexWrap: 'wrap',
+                gap: '8px'
               }}
             >
               <div>
-                Đang hiển thị: <strong style={{ color: 'var(--text-ink)' }}>{filteredServices.length}</strong> dịch vụ phù hợp
+                Đang hiển thị: <strong style={{ color: 'var(--text-ink)' }}>{displayedServices.length}</strong> / <strong>{filteredServices.length}</strong> dịch vụ phù hợp
               </div>
               <div style={{ fontSize: '12px' }}>
-                Gợi ý: Nhấn vào thẻ để xem phân tích chi tiết &amp; lưu ghi chú
+                Gợi ý: Nhấn vào thẻ để xem chi tiết • Bấm biểu tượng Loa để nghe giọng đọc khi bận tay
               </div>
             </div>
 
             {/* Services Grid */}
             {filteredServices.length > 0 ? (
-              <div
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fill, minmax(360px, 1fr))',
-                  gap: '26px'
-                }}
-              >
-                {filteredServices.map((service) => (
-                  <ServiceCard
-                    key={service.id}
-                    service={service}
-                    status={statusMap[service.id] || 'not_started'}
-                    onStatusChange={(newSt) => handleStatusChange(service.id, newSt)}
-                    onSelect={() => setSelectedService(service)}
-                  />
-                ))}
-              </div>
+              <>
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fill, minmax(360px, 1fr))',
+                    gap: '26px'
+                  }}
+                >
+                  {displayedServices.map((service) => (
+                    <ServiceCard
+                      key={service.id}
+                      service={service}
+                      status={statusMap[service.id] || 'not_started'}
+                      onStatusChange={(newSt) => handleStatusChange(service.id, newSt)}
+                      onSelect={() => setSelectedService(service)}
+                    />
+                  ))}
+                </div>
+
+                {/* Load More Controls */}
+                {visibleCount < filteredServices.length && (
+                  <div
+                    className="paper-shadow"
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      gap: '12px',
+                      marginTop: '28px',
+                      padding: '24px 20px',
+                      background: 'var(--bg-card)',
+                      border: '1.5px dashed var(--border-dashed)',
+                      borderRadius: '3px'
+                    }}
+                  >
+                    <div className="mono" style={{ fontSize: '13px', color: 'var(--text-charcoal)' }}>
+                      Đã tải: <strong>{displayedServices.length}</strong> / <strong>{filteredServices.length}</strong> dịch vụ ({Math.round((displayedServices.length / filteredServices.length) * 100)}%)
+                    </div>
+
+                    <div style={{ width: '100%', maxWidth: '280px', height: '6px', background: 'var(--bg-card-warm)', borderRadius: '3px', overflow: 'hidden', border: '1px solid var(--border-dashed)' }}>
+                      <div style={{ width: `${(displayedServices.length / filteredServices.length) * 100}%`, height: '100%', background: 'var(--text-ink)', transition: 'width 0.3s ease' }} />
+                    </div>
+
+                    <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'center' }}>
+                      <button
+                        type="button"
+                        onClick={() => setVisibleCount((prev) => Math.min(prev + 24, filteredServices.length))}
+                        style={{
+                          background: 'var(--text-ink)',
+                          color: '#FFFFFF',
+                          border: '1.5px solid var(--text-ink)',
+                          padding: '10px 20px',
+                          fontSize: '13px',
+                          fontWeight: 700,
+                          borderRadius: '2px',
+                          cursor: 'pointer',
+                          boxShadow: '0 4px 12px rgba(20,15,10,0.1)'
+                        }}
+                      >
+                        Tải thêm 24 dịch vụ nữa (Còn {filteredServices.length - displayedServices.length})
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => setVisibleCount(filteredServices.length)}
+                        style={{
+                          background: 'var(--bg-card-warm)',
+                          color: 'var(--text-ink)',
+                          border: '1px solid var(--border-dashed)',
+                          padding: '10px 18px',
+                          fontSize: '13px',
+                          fontWeight: 600,
+                          borderRadius: '2px',
+                          cursor: 'pointer'
+                        }}
+                      >
+                        Hiển thị tất cả ({filteredServices.length})
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* All Services Loaded Indicator */}
+                {filteredServices.length > 24 && visibleCount >= filteredServices.length && (
+                  <div
+                    style={{
+                      textAlign: 'center',
+                      marginTop: '24px',
+                      padding: '12px',
+                      fontSize: '12.5px',
+                      color: 'var(--text-sepia)',
+                      borderTop: '1px dashed var(--border-light)'
+                    }}
+                  >
+                    ✓ Đã tải hiển thị toàn bộ {filteredServices.length} dịch vụ AWS
+                  </div>
+                )}
+              </>
             ) : (
               <div
                 className="torn-both"
@@ -366,6 +476,39 @@ export function App() {
         </footer>
 
       </div>
+
+      {/* Floating Back to Top Button */}
+      {showBackToTop && (
+        <button
+          type="button"
+          onClick={scrollToTop}
+          title="Quay lại đầu trang"
+          aria-label="Quay lại đầu trang"
+          className="paper-shadow"
+          style={{
+            position: 'fixed',
+            bottom: '28px',
+            right: '28px',
+            zIndex: 99,
+            background: '#FFFFFF',
+            border: '1.5px solid var(--text-ink)',
+            color: 'var(--text-ink)',
+            padding: '10px 16px',
+            borderRadius: '3px',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            fontSize: '12.5px',
+            fontWeight: 700,
+            boxShadow: '0 6px 20px rgba(20,15,10,0.18)',
+            transition: 'transform 0.15s ease'
+          }}
+        >
+          <ArrowUpIcon size={14} color="var(--text-ink)" />
+          <span>Đầu trang</span>
+        </button>
+      )}
     </div>
   );
 }

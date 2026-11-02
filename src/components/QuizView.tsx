@@ -1,21 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FLASHCARDS } from '../data/services';
-import { CheckIcon, TargetIcon } from './Icons';
+import { CheckIcon, TargetIcon, SpeakerIcon, StopIcon } from './Icons';
+import { speakStructuredText, buildFlashcardSpeech, subscribeSpeech, stopSpeech } from '../utils/speech';
 
 export const QuizView: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isRevealed, setIsRevealed] = useState(false);
   const [answeredMap, setAnsweredMap] = useState<Record<string, boolean>>({});
+  const [isSpeaking, setIsSpeaking] = useState(false);
 
   const card = FLASHCARDS[currentIndex];
   const isMastered = Boolean(answeredMap[card.id]);
 
+  useEffect(() => {
+    return subscribeSpeech((speakingId) => {
+      setIsSpeaking(speakingId === `card-${card.id}`);
+    });
+  }, [card.id]);
+
   const handleNext = () => {
+    stopSpeech();
     setIsRevealed(false);
     setCurrentIndex((prev) => (prev + 1) % FLASHCARDS.length);
   };
 
   const handlePrev = () => {
+    stopSpeech();
     setIsRevealed(false);
     setCurrentIndex((prev) => (prev - 1 + FLASHCARDS.length) % FLASHCARDS.length);
   };
@@ -78,36 +88,60 @@ export const QuizView: React.FC = () => {
         {/* Card Content Top */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
 
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
             <span className="mono stamp-badge stamp-outline">
               MÃ ĐỀ: {card.examCode}
             </span>
-            <button
-              type="button"
-              onClick={toggleMastered}
-              style={{
-                background: isMastered ? 'var(--text-ink)' : 'var(--bg-card-warm)',
-                color: isMastered ? '#FFFFFF' : 'var(--text-ink)',
-                border: '1px solid var(--border-dashed)',
-                padding: '4px 10px',
-                fontSize: '11.5px',
-                fontWeight: 700,
-                borderRadius: '2px',
-                cursor: 'pointer',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '6px'
-              }}
-            >
-              {isMastered ? (
-                <>
-                  <CheckIcon size={12} color={isMastered ? '#FFFFFF' : '#155724'} />
-                  <span>Đã thuộc bài toán này</span>
-                </>
-              ) : (
-                <span>Đánh dấu đã thuộc</span>
-              )}
-            </button>
+            <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+              <button
+                type="button"
+                onClick={() => speakStructuredText(`card-${card.id}`, buildFlashcardSpeech(card, isRevealed))}
+                title={isSpeaking ? 'Bấm để dừng đọc' : 'Nghe tình huống và lời giải (Hands-free audio)'}
+                style={{
+                  background: isSpeaking ? '#FDF2F0' : 'var(--bg-card-warm)',
+                  color: isSpeaking ? '#C0392B' : 'var(--text-ink)',
+                  border: isSpeaking ? '1px solid #C0392B' : '1px solid var(--border-dashed)',
+                  padding: '4px 10px',
+                  fontSize: '11.5px',
+                  fontWeight: 700,
+                  borderRadius: '2px',
+                  cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px'
+                }}
+              >
+                {isSpeaking ? <StopIcon size={12} color="#C0392B" /> : <SpeakerIcon size={12} color="var(--text-ink)" />}
+                <span>{isSpeaking ? 'Dừng đọc' : 'Nghe Audio'}</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={toggleMastered}
+                style={{
+                  background: isMastered ? 'var(--text-ink)' : 'var(--bg-card-warm)',
+                  color: isMastered ? '#FFFFFF' : 'var(--text-ink)',
+                  border: '1px solid var(--border-dashed)',
+                  padding: '4px 10px',
+                  fontSize: '11.5px',
+                  fontWeight: 700,
+                  borderRadius: '2px',
+                  cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px'
+                }}
+              >
+                {isMastered ? (
+                  <>
+                    <CheckIcon size={12} color={isMastered ? '#FFFFFF' : '#155724'} />
+                    <span>Đã thuộc</span>
+                  </>
+                ) : (
+                  <span>Đánh dấu đã thuộc</span>
+                )}
+              </button>
+            </div>
           </div>
 
           {/* Scenario */}
