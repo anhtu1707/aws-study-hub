@@ -5,15 +5,17 @@ export type AWSCategory =
   | 'networking'
   | 'security'
   | 'serverless'
-  | 'containers'
   | 'aiml'
   | 'management'
   | 'analytics'
   | 'devtools'
   | 'migration'
+  | 'iot'
+  | 'business'
+  | 'media'
   | 'cost';
 
-export type ExamLevel = 'CLF' | 'SAA' | 'DVA' | 'SOA' | 'SAP' | 'MLS' | 'ANS';
+export type ExamLevel = 'CLF' | 'SAA' | 'DVA' | 'SOA' | 'SAP' | 'MLS' | 'ANS' | 'DBS' | 'DAS' | 'SCS';
 
 export type LearningStatus = 'not_started' | 'in_progress' | 'mastered';
 

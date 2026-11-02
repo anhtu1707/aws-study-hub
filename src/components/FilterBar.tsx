@@ -41,10 +41,13 @@ export const FilterBar: React.FC<FilterBarProps> = ({
     { id: 'analytics', label: 'Analytics' },
     { id: 'devtools', label: 'CI/CD & DevTools' },
     { id: 'migration', label: 'Migration' },
+    { id: 'iot', label: 'IoT & Edge' },
+    { id: 'business', label: 'Business & Apps' },
+    { id: 'media', label: 'Media & Games' },
     { id: 'cost', label: 'Cost & Gov' }
   ];
 
-  const levels: (ExamLevel | 'all')[] = ['all', 'CLF', 'SAA', 'DVA', 'SOA', 'SAP'];
+  const levels: (ExamLevel | 'all')[] = ['all', 'CLF', 'SAA', 'DVA', 'SOA', 'SAP', 'SCS', 'ANS', 'DBS', 'DAS', 'MLS'];
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
