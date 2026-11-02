@@ -205,6 +205,103 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
 
         </div>
 
+        {/* Docker Lab Suite (If available for local practice) */}
+        {service.dockerLab && (
+          <div
+            style={{
+              background: 'var(--bg-card-warm)',
+              border: '1.5px dashed var(--text-ink)',
+              padding: '16px 18px',
+              borderRadius: '3px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '12px'
+            }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span className="stamp-badge stamp-dark" style={{ fontSize: '11px' }}>
+                🐳 PHÒNG LAB DOCKER CỤC BỘ (THỰC HÀNH TEST)
+              </span>
+              <span className="mono" style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
+                Target: {service.dockerLab.profile}
+              </span>
+            </div>
+
+            <div style={{ fontSize: '13px', color: 'var(--text-charcoal)' }}>
+              {service.dockerLab.description}
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '10px' }}>
+              <div style={{ background: '#FFFFFF', border: '1px solid var(--border-dashed)', padding: '10px 12px', borderRadius: '2px' }}>
+                <div className="mono" style={{ fontSize: '10px', color: 'var(--text-muted)', marginBottom: '4px' }}>
+                  LỆNH KHỞI ĐỘNG LAB:
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <code className="mono" style={{ fontSize: '12px', fontWeight: 700, color: 'var(--text-ink)' }}>
+                    {service.dockerLab.command}
+                  </code>
+                  <button
+                    type="button"
+                    onClick={() => navigator.clipboard.writeText(service.dockerLab!.command)}
+                    style={{ fontSize: '11px', background: 'transparent', border: '1px solid var(--border-dashed)', padding: '2px 6px', borderRadius: '2px', cursor: 'pointer' }}
+                  >
+                    Copy
+                  </button>
+                </div>
+              </div>
+
+              <div style={{ background: '#FFFFFF', border: '1px solid var(--border-dashed)', padding: '10px 12px', borderRadius: '2px' }}>
+                <div className="mono" style={{ fontSize: '10px', color: 'var(--text-muted)', marginBottom: '4px' }}>
+                  LỆNH TẮT SAU KHI HỌC XONG:
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <code className="mono" style={{ fontSize: '12px', fontWeight: 700, color: '#8A5A2B' }}>
+                    {service.dockerLab.stopCommand}
+                  </code>
+                  <button
+                    type="button"
+                    onClick={() => navigator.clipboard.writeText(service.dockerLab!.stopCommand)}
+                    style={{ fontSize: '11px', background: 'transparent', border: '1px solid var(--border-dashed)', padding: '2px 6px', borderRadius: '2px', cursor: 'pointer' }}
+                  >
+                    Copy
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '10px', paddingTop: '4px' }}>
+              <div style={{ fontSize: '12px', color: 'var(--text-sepia)' }}>
+                Endpoint: <code className="mono" style={{ color: 'var(--text-ink)', fontWeight: 600 }}>{service.dockerLab.endpoint}</code>
+                {service.dockerLab.guiUrl && (
+                  <span style={{ marginLeft: '12px' }}>
+                    Web GUI: <a href={service.dockerLab.guiUrl} target="_blank" rel="noreferrer" style={{ textDecoration: 'underline', fontWeight: 700, color: 'var(--text-ink)' }}>Mở Web Console ↗</a>
+                  </span>
+                )}
+              </div>
+
+              <button
+                type="button"
+                onClick={() => {
+                  onStatusChange('mastered');
+                  alert('✓ Đã lưu tiến độ: Dịch vụ này đã được đánh dấu là ĐÃ THUỘC!');
+                }}
+                style={{
+                  background: 'var(--text-ink)',
+                  color: '#FFFFFF',
+                  border: 'none',
+                  padding: '7px 14px',
+                  fontSize: '11.5px',
+                  fontWeight: 700,
+                  borderRadius: '2px',
+                  cursor: 'pointer'
+                }}
+              >
+                ✓ Đã Hoàn Thành Lab &amp; Lưu Tiến Độ
+              </button>
+            </div>
+          </div>
+        )}
+
         {/* CLI Snippet Box */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>

@@ -32,7 +32,14 @@ export const AWS_SERVICES: AWSService[] = [
     pricingGotcha: 'Miễn phí 1 triệu request và 400,000 GB-giây mỗi tháng (Free Tier vĩnh viễn). Tối ưu RAM sẽ tự động tăng CPU tương ứng.',
     cliSnippet: 'aws lambda invoke --function-name ProcessOrder --payload \'{"id": 101}\' response.json',
     relatedServices: ['API Gateway', 'S3', 'SQS', 'EventBridge'],
-    freeTier: true
+    freeTier: true,
+    dockerLab: {
+      profile: 'core',
+      command: '.\\lab.ps1 start core',
+      stopCommand: '.\\lab.ps1 stop core',
+      endpoint: 'http://localhost:4566',
+      description: 'Chạy giả lập AWS Lambda Serverless trong LocalStack'
+    }
   },
   {
     id: 'ecs',
@@ -162,7 +169,15 @@ export const AWS_SERVICES: AWSService[] = [
     pricingGotcha: 'Phí gồm dung lượng lưu trữ (GB/tháng), số lượng request (PUT/GET) và phí truyền dữ liệu ra Internet (Data Transfer Out).',
     cliSnippet: 'aws s3 sync ./dist s3://my-static-web --acl public-read',
     relatedServices: ['CloudFront', 'Glacier', 'Lambda', 'KMS'],
-    freeTier: true
+    freeTier: true,
+    dockerLab: {
+      profile: 's3',
+      command: '.\\lab.ps1 start s3',
+      stopCommand: '.\\lab.ps1 stop s3',
+      endpoint: 'http://localhost:9000',
+      guiUrl: 'http://localhost:9001',
+      description: 'MinIO S3 Server + Web Console UI xem bucket, object lock, versioning'
+    }
   },
   {
     id: 'ebs',
@@ -276,7 +291,14 @@ export const AWS_SERVICES: AWSService[] = [
     pricingGotcha: 'Multi-AZ nhân đôi chi phí instance; nhớ tính thêm chi phí lưu trữ EBS và phí I/O (với gp2 hoặc io1).',
     cliSnippet: 'aws rds create-db-instance --db-instance-identifier prod-db --db-instance-class db.t4g.small --engine postgres',
     relatedServices: ['Aurora', 'Secrets Manager', 'EC2', 'KMS'],
-    freeTier: true
+    freeTier: true,
+    dockerLab: {
+      profile: 'rds',
+      command: '.\\lab.ps1 start rds',
+      stopCommand: '.\\lab.ps1 stop rds',
+      endpoint: 'localhost:5432 (Postgres) / 3306 (MySQL)',
+      description: 'Postgres 16 & MySQL 8 mô phỏng RDS Aurora Multi-Engine'
+    }
   },
   {
     id: 'aurora',
@@ -292,7 +314,14 @@ export const AWS_SERVICES: AWSService[] = [
     pricingGotcha: 'Chi phí tính theo instance + storage + request I/O (hoặc chọn gói Aurora I/O-Optimized để cố định giá I/O).',
     cliSnippet: 'aws rds create-db-cluster --db-cluster-identifier aurora-prod --engine aurora-postgresql',
     relatedServices: ['RDS', 'Lambda', 'Secrets Manager'],
-    freeTier: false
+    freeTier: false,
+    dockerLab: {
+      profile: 'rds',
+      command: '.\\lab.ps1 start rds',
+      stopCommand: '.\\lab.ps1 stop rds',
+      endpoint: 'localhost:5432 (Postgres)',
+      description: 'PostgreSQL 16 mô phỏng Aurora Cluster'
+    }
   },
   {
     id: 'dynamodb',
@@ -308,7 +337,15 @@ export const AWS_SERVICES: AWSService[] = [
     pricingGotcha: 'Cẩn thận chế độ Provisioned nếu dự trù dư thừa WCU/RCU; On-Demand phù hợp cho traffic biến động.',
     cliSnippet: 'aws dynamodb put-item --table-name Users --item \'{"UserId":{"S":"user123"},"Points":{"N":"500"}}\'',
     relatedServices: ['Lambda', 'DAX', 'API Gateway', 'Cognito'],
-    freeTier: true
+    freeTier: true,
+    dockerLab: {
+      profile: 'dynamodb',
+      command: '.\\lab.ps1 start dynamodb',
+      stopCommand: '.\\lab.ps1 stop dynamodb',
+      endpoint: 'http://localhost:8000',
+      guiUrl: 'http://localhost:8001',
+      description: 'DynamoDB Local + DynamoDB Admin Web GUI xem bảng trực quan'
+    }
   },
   {
     id: 'elasticache',
@@ -324,7 +361,14 @@ export const AWS_SERVICES: AWSService[] = [
     pricingGotcha: 'RAM là tài nguyên đắt đỏ; cần cấu hình chính sách xoay vòng bộ nhớ (LRU eviction policy) chuẩn xác.',
     cliSnippet: 'aws elasticache create-cache-cluster --cache-cluster-id web-cache --cache-node-type cache.t4g.micro --engine redis',
     relatedServices: ['RDS', 'Aurora', 'EC2', 'Lambda'],
-    freeTier: true
+    freeTier: true,
+    dockerLab: {
+      profile: 'redis',
+      command: '.\\lab.ps1 start redis',
+      stopCommand: '.\\lab.ps1 stop redis',
+      endpoint: 'localhost:6379',
+      description: 'Redis Alpine Cache mô phỏng ElastiCache Cluster'
+    }
   },
   {
     id: 'neptune',
@@ -536,7 +580,14 @@ export const AWS_SERVICES: AWSService[] = [
     pricingGotcha: '$1/tháng cho mỗi khóa do khách hàng tạo (Customer Managed Key) + phí gọi API mã hóa/giải mã.',
     cliSnippet: 'aws kms encrypt --key-id 1234abcd --plaintext "SecretData" --output text',
     relatedServices: ['CloudTrail', 'S3', 'EBS', 'Secrets Manager'],
-    freeTier: true
+    freeTier: true,
+    dockerLab: {
+      profile: 'core',
+      command: '.\\lab.ps1 start core',
+      stopCommand: '.\\lab.ps1 stop core',
+      endpoint: 'http://localhost:4566',
+      description: 'LocalStack KMS CMK & Envelope Encryption'
+    }
   },
   {
     id: 'secrets-manager',
@@ -552,7 +603,14 @@ export const AWS_SERVICES: AWSService[] = [
     pricingGotcha: '$0.40/tháng cho mỗi secret lưu trữ + $0.05 cho mỗi 10,000 lượt gọi API lấy secret.',
     cliSnippet: 'aws secretsmanager get-secret-value --secret-id prod/db/creds',
     relatedServices: ['RDS', 'Lambda', 'KMS', 'IAM'],
-    freeTier: false
+    freeTier: false,
+    dockerLab: {
+      profile: 'core',
+      command: '.\\lab.ps1 start core',
+      stopCommand: '.\\lab.ps1 stop core',
+      endpoint: 'http://localhost:4566',
+      description: 'LocalStack Secrets Manager Secret Storage'
+    }
   },
   {
     id: 'waf',
@@ -634,7 +692,14 @@ export const AWS_SERVICES: AWSService[] = [
     pricingGotcha: 'Miễn phí 1 triệu request mỗi tháng (Free Tier vĩnh viễn), sau đó chỉ ~$0.40 trên mỗi triệu request.',
     cliSnippet: 'aws sqs send-message --queue-url https://sqs.../orders --message-body \'{"id":1}\'',
     relatedServices: ['Lambda', 'SNS', 'EC2 Auto Scaling'],
-    freeTier: true
+    freeTier: true,
+    dockerLab: {
+      profile: 'core',
+      command: '.\\lab.ps1 start core',
+      stopCommand: '.\\lab.ps1 stop core',
+      endpoint: 'http://localhost:4566',
+      description: 'LocalStack SQS Standard & FIFO Message Queue'
+    }
   },
   {
     id: 'sns',
@@ -650,7 +715,14 @@ export const AWS_SERVICES: AWSService[] = [
     pricingGotcha: 'Gửi Email và HTTP request rất rẻ; cẩn thận chi phí gửi SMS di động tới các quốc gia khác nhau.',
     cliSnippet: 'aws sns publish --topic-arn arn:aws:sns:...:Alerts --message "Server CPU High"',
     relatedServices: ['SQS', 'Lambda', 'CloudWatch Alarms'],
-    freeTier: true
+    freeTier: true,
+    dockerLab: {
+      profile: 'core',
+      command: '.\\lab.ps1 start core',
+      stopCommand: '.\\lab.ps1 stop core',
+      endpoint: 'http://localhost:4566',
+      description: 'LocalStack SNS Pub/Sub & Fan-out Architectures'
+    }
   },
   {
     id: 'eventbridge',
@@ -666,7 +738,14 @@ export const AWS_SERVICES: AWSService[] = [
     pricingGotcha: 'Tất cả sự kiện phát sinh từ các dịch vụ AWS là hoàn toàn MIỄN PHÍ; chỉ tính $1/triệu sự kiện tùy chỉnh hoặc SaaS.',
     cliSnippet: 'aws events put-events --entries file://event.json',
     relatedServices: ['Lambda', 'Step Functions', 'CloudTrail', 'SQS'],
-    freeTier: true
+    freeTier: true,
+    dockerLab: {
+      profile: 'core',
+      command: '.\\lab.ps1 start core',
+      stopCommand: '.\\lab.ps1 stop core',
+      endpoint: 'http://localhost:4566',
+      description: 'LocalStack EventBridge Event Bus & Rules'
+    }
   },
   {
     id: 'step-functions',
@@ -682,7 +761,14 @@ export const AWS_SERVICES: AWSService[] = [
     pricingGotcha: 'Standard tính phí theo số bước chuyển trạng thái (State Transitions - $0.025/1,000 bước); Express tính theo thời gian chạy.',
     cliSnippet: 'aws stepfunctions start-execution --state-machine-arn arn:aws:states:...',
     relatedServices: ['Lambda', 'SNS', 'SQS', 'DynamoDB'],
-    freeTier: true
+    freeTier: true,
+    dockerLab: {
+      profile: 'core',
+      command: '.\\lab.ps1 start core',
+      stopCommand: '.\\lab.ps1 stop core',
+      endpoint: 'http://localhost:4566',
+      description: 'LocalStack Step Functions State Machines'
+    }
   },
 
   // 7. AI & MACHINE LEARNING
@@ -700,7 +786,15 @@ export const AWS_SERVICES: AWSService[] = [
     pricingGotcha: 'Tính tiền theo số lượng token đầu vào (Input Tokens) và token sinh ra (Output Tokens) theo từng model.',
     cliSnippet: 'aws bedrock-runtime invoke-model --model-id anthropic.claude-3-sonnet-20240229-v1:0 ...',
     relatedServices: ['S3', 'OpenSearch', 'Lambda', 'IAM'],
-    freeTier: false
+    freeTier: false,
+    dockerLab: {
+      profile: 'search',
+      command: '.\\lab.ps1 start search',
+      stopCommand: '.\\lab.ps1 stop search',
+      endpoint: 'http://localhost:9200',
+      guiUrl: 'http://localhost:5601',
+      description: 'OpenSearch 2.14 Vector Database mô phỏng Knowledge Bases RAG'
+    }
   },
   {
     id: 'sagemaker',

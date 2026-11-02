@@ -1,22 +1,19 @@
 version: '3.8'
 
 # ==============================================================================
-# AWS ENTERPRISE LAB SUITE (SAP-C02 & SPECIALTY DOMAINS)
-# Quản lý theo Profile để tiết kiệm RAM:
-#   docker compose --profile core up -d       (LocalStack S3, SQS, SNS, Lambda...)
-#   docker compose --profile nosql up -d      (DynamoDB + Web GUI)
-#   docker compose --profile database up -d   (RDS Aurora Postgres + Redis)
-#   docker compose --profile search up -d     (OpenSearch + Dashboards)
-#   docker compose --profile streaming up -d  (Amazon MQ RabbitMQ)
-#   docker compose --profile all up -d        (Bật toàn bộ bộ lab)
+# AWS FULL PROFESSIONAL & SPECIALTY LAB SUITE
+# Học dịch vụ nào -> Bật đúng container dịch vụ đó -> Học xong tắt giải phóng RAM
 # ==============================================================================
 
 services:
-  # 1. CORE AWS SERVICES (LocalStack All-in-One)
+  # ----------------------------------------------------------------------------
+  # 1. CORE SERVERLESS & CLOUD SERVICES (LocalStack All-in-One)
+  # Phù hợp: SAA-C03, SAP-C02 (S3, SQS, SNS, Lambda, Secrets Manager, KMS, EventBridge, Step Functions)
+  # ----------------------------------------------------------------------------
   localstack:
     image: localstack/localstack:latest
     container_name: aws_localstack
-    profiles: ["core", "all"]
+    profiles: ["core", "serverless", "all"]
     ports:
       - "4566:4566"
     environment:
@@ -29,11 +26,14 @@ services:
     networks:
       - aws_lab_net
 
-  # 2. DEDICATED NOSQL & WEB GUI (DynamoDB + DynamoDB Admin)
+  # ----------------------------------------------------------------------------
+  # 2. DEDICATED NOSQL & WEB GUI (Amazon DynamoDB)
+  # Phù hợp: DVA-C02, SAP-C02, Database Specialty
+  # ----------------------------------------------------------------------------
   dynamodb-local:
     image: amazon/dynamodb-local:latest
     container_name: aws_dynamodb
-    profiles: ["nosql", "all"]
+    profiles: ["nosql", "dynamodb", "all"]
     ports:
       - "8000:8000"
     command: "-jar DynamoDBLocal.jar -sharedDb -dbPath /data"
@@ -45,7 +45,7 @@ services:
   dynamodb-admin:
     image: aaronshaf/dynamodb-admin:latest
     container_name: aws_dynamodb_admin
-    profiles: ["nosql", "all"]
+    profiles: ["nosql", "dynamodb", "all"]
     ports:
       - "8001:8001"
     environment:
@@ -56,13 +56,16 @@ services:
     networks:
       - aws_lab_net
 
-  # 3. S3 STORAGE WITH VISUAL CONSOLE (MinIO)
+  # ----------------------------------------------------------------------------
+  # 3. OBJECT STORAGE & S3 BUCKET POLICIES (MinIO + Console)
+  # Phù hợp: Security Specialty, Data Engineer, SAA, SAP
+  # ----------------------------------------------------------------------------
   minio-s3:
     image: minio/minio:latest
     container_name: aws_s3_minio
-    profiles: ["storage", "all"]
+    profiles: ["storage", "s3", "all"]
     ports:
-      - "9000:9000"   # S3 API Endpoint
+      - "9000:9000"   # S3 API
       - "9001:9001"   # S3 Web Console UI
     environment:
       - MINIO_ROOT_USER=awsadmin
@@ -73,11 +76,14 @@ services:
     networks:
       - aws_lab_net
 
-  # 4. RELATIONAL DATABASE (Simulating RDS Aurora PostgreSQL)
+  # ----------------------------------------------------------------------------
+  # 4. RELATIONAL DATABASES (RDS PostgreSQL & RDS MySQL)
+  # Phù hợp: Database Specialty, SAA, SAP
+  # ----------------------------------------------------------------------------
   rds-postgres:
     image: postgres:16-alpine
     container_name: aws_rds_postgres
-    profiles: ["database", "all"]
+    profiles: ["database", "rds", "postgres", "all"]
     ports:
       - "5432:5432"
     environment:
@@ -89,11 +95,30 @@ services:
     networks:
       - aws_lab_net
 
-  # 5. IN-MEMORY CACHE (Simulating Amazon ElastiCache Redis)
+  rds-mysql:
+    image: mysql:8.0
+    container_name: aws_rds_mysql
+    profiles: ["database", "rds", "mysql", "all"]
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_DATABASE=aws_enterprise_db
+      - MYSQL_USER=awsadmin
+      - MYSQL_PASSWORD=awspassword123
+      - MYSQL_ROOT_PASSWORD=rootpassword123
+    volumes:
+      - "./lab_data/mysql:/var/lib/mysql"
+    networks:
+      - aws_lab_net
+
+  # ----------------------------------------------------------------------------
+  # 5. IN-MEMORY CACHE (Amazon ElastiCache Redis)
+  # Phù hợp: Performance, SAA, SAP
+  # ----------------------------------------------------------------------------
   elasticache-redis:
     image: redis:alpine
     container_name: aws_elasticache_redis
-    profiles: ["database", "all"]
+    profiles: ["database", "redis", "cache", "all"]
     ports:
       - "6379:6379"
     command: redis-server --appendonly yes
@@ -102,14 +127,17 @@ services:
     networks:
       - aws_lab_net
 
-  # 6. MESSAGE BROKER (Simulating Amazon MQ)
+  # ----------------------------------------------------------------------------
+  # 6. MESSAGE BROKER & STREAMING (Amazon MQ & Amazon MSK Kafka)
+  # Phù hợp: Data Engineer, SAP-C02
+  # ----------------------------------------------------------------------------
   amazon-mq-rabbit:
     image: rabbitmq:3-management-alpine
     container_name: aws_amazon_mq
-    profiles: ["streaming", "all"]
+    profiles: ["streaming", "mq", "all"]
     ports:
-      - "5672:5672"    # AMQP protocol
-      - "15672:15672"  # Web Management UI
+      - "5672:5672"    # AMQP
+      - "15672:15672"  # Web UI
     environment:
       - RABBITMQ_DEFAULT_USER=awsadmin
       - RABBITMQ_DEFAULT_PASS=awspassword123
@@ -118,11 +146,37 @@ services:
     networks:
       - aws_lab_net
 
-  # 7. SEARCH & VECTOR EMBEDDINGS (Simulating OpenSearch & Bedrock Vector RAG)
+  amazon-msk-kafka:
+    image: apache/kafka:latest
+    container_name: aws_msk_kafka
+    profiles: ["streaming", "kafka", "msk", "all"]
+    ports:
+      - "9092:9092"
+    environment:
+      - KAFKA_NODE_ID=1
+      - KAFKA_PROCESS_ROLES=broker,controller
+      - KAFKA_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092
+      - KAFKA_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      - KAFKA_CONTROLLER_QUORUM_VOTERS=1@localhost:9093
+      - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1
+      - KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS=0
+      - KAFKA_TRANSACTION_STATE_LOG_MIN_ISR=1
+      - KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR=1
+    volumes:
+      - "./lab_data/kafka:/tmp/kraft-combined-logs"
+    networks:
+      - aws_lab_net
+
+  # ----------------------------------------------------------------------------
+  # 7. SEARCH & VECTOR EMBEDDINGS (Amazon OpenSearch & Bedrock Vector RAG)
+  # Phù hợp: Machine Learning Specialty, GenAI, Data Engineer
+  # ----------------------------------------------------------------------------
   opensearch:
     image: opensearchproject/opensearch:2.14.0
     container_name: aws_opensearch
-    profiles: ["search", "all"]
+    profiles: ["search", "opensearch", "all"]
     ports:
       - "9200:9200"
     environment:
@@ -130,13 +184,15 @@ services:
       - bootstrap.memory_lock=true
       - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m"
       - DISABLE_SECURITY_PLUGIN=true
+    volumes:
+      - "./lab_data/opensearch:/usr/share/opensearch/data"
     networks:
       - aws_lab_net
 
   opensearch-dashboards:
     image: opensearchproject/opensearch-dashboards:2.14.0
     container_name: aws_opensearch_ui
-    profiles: ["search", "all"]
+    profiles: ["search", "opensearch", "all"]
     ports:
       - "5601:5601"
     environment:
@@ -144,6 +200,36 @@ services:
       - DISABLE_SECURITY_DASHBOARDS_PLUGIN=true
     depends_on:
       - opensearch
+    networks:
+      - aws_lab_net
+
+  # ----------------------------------------------------------------------------
+  # 8. EMAIL SERVICE (Simulating Amazon SES)
+  # Phù hợp: Web development, Notification architectures
+  # ----------------------------------------------------------------------------
+  ses-mock:
+    image: axllent/mailpit:latest
+    container_name: aws_ses_mock
+    profiles: ["email", "ses", "all"]
+    ports:
+      - "1025:1025"   # SMTP Port
+      - "8025:8025"   # Web Mailbox UI
+    networks:
+      - aws_lab_net
+
+  # ----------------------------------------------------------------------------
+  # 9. FAST ANALYTICS OLAP (Simulating Amazon Redshift / Athena local)
+  # Phù hợp: Data Engineer, Analytics Specialty
+  # ----------------------------------------------------------------------------
+  redshift-mock:
+    image: clickhouse/clickhouse-server:latest
+    container_name: aws_redshift_mock
+    profiles: ["analytics", "redshift", "all"]
+    ports:
+      - "8123:8123"   # HTTP API
+      - "9004:9000"   # Native Client
+    volumes:
+      - "./lab_data/clickhouse:/var/lib/clickhouse"
     networks:
       - aws_lab_net
 

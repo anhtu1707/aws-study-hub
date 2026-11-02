@@ -115,6 +115,23 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
               FREE
             </span>
           )}
+
+          {service.dockerLab && (
+            <span
+              className="mono"
+              style={{
+                fontSize: '9.5px',
+                fontWeight: 700,
+                color: '#1D588F',
+                border: '1px solid #1D588F',
+                background: '#EDF4FC',
+                padding: '1px 5px',
+                borderRadius: '2px'
+              }}
+            >
+              🐳 DOCKER LAB
+            </span>
+          )}
         </div>
 
         {/* Status Toggle Button */}

@@ -17,6 +17,15 @@ export type ExamLevel = 'CLF' | 'SAA' | 'DVA' | 'SOA' | 'SAP' | 'MLS' | 'ANS';
 
 export type LearningStatus = 'not_started' | 'in_progress' | 'mastered';
 
+export interface DockerLabConfig {
+  profile: string;
+  command: string;
+  stopCommand: string;
+  endpoint: string;
+  guiUrl?: string;
+  description: string;
+}
+
 export interface AWSService {
   id: string;
   code: string;
@@ -32,6 +41,7 @@ export interface AWSService {
   cliSnippet: string;
   relatedServices: string[];
   freeTier: boolean;
+  dockerLab?: DockerLabConfig;
 }
 
 export interface Flashcard {
