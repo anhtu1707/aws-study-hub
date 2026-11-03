@@ -63,7 +63,7 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
         justifyContent: 'center',
         alignItems: 'center',
         zIndex: 100,
-        padding: '20px'
+        padding: 'clamp(10px, 3vw, 20px)'
       }}
       onClick={() => {
         stopSpeech();
@@ -81,7 +81,8 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
           background: '#FFFFFF',
           border: '1px solid var(--border-dashed)',
           boxShadow: '0 20px 50px rgba(20, 15, 10, 0.25)',
-          padding: '36px 32px',
+          padding: 'clamp(20px, 4vw, 36px) clamp(14px, 4vw, 32px)',
+          boxSizing: 'border-box',
           display: 'flex',
           flexDirection: 'column',
           gap: '24px',
@@ -555,7 +556,7 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
               {service.dockerLab.description}
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '10px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 240px), 1fr))', gap: '10px' }}>
               <div style={{ background: '#FFFFFF', border: '1px solid var(--border-dashed)', padding: '10px 12px', borderRadius: '2px' }}>
                 <div className="mono" style={{ fontSize: '10px', color: 'var(--text-muted)', marginBottom: '4px' }}>
                   LỆNH KHỞI ĐỘNG LAB:
@@ -827,7 +828,7 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
           )}
 
           {/* Verification & Cleanup Tips */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '12px', paddingTop: '4px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 240px), 1fr))', gap: '12px', paddingTop: '4px' }}>
             <div
               style={{
                 background: '#F0F7F2',

@@ -42,13 +42,14 @@ export const AudioPlayerBar: React.FC = () => {
         left: '50%',
         transform: 'translateX(-50%)',
         zIndex: 98,
-        width: 'calc(100% - 32px)',
+        width: 'calc(100% - 24px)',
         maxWidth: '720px',
+        boxSizing: 'border-box',
         background: '#FFFDF9',
         border: '1.5px solid var(--text-ink)',
         borderLeft: '5px solid var(--text-ink)',
         borderRadius: '3px',
-        padding: '12px 18px',
+        padding: '10px clamp(12px, 3vw, 18px)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -60,7 +61,7 @@ export const AudioPlayerBar: React.FC = () => {
       aria-label="Trình phát âm thanh rảnh tay"
     >
       {/* Title & Status */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '10px', minWidth: '200px', flex: '1 1 auto' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '10px', minWidth: 0, flex: '1 1 180px' }}>
         <div
           style={{
             width: '32px',

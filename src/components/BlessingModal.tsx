@@ -33,7 +33,7 @@ export const BlessingModal: React.FC<BlessingModalProps> = ({ isOpen, onClose })
         alignItems: 'center',
         justifyContent: 'center',
         zIndex: 200,
-        padding: '20px'
+        padding: 'clamp(10px, 3vw, 20px)'
       }}
       onClick={onClose}
     >
@@ -44,7 +44,8 @@ export const BlessingModal: React.FC<BlessingModalProps> = ({ isOpen, onClose })
           border: '1.5px solid var(--text-ink)',
           maxWidth: '460px',
           width: '100%',
-          padding: '30px 24px',
+          boxSizing: 'border-box',
+          padding: 'clamp(20px, 4vw, 30px) clamp(14px, 4vw, 24px)',
           position: 'relative',
           display: 'flex',
           flexDirection: 'column',
@@ -147,14 +148,14 @@ export const BlessingModal: React.FC<BlessingModalProps> = ({ isOpen, onClose })
               fontSize: '12.5px'
             }}
           >
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '4px' }}>
               <span className="mono" style={{ color: 'var(--text-sepia)' }}>Ngân hàng:</span>
               <strong style={{ color: 'var(--text-ink)' }}>ACB (Ngân hàng Á Châu)</strong>
             </div>
 
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '4px' }}>
               <span className="mono" style={{ color: 'var(--text-sepia)' }}>Số tài khoản:</span>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
                 <code className="mono" style={{ fontSize: '14px', fontWeight: 800, color: '#8A5A2B' }}>
                   16601281
                 </code>
@@ -182,7 +183,7 @@ export const BlessingModal: React.FC<BlessingModalProps> = ({ isOpen, onClose })
               </div>
             </div>
 
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '4px' }}>
               <span className="mono" style={{ color: 'var(--text-sepia)' }}>Nội dung gợi ý:</span>
               <span className="mono" style={{ fontSize: '11.5px', color: 'var(--text-ink)' }}>
                 Ban phuoc lanh AWS Hub

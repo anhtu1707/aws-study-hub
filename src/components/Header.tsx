@@ -44,11 +44,13 @@ export const Header: React.FC<HeaderProps> = ({
         border: '1px solid var(--border-light)',
         borderBottom: 'none',
         boxShadow: '0 4px 20px rgba(50, 40, 30, 0.05)',
-        padding: '36px 32px 42px 32px',
+        padding: 'clamp(20px, 4vw, 36px) clamp(14px, 4vw, 32px) clamp(24px, 4vw, 42px) clamp(14px, 4vw, 32px)',
         borderRadius: '4px 4px 0 0',
         display: 'flex',
         flexDirection: 'column',
-        gap: '24px'
+        gap: '24px',
+        width: '100%',
+        boxSizing: 'border-box'
       }}
     >
       {/* Washi Tape Pins on corners */}
@@ -100,7 +102,7 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
 
         {/* Action Buttons: Export, Import & Reset */}
-        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
           <button
             type="button"
             onClick={onExport}
@@ -221,8 +223,8 @@ export const Header: React.FC<HeaderProps> = ({
           gap: '24px'
         }}
       >
-        <div style={{ flex: '1 1 540px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          <h1 style={{ fontSize: '32px', margin: 0, lineHeight: 1.15 }}>
+        <div style={{ flex: '1 1 320px', minWidth: 0, display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <h1 style={{ fontSize: 'clamp(22px, 5vw, 32px)', margin: 0, lineHeight: 1.15 }}>
             Sổ Tay Tự Học Toàn Bộ Dịch Vụ AWS
           </h1>
           <p style={{ fontSize: '14.5px', color: 'var(--text-charcoal)', maxWidth: '720px', lineHeight: 1.6 }}>
@@ -241,7 +243,8 @@ export const Header: React.FC<HeaderProps> = ({
             display: 'flex',
             flexDirection: 'column',
             gap: '8px',
-            minWidth: '220px'
+            flex: '1 1 200px',
+            minWidth: 0
           }}
         >
           <div

@@ -217,10 +217,11 @@ export function App() {
         width: '100%',
         minHeight: '100vh',
         boxSizing: 'border-box',
-        padding: '24px 20px 80px 20px',
+        padding: '20px clamp(10px, 3vw, 20px) 80px clamp(10px, 3vw, 20px)',
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center'
+        alignItems: 'center',
+        overflowX: 'hidden'
       }}
     >
       <div style={{ width: '100%', maxWidth: '1340px', display: 'flex', flexDirection: 'column', gap: '32px' }}>
@@ -284,8 +285,9 @@ export function App() {
                 <div
                   style={{
                     display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fill, minmax(360px, 1fr))',
-                    gap: '26px'
+                    gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 340px), 1fr))',
+                    gap: '26px',
+                    width: '100%'
                   }}
                 >
                   {displayedServices.map((service) => (
@@ -450,16 +452,18 @@ export function App() {
           style={{
             background: '#FFFDF9',
             border: '1.5px dashed #8A5A2B',
-            padding: '20px 24px',
+            padding: 'clamp(14px, 3vw, 20px) clamp(12px, 3vw, 24px)',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
             flexWrap: 'wrap',
             gap: '16px',
-            marginTop: '36px'
+            marginTop: '36px',
+            width: '100%',
+            boxSizing: 'border-box'
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flex: '1 1 260px', minWidth: 0 }}>
             <div
               style={{
                 width: '42px',
@@ -475,11 +479,11 @@ export function App() {
             >
               <CoffeeIcon size={20} color="#8A5A2B" />
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '3px', minWidth: 0 }}>
               <div style={{ fontSize: '15px', fontWeight: 800, color: 'var(--text-ink)' }}>
                 Nếu thấy hay hãy ban phước lành cho tui ☕
               </div>
-              <div style={{ fontSize: '13px', color: 'var(--text-charcoal)' }}>
+              <div style={{ fontSize: '13px', color: 'var(--text-charcoal)', lineHeight: 1.5 }}>
                 Ủng hộ tác giả qua <strong>VietQR Ngân hàng ACB (STK: 16601281)</strong> để tiếp thêm động lực duy trì và cập nhật dự án!
               </div>
             </div>
@@ -516,13 +520,15 @@ export function App() {
             background: 'var(--bg-card)',
             border: '1px solid var(--border-light)',
             borderTop: 'none',
-            padding: '24px 30px',
+            padding: '20px clamp(14px, 3vw, 30px)',
             borderRadius: '0 0 4px 4px',
             display: 'flex',
             flexWrap: 'wrap',
             justifyContent: 'space-between',
             alignItems: 'center',
             gap: '16px',
+            width: '100%',
+            boxSizing: 'border-box',
             boxShadow: '0 4px 16px rgba(45,35,25,0.04)'
           }}
         >

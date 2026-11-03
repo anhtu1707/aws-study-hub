@@ -59,7 +59,8 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
         background: 'var(--bg-card)',
         border: '1px solid var(--border-light)',
         borderBottom: 'none',
-        padding: '24px 22px 30px 22px',
+        padding: '24px clamp(14px, 4vw, 22px) 30px clamp(14px, 4vw, 22px)',
+        boxSizing: 'border-box',
         borderRadius: '3px 3px 0 0',
         display: 'flex',
         flexDirection: 'column',
@@ -82,7 +83,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
       />
 
       {/* Card Header: Category, Levels & Status Button */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '8px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '8px', flexWrap: 'wrap' }}>
         <div style={{ display: 'flex', gap: '6px', alignItems: 'center', flexWrap: 'wrap' }}>
           <span
             className="mono"
@@ -229,7 +230,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
 
       {/* Service Name & Acronym */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', flexWrap: 'wrap' }}>
           <h2 className="mono" style={{ fontSize: '22px', margin: 0, color: 'var(--text-ink)' }}>
             {service.code}
           </h2>
@@ -265,6 +266,8 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: '6px',
           borderTop: '1px dashed var(--border-light)',
           paddingTop: '12px',
           marginTop: 'auto'

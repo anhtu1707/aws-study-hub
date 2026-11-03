@@ -96,10 +96,12 @@ export const ArchitectureView: React.FC<ArchitectureViewProps> = ({ onSelectServ
         style={{
           background: '#FFFDF9',
           border: '1.5px solid var(--text-ink)',
-          padding: '24px 26px',
+          padding: 'clamp(16px, 4vw, 24px) clamp(14px, 4vw, 26px)',
           display: 'flex',
           flexDirection: 'column',
-          gap: '12px'
+          gap: '12px',
+          width: '100%',
+          boxSizing: 'border-box'
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
@@ -133,7 +135,8 @@ export const ArchitectureView: React.FC<ArchitectureViewProps> = ({ onSelectServ
               padding: '6px 12px',
               borderRadius: '2px',
               gap: '8px',
-              flex: '1 1 300px',
+              flex: '1 1 240px',
+              minWidth: 0,
               maxWidth: '500px'
             }}
           >
@@ -258,7 +261,7 @@ export const ArchitectureView: React.FC<ArchitectureViewProps> = ({ onSelectServ
       )}
 
       {/* Blueprint Grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(420px, 1fr))', gap: '24px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))', gap: '24px', width: '100%', minWidth: 0 }}>
         {filteredPatterns.map((pat) => {
           const isThisSpeaking = speakingId === `blueprint-${pat.id}`;
 
@@ -270,7 +273,9 @@ export const ArchitectureView: React.FC<ArchitectureViewProps> = ({ onSelectServ
                 background: '#FFFFFF',
                 border: '1px solid var(--border-light)',
                 borderBottom: 'none',
-                padding: '26px 22px 32px 22px',
+                padding: '24px clamp(14px, 4vw, 22px) 28px clamp(14px, 4vw, 22px)',
+                boxSizing: 'border-box',
+                minWidth: 0,
                 borderRadius: '4px 4px 0 0',
                 display: 'flex',
                 flexDirection: 'column',

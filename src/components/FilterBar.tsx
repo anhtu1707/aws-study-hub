@@ -54,10 +54,10 @@ export const FilterBar: React.FC<FilterBarProps> = ({
     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
 
       {/* Top Search & Level Row */}
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '14px', alignItems: 'center' }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '14px', alignItems: 'center', width: '100%' }}>
 
         {/* Notebook Search Input */}
-        <div style={{ flex: '1 1 360px', position: 'relative' }}>
+        <div style={{ flex: '1 1 240px', minWidth: 0, position: 'relative' }}>
           <input
             type="text"
             placeholder="Tìm theo tên dịch vụ (S3, EC2...), từ khóa (WORM, Multi-AZ...) hoặc tác vụ..."
@@ -128,7 +128,9 @@ export const FilterBar: React.FC<FilterBarProps> = ({
             padding: '4px',
             borderRadius: '4px',
             border: '1px solid var(--border-dashed)',
-            overflowX: 'auto'
+            overflowX: 'auto',
+            maxWidth: '100%',
+            minWidth: 0
           }}
         >
           {levels.map((lvl) => {
