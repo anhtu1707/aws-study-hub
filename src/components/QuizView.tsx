@@ -385,7 +385,7 @@ export const QuizView: React.FC = () => {
               )}
             </div>
 
-            <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+            <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap', flexShrink: 0 }}>
               {/* Hands-Free Audio Button */}
               <button
                 type="button"
@@ -408,7 +408,9 @@ export const QuizView: React.FC = () => {
                   cursor: 'pointer',
                   display: 'inline-flex',
                   alignItems: 'center',
-                  gap: '6px'
+                  gap: '6px',
+                  whiteSpace: 'nowrap',
+                  flexShrink: 0
                 }}
               >
                 {isSpeaking ? <StopIcon size={12} color="#C0392B" /> : <SpeakerIcon size={12} color="var(--text-ink)" />}
@@ -430,7 +432,9 @@ export const QuizView: React.FC = () => {
                   cursor: 'pointer',
                   display: 'inline-flex',
                   alignItems: 'center',
-                  gap: '6px'
+                  gap: '6px',
+                  whiteSpace: 'nowrap',
+                  flexShrink: 0
                 }}
               >
                 {isMastered ? (

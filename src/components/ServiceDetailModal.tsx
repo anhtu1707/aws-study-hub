@@ -108,12 +108,13 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'flex-start',
-            gap: '16px',
+            gap: '12px',
+            flexWrap: 'wrap',
             borderBottom: '2px dashed var(--border-dashed)',
             paddingBottom: '16px'
           }}
         >
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', flex: '1 1 240px', minWidth: 0 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
               <span className="mono" style={{ fontSize: '28px', fontWeight: 800, color: 'var(--text-ink)' }}>
                 {service.code}
@@ -121,7 +122,7 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
               <span className="stamp-badge stamp-dark" style={{ fontSize: '11px' }}>
                 {service.categoryLabel}
               </span>
-              <div style={{ display: 'flex', gap: '4px' }}>
+              <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
                 {service.levels.map((lvl) => (
                   <span key={lvl} className="stamp-badge stamp-kraft" style={{ fontSize: '10px' }}>
                     {lvl}
@@ -139,7 +140,7 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
             </h3>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0, alignSelf: 'flex-start' }}>
             <button
               type="button"
               onClick={() => speakStructuredText(`modal-${service.id}`, buildDetailedSpeech(service), `Hồ sơ ${service.code} • ${service.name}`)}
@@ -155,12 +156,14 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
                 fontWeight: 700,
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '6px'
+                gap: '6px',
+                whiteSpace: 'nowrap',
+                flexShrink: 0
               }}
               aria-label="Nghe đọc hồ sơ âm thanh"
             >
               {isSpeaking ? <StopIcon size={12} color="#C0392B" /> : <SpeakerIcon size={12} color="var(--text-ink)" />}
-              <span>{isSpeaking ? 'Dừng đọc' : 'Nghe Hồ Sơ (Audio)'}</span>
+              <span>{isSpeaking ? 'Dừng đọc' : 'Nghe Audio'}</span>
             </button>
 
             <button
@@ -179,7 +182,8 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                flexShrink: 0
               }}
               aria-label="Đóng cửa sổ"
             >
@@ -912,7 +916,7 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
             Dịch vụ liên kết: <strong>{service.relatedServices.join(', ')}</strong>
           </div>
 
-          <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+          <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
             <span style={{ fontSize: '12px', fontWeight: 600 }}>Trạng thái:</span>
             {(['not_started', 'in_progress', 'mastered'] as LearningStatus[]).map((st) => {
               const labels = {

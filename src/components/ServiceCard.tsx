@@ -168,7 +168,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
           </span>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
           {/* Hands-Free Text to Speech Button */}
           <button
             type="button"
@@ -188,7 +188,9 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
               cursor: 'pointer',
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '4px'
+              gap: '4px',
+              whiteSpace: 'nowrap',
+              flexShrink: 0
             }}
             aria-label={isSpeaking ? 'Dừng đọc' : 'Nghe tóm tắt'}
           >
@@ -215,7 +217,9 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
-              gap: '4px'
+              gap: '4px',
+              whiteSpace: 'nowrap',
+              flexShrink: 0
             }}
           >
             {status === 'mastered' && (

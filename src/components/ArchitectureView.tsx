@@ -322,7 +322,9 @@ export const ArchitectureView: React.FC<ArchitectureViewProps> = ({ onSelectServ
                       fontWeight: 700,
                       display: 'inline-flex',
                       alignItems: 'center',
-                      gap: '5px'
+                      gap: '5px',
+                      whiteSpace: 'nowrap',
+                      flexShrink: 0
                     }}
                   >
                     {isThisSpeaking ? <StopIcon size={11} color="#C0392B" /> : <SpeakerIcon size={11} color="var(--text-ink)" />}
